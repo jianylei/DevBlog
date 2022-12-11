@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const AutoIncrement = require('mongoose-sequence')(mongoose);
+const mongoose = require('mongoose')
+const AutoIncrement = require('mongoose-sequence')(mongoose)
 
 const postSchema = new mongoose.Schema(
     {
@@ -32,12 +32,12 @@ const postSchema = new mongoose.Schema(
     {
         timestamps: true
     }
-);
+)
 
 noteSchema.plugin(AutoIncrement, {
     inc_field: 'post',
     id: 'postNums',
     start_seq: 0
-});
+})
 
-module.exports = mongoose.model('Post', postSchema);
+module.exports = mongoose.model('Post', postSchema)
