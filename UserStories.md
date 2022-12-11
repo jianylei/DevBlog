@@ -12,8 +12,6 @@
 10. [ ] Display current user and role (Ex. Moderator: jianylei)
 11. [ ] Provide a logout option 
 12. [ ] Require users to login at least once per month
-13. [ ] Anyone can create a post (no login = anonymous)
-14. [ ] Anonymous users cannot edit/delete post
 15. [ ] Users can be Author, Moderator, or Admin
 16. [ ] Authors can only edit/delete their own post
 17. [ ] Admin/moderator can edit/delete all post
