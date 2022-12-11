@@ -60,8 +60,7 @@ const updateUser = asyncHandler(async (req, res) => {
         firstName, 
         lastName,
         about,
-        profileImg,
-        coverImg,
+        images,
         roles, 
         active, 
         password 
@@ -91,8 +90,8 @@ const updateUser = asyncHandler(async (req, res) => {
     user.firstName = firstName
     user.lastName = lastName
     user.about = about
-    user.profileImg = profileImg
-    user.coverImg = coverImg
+    user.images.profile = images?.profile
+    user.images.cover = images?.cover
     user.roles = roles
     user.active = active
 

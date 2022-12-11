@@ -21,14 +21,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    profileImg: {
-        type: String,
-        required: false
-    },
-    coverImg: {
-        type: String,
-        required: false
-    },
+    images: [{
+        profile: {
+            type: String,
+            required: false
+        },
+        cover: {
+            type: String,
+            required: false
+        }
+    }],
     roles: {
         type: [String],
         default : ['Author']
