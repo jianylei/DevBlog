@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt')
 
 // @desc Get all users
 // @route GET /users
-// @access Private
+// @access Public
 const getAllUsers = asyncHandler(async (req, res) => {
     const users = await User.find().select('-password').lean()
 
@@ -15,7 +15,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
 
 // @desc Create new user
 // @route POST /users
-// @access Private
+// @access Public
 const createNewUser = asyncHandler(async (req, res) => {
     const { 
         username, 
@@ -65,7 +65,6 @@ const updateUser = asyncHandler(async (req, res) => {
         active, 
         password 
     } = req.body
-
     // Confirm data 
     if (!id || !username || !firstName || !lastName || !Array.isArray(roles) 
         || !roles.length || typeof active !== 'boolean') {
@@ -90,10 +89,16 @@ const updateUser = asyncHandler(async (req, res) => {
     user.firstName = firstName
     user.lastName = lastName
     user.about = about
-    user.images.profile = images?.profile
-    user.images.cover = images?.cover
     user.roles = roles
     user.active = active
+
+    const userImages = images?.profile && images?.cover
+        ? {
+            profile: images?.profile === '' ? undefined : images?.profile,
+            cover: images?.cover === '' ? undefined : images?.cover
+        }
+        : undefined
+    user.images = userImages
 
     if (password) user.password = await bcrypt.hash(password, 10)
 

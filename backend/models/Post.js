@@ -20,13 +20,18 @@ const postSchema = new mongoose.Schema(
             type: String,
             required: true
         },
-        likes: {
+        views: {
             type: Number,
             default : 0
         },
         tags: {
             type: [String],
             required: false
+        },
+        status: {
+            type: String,
+            enum: ['Approved', 'Senied', 'Review'],
+            default: 'Review'
         }
     },
     {
@@ -34,7 +39,7 @@ const postSchema = new mongoose.Schema(
     }
 )
 
-noteSchema.plugin(AutoIncrement, {
+postSchema.plugin(AutoIncrement, {
     inc_field: 'post',
     id: 'postNums',
     start_seq: 0
