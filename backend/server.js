@@ -6,6 +6,7 @@ const { logger, logEvents } = require('./middleware/logger')
 const errorHandler = require('./middleware/errorHandler')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
+const corsConfig = require('./config/corsConfig')
 const dbConnect = require('./config/dbConn')
 const mongoose = require('mongoose')
 const PORT = process.env.PORT || 3080
@@ -13,6 +14,8 @@ const PORT = process.env.PORT || 3080
 dbConnect()
 
 app.use(logger)
+
+app.use(cors(corsConfig))
 
 app.use(express.json())
 
