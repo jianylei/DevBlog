@@ -37,7 +37,7 @@ const upload = multer({ storage: storage,
     },
     fileFilter: (req, file, cb) => {
         if (!whitelist.includes(file.mimetype)) {
-            return cb(new Error('file is not allowed'))
+            return cb(new Error('File is not allowed'))
         }
         cb(null, true)
     } 
