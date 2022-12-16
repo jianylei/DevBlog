@@ -65,6 +65,7 @@ const updateUser = asyncHandler(async (req, res) => {
         active, 
         password 
     } = req.body
+    
     // Confirm data 
     if (!id || !username || !firstName || !lastName || !Array.isArray(roles) 
         || !roles.length || typeof active !== 'boolean') {

@@ -7,7 +7,7 @@ const errorHandler = require('./middleware/errorHandler')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const corsConfig = require('./config/corsConfig')
-const dbConnect = require('./config/dbConn')
+const dbConnect = require('./config/dbConfig')
 const mongoose = require('mongoose')
 const PORT = process.env.PORT || 3080
 
@@ -26,6 +26,7 @@ app.use('/', express.static(path.join(__dirname, 'public')))
 app.use('/', require('./routes/root'))
 app.use('/users', require('./routes/userRoutes'))
 app.use('/posts', require('./routes/postRoutes'))
+app.use('/upload', require('./routes/uploadRoute'))
 
 
 app.all('*', (req, res) => {
