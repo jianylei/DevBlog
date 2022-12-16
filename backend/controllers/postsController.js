@@ -1,7 +1,7 @@
 const User = require('../models/User')
 const Post = require('../models/Post')
 const asyncHandler = require('express-async-handler')
-const STATUS = require('../config/status')
+const { STATUS } = require('../config/constants') 
 
 // @desc Get all post
 // @route GET /post
@@ -14,7 +14,7 @@ const getAllPosts = asyncHandler(async (req, res) => {
     // Add username to each post before sending the response 
     const postWithUser = await Promise.all(posts.map(async (post) => {
         const user = await User.findById(post.author).lean().exec()
-        return { ...post, author: user.author }
+        return { ...post, author: user.username }
     }))
 
     res.json(postWithUser)
@@ -39,9 +39,7 @@ const createNewPost = asyncHandler(async (req, res) => {
 
     // Create and store new post
     const postCover = cover === '' ? undefined : cover
-    const postTags = !tags?.length ? undefined : tags
-    const post = await Post.create({ author, title, content, "cover": postCover, 
-        "tags": postTags })
+    const post = await Post.create({ author, title, content, "cover": postCover, tags })
 
     if (post) {
         res.status(201).json({ message: `New post created: ${title}` })
@@ -56,7 +54,6 @@ const createNewPost = asyncHandler(async (req, res) => {
 const updatePost = asyncHandler(async (req, res) => {
     const { 
         id, 
-        author, 
         title, 
         content, 
         cover, 
@@ -64,7 +61,7 @@ const updatePost = asyncHandler(async (req, res) => {
         status
     } = req.body
 
-    if (!id || !author || !title || !content) {
+    if (!id || !title || !content) {
         return res.status(400).json({ message: 'Please enter all required fields' })
     }
 
@@ -81,7 +78,6 @@ const updatePost = asyncHandler(async (req, res) => {
         return res.status(409).json({ message: 'Duplicate post title' })
     }
 
-    post.author = author
     post.title = title
     post.content = content
     post.status = status
@@ -93,23 +89,45 @@ const updatePost = asyncHandler(async (req, res) => {
     res.json({ message: `Updated post: ${updatedPost.title}` })
 })
 
+// @desc Update post status
+// @route PATCH /post/status
+// @access Private - Admin/Moderator only
+const updatePostStatus = asyncHandler(async (req, res) => {
+    const { id, status } = req.body
+
+    console.log(id +": " + status)
+    if (!id || !status) return res.status(400).json({ message: 'All fields are required' })
+    
+    if (!Object.values(STATUS).includes(status)) {
+        return res.status(400).json({ message: 'Invalid status' })
+    }
+
+    const post = await Post.findById(id).exec()
+    if (!post) return res.status(400).json({ message: 'Post not found' })
+
+    post.status = status
+    const updatedPost = await post.save()
+
+    res.json({ message: `Updated post: ${updatedPost.title} is ${updatedPost.status}` })
+})
+
 // @desc Delete post
 // @route DELETE /post
 // @access Private
 const deletePost = asyncHandler(async (req, res) => {
-    const { id } = req.body;
+    const { id } = req.body
 
-    if (!id) return res.status(400).json({ message: 'Post ID required' });
+    if (!id) return res.status(400).json({ message: 'Post ID required' })
 
-    const post = await Post.findById(id).exec();
+    const post = await Post.findById(id).exec()
 
-    if (!post) return res.status(400).json({ message: 'Post not found' });
+    if (!post) return res.status(400).json({ message: 'Post not found' })
 
-    const result = await note.deleteOne();
+    const result = await post.deleteOne()
 
-    const reply = `Post ${result.title} with ID ${result._id} deleted`;
+    const reply = `Post ${result.title} with ID ${result._id} deleted`
 
-    res.json(reply);
-});
+    res.json(reply)
+})
 
-module.exports = { getAllPosts, createNewPost, updatePost, deletePost };
+module.exports = { getAllPosts, createNewPost, updatePost, updatePostStatus, deletePost };

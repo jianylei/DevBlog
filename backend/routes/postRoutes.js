@@ -8,4 +8,6 @@ router.route('/')
     .patch(postsController.updatePost)
     .delete(postsController.deletePost)
 
+router.route('/status').patch(postsController.updatePostStatus)
+
 module.exports = router

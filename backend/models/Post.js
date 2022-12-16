@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const AutoIncrement = require('mongoose-sequence')(mongoose)
+const { STATUS } = require('../config/constants') 
 
 const postSchema = new mongoose.Schema(
     {
@@ -30,8 +31,8 @@ const postSchema = new mongoose.Schema(
         },
         status: {
             type: String,
-            enum: ['Approved', 'Senied', 'Review'],
-            default: 'Review'
+            enum: [STATUS.Approved, STATUS.Denied, STATUS.Pending],
+            default: STATUS.Approved
         }
     },
     {

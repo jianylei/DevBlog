@@ -1,34 +1,48 @@
 const multer = require('multer')
+const fs = require("fs")
+const { PATH } = require('../config/constants')
 
 const whitelist = [
-    'image/png',
-    'image/jpeg',
-    'image/jpg',
-    'image/webp'
+  'image/png',
+  'image/jpeg',
+  'image/jpg',
+  'image/webp'
 ]
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, './public/images')
+        const name = req.body?.name
+        if (name) {
+            const path = PATH.Images + file.fieldname + '/' + name
+            try {
+                if (fs.existsSync(path)) {
+                    fs.rmSync(path, { recursive: true, force: true })
+                }
+                fs.mkdirSync(path, { recursive: true })
+                cb(null, path)
+            } catch (err) {
+                console.log("An error occurred uploading image")
+            }
+        }
     },
     filename: function (req, file, cb) {
-      //const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-      //cb(null, file.fieldname + '-' + uniqueSuffix + '.jpg')
-      cb(null, file.originalname)
+        cb(null, file.originalname)
     }
 })
 
 const upload = multer({ storage: storage,
     limits: {
-        fileSize: 1 * 1024 * 1024
+        fileSize: 1 * 1024 * 1024 // 1MB
     },
     fileFilter: (req, file, cb) => {
         if (!whitelist.includes(file.mimetype)) {
-          return cb(new Error('file is not allowed'))
+            return cb(new Error('file is not allowed'))
         }
-    
         cb(null, true)
     } 
-})
+}).fields([
+  { name: 'users' },
+  { name: 'posts' }
+])
 
 module.exports = upload
