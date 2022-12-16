@@ -5,6 +5,12 @@ module.exports = {
         Pending: 'Pending'
     }),
 
+    ROLES: Object.freeze({
+        Author: 'Author',
+        Moderator: 'Moderator',
+        Admin: 'Admin'
+    }),
+
     PATH: Object.freeze({
         Images: './public/images/'
     })
