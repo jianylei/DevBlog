@@ -24,10 +24,10 @@ const getAllPosts = asyncHandler(async (req, res) => {
 // @route POST /post
 // @access Private
 const createNewPost = asyncHandler(async (req, res) => {
-    const { author, title, content, cover, tags } = req.body
+    const { author, title, subHeading, content, cover, tags } = req.body
 
     // Confirm data
-    if (!author || !title || !content) {
+    if (!author || !title || !subHeading || !content) {
         return res.status(400).json({ message: 'Please enter all required fields' })
     }
 
@@ -39,7 +39,7 @@ const createNewPost = asyncHandler(async (req, res) => {
 
     // Create and store new post
     const postCover = cover === '' ? undefined : cover
-    const post = await Post.create({ author, title, content, "cover": postCover, tags })
+    const post = await Post.create({ author, title, subHeading, content, "cover": postCover, tags })
 
     if (post) {
         res.status(201).json({ message: `New post created: ${title}` })
@@ -55,13 +55,14 @@ const updatePost = asyncHandler(async (req, res) => {
     const { 
         id, 
         title, 
+        subHeading,
         content, 
         cover, 
         tags,
         status
     } = req.body
 
-    if (!id || !title || !content) {
+    if (!id || !title || !subHeading || !content) {
         return res.status(400).json({ message: 'Please enter all required fields' })
     }
 
@@ -79,6 +80,7 @@ const updatePost = asyncHandler(async (req, res) => {
     }
 
     post.title = title
+    post.subHeading = subHeading
     post.content = content
     post.status = status
     post.cover = !cover || cover === '' ? undefined : cover
