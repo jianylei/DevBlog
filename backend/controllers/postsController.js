@@ -2,6 +2,7 @@ const User = require('../models/User')
 const Post = require('../models/Post')
 const asyncHandler = require('express-async-handler')
 const { STATUS } = require('../config/constants') 
+const { wordCntToTime } = require('../config/utils')
 
 // @desc Get all post
 // @route GET /post
@@ -11,10 +12,12 @@ const getAllPosts = asyncHandler(async (req, res) => {
 
     if (!posts?.length) return res.status(400).json({ message: 'No posts found' })
 
-    // Add username to each post before sending the response 
+    // Add username and estimated read time to each post before sending the response 
     const postWithUser = await Promise.all(posts.map(async (post) => {
+        const wordCount = post.title.length + post.subHeading.length + post.content.length
+        const readTime = wordCntToTime(wordCount)
         const user = await User.findById(post.author).lean().exec()
-        return { ...post, author: user.username }
+        return { ...post, author: user.username, readTime: readTime }
     }))
 
     res.json(postWithUser)

@@ -11,6 +11,7 @@
   --SURFACE: rgba(255, 255, 255, 5%);
   --SURFACE-HOVER: rgba(255, 255, 255, 3%);
   --BORDER-COLOR: rgba(255, 255, 255, 5%);
+  --BORDER-RADIUS: 5px;
   --COLOR: #FFF;
   --ERROR: #EA6D7E;
   --INACTIVE: rgba(255, 255, 255, 3%);
@@ -173,4 +174,18 @@ button {
   color: var(--COLOR);
   border: 1px solid var(--BORDER-COLOR);
   border-radius: 4px;
+}
+
+/*  || CARDS */
+.card-container {
+
+}
+
+.card-container img {
+  width: 50px;
+  width: min(25vw, 180px);
+  height: 120px;
+  object-fit: cover;
+  aspect-ratio: 180/125;
+  border-radius: var(--BORDER-RADIUS);
 }

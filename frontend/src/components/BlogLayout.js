@@ -5,7 +5,7 @@ const BlogLayout = () => {
     <div className='blog-container'>
         <div className='blog-nav__container'>
             <div className="blog-nav__links">
-                <Link to='/posts'>Posts</Link>
+                <Link to='/'>Posts</Link>
                 <Link>Authors</Link>
                 <Link>Review</Link>
                 <Link>Pending</Link>
