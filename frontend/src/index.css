@@ -6,10 +6,171 @@
   box-sizing: border-box;
 }
 
+:root {
+  --BGCOLOR: #121212;
+  --SURFACE: rgba(255, 255, 255, 5%);
+  --SURFACE-HOVER: rgba(255, 255, 255, 3%);
+  --BORDER-COLOR: rgba(255, 255, 255, 5%);
+  --COLOR: #FFF;
+  --ERROR: #EA6D7E;
+  --INACTIVE: rgba(255, 255, 255, 3%);
+  --LINK-COLOR: #f5f5f5e6;
+  --LINK-HOVER: #FFF;
+  --STATUS-COMPLETE: #74E39A;
+  --STATUS-OPEN: #EA6D7E;
+  --INPUT-INVALID: #DD0D3C;
+  --PRIMARY: #bb86fc;
+  --PRIMARY-HOVER: #b076f7;
+}
+
+/* || UTILITY CLASSES */
+.errmsg {
+  display: inline-block;
+  color: var(--ERROR);
+  margin-bottom: 0.5em;
+}
+
+.errmsg a:any-link {
+  color: var(--ERROR);
+  text-decoration: underline;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+.icon-button {
+  width: 48px;
+  height: 48px;
+  font-size: 1.25rem;
+  background-color: transparent;
+  border: none;
+  color: var(--LINK-COLOR);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+
+.icon-button:hover,
+.icon-button:focus-visible {
+  color: var(--LINK-HOVER);
+}
+
+.icon-button[disabled] {
+  visibility: hidden;
+}
+
+/* || GENERAL STYLES */
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  background-color: var(--BGCOLOR);
+  color: var(--COLOR);
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+#root {
+  /* React root div */
+  min-height: 100vh;
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a:any-link {
+  color: var(--LINK-COLOR);
+}
+
+a:hover,
+a:focus-visible {
+  color: var(--LINK-HOVER);
+}
+
+button {
+  height: 25px;
+  cursor: pointer;
+}
+
+/*  || SCROLLBAR */
+::-webkit-scrollbar {
+  width: 15px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--BGCOLOR);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--SURFACE)
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--SURFACE-HOVER)
+}
+
+/*  || LAYOUT */
+.main-header {
+  position: sticky;
+  top: 0;
+  background-color: var(--BGCOLOR);
+  padding: 1rem 1.5rem;
+}
+
+.main-header__container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-header__nav {
+  display: flex;
+  gap: 15px;
+}
+
+.blog-container {
+  display: flex;
+  width: 80%;
+  margin: 50px auto auto auto;
+  flex-direction: column;
+  padding: 0 1.5rem;
+}
+
+.blog-nav__container {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.blog-nav__links {
+  display: flex;
+  flex-flow: col nowrap;
+  gap: 1rem;
+}
+
+.blog-nav__select:focus {
+  outline-width: 0;
+}
+
+.blog-nav__select {
+  width: fit-content;
+  padding: 0.25em;
+  background-color: var(--SURFACE);
+  color: var(--COLOR);
+  border: 1px solid var(--BORDER-COLOR);
+  border-radius: 4px;
 }
