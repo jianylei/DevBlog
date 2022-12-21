@@ -2,7 +2,7 @@ const User = require('../models/User')
 const Post = require('../models/Post')
 const asyncHandler = require('express-async-handler')
 const { STATUS } = require('../config/constants') 
-const { wordCntToTime } = require('../config/utils')
+const { wordCntToTime, wordCount } = require('../config/utils')
 
 // @desc Get all post
 // @route GET /post
@@ -14,8 +14,10 @@ const getAllPosts = asyncHandler(async (req, res) => {
 
     // Add username and estimated read time to each post before sending the response 
     const postWithUser = await Promise.all(posts.map(async (post) => {
-        const wordCount = post.title.length + post.subHeading.length + post.content.length
-        const readTime = wordCntToTime(wordCount)
+        const str = post.title + ' ' + post.subHeading + ' ' + post.content
+        const wordCnt = wordCount(str)
+        const readTime = wordCntToTime(wordCnt)
+        console.log(readTime)
         const user = await User.findById(post.author).lean().exec()
         return { ...post, author: user.username, readTime: readTime }
     }))
@@ -100,7 +102,6 @@ const updatePost = asyncHandler(async (req, res) => {
 const updatePostStatus = asyncHandler(async (req, res) => {
     const { id, status } = req.body
 
-    console.log(id +": " + status)
     if (!id || !status) return res.status(400).json({ message: 'All fields are required' })
     
     if (!Object.values(STATUS).includes(status)) {
@@ -114,6 +115,23 @@ const updatePostStatus = asyncHandler(async (req, res) => {
     const updatedPost = await post.save()
 
     res.json({ message: `Updated post: ${updatedPost.title} is ${updatedPost.status}` })
+})
+
+// @desc Update view
+// @route PATCH /post/view
+// @access Public
+const updateView = asyncHandler(async (req, res) => {
+    const { id } = req.body
+
+    if (!id) return res.status(400).json({ message: 'All fields are required' })
+
+    const post = await Post.findOneAndUpdate({ _id: id }, { $inc: {'views': 1} }).exec()
+
+    if (!post) return res.status(400).json({ message: 'Post not found' })
+
+    const updatedPost = await post.save()
+
+    res.json({ message: `Updated ${updatedPost.title} view` })
 })
 
 // @desc Delete post
@@ -135,4 +153,4 @@ const deletePost = asyncHandler(async (req, res) => {
     res.json(reply)
 })
 
-module.exports = { getAllPosts, createNewPost, updatePost, updatePostStatus, deletePost };
+module.exports = { getAllPosts, createNewPost, updatePost, updatePostStatus, updateView, deletePost };

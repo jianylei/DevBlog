@@ -10,4 +10,6 @@ router.route('/')
 
 router.route('/status').patch(postsController.updatePostStatus)
 
+router.route('/view').patch(postsController.updateView)
+
 module.exports = router
