@@ -34,7 +34,6 @@ const PostList = () => {
 
         content = (
             <div className='content__container'>
-                <h2>Posts</h2>
                 <div className="card-grid__container">{postsContent}</div>
             </div>
         )

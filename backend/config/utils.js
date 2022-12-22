@@ -12,7 +12,6 @@ module.exports = {
             const sec = ('.' + timeArr[1]) * .60
             min = sec > .3 ? min + 1 : min
         }
-        min = min > 0 ? min : 1
-        return min
+        return min > 0 ? min : 1
     }
 }

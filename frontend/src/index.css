@@ -23,6 +23,7 @@
   --INPUT-INVALID: #DD0D3C;
   --PRIMARY: #bb86fc;
   --PRIMARY-HOVER: #b076f7;
+  --NO-IMAGE: linear-gradient(135deg, var(--SURFACE) 50%, var(--SURFACE-HOVER) 50%);
 }
 
 /* || UTILITY CLASSES */
@@ -102,6 +103,10 @@ a:focus-visible {
   color: var(--LINK-HOVER);
 }
 
+a.active{
+  color: var(--ERROR);
+}
+
 button {
   height: 25px;
   cursor: pointer;
@@ -146,24 +151,24 @@ button {
 
 .blog-container {
   display: flex;
-  width: 85%;
+  width: 100;
   margin: 25px auto auto auto;
   flex-direction: column;
-  padding: 0 1.5rem;
+  padding: 0 5rem;
 }
 
 .blog-nav__container {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
+  padding: 0 10px;
 }
 
 .blog-nav__links {
   display: flex;
   flex-flow: col nowrap;
   gap: 1rem;
-  padding: 0 10px;
 }
 
 .blog-nav__select:focus {
@@ -172,7 +177,7 @@ button {
 
 .blog-nav__select {
   width: fit-content;
-  padding: 0.25em;
+  padding: 0.25rem;
   background-color: var(--SURFACE);
   color: var(--COLOR);
   border: 1px solid var(--BORDER-COLOR);
@@ -186,22 +191,17 @@ button {
   gap: 15px;
 }
 
-.content__container h2 {
-  padding-left: 10px;
-}
-
 .card-grid__container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-content: flex-end;
-  gap: 50px 10px;
+  gap: 30px 15px;
 }
 
 .card-container {
   display: flex;
   flex-direction: column;
   padding: 10px;
-  height: 335px;
   width: 100%;
   border-radius: var(--BORDER-RADIUS);
   justify-content: space-between;
@@ -218,6 +218,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  margin-bottom: 10px;
 }
 
 .card__container-bottom {
@@ -244,7 +245,7 @@ button {
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 1.2rem;
-  margin-top: 5px;
+  margin-top: 7px;
 }
 
 .card-subHeading {
@@ -260,8 +261,15 @@ button {
 
 .card-container img {
   width: 100%;
-  height: 145px;
+  height: 165px;
   object-fit: cover;
   border-radius: var(--BORDER-RADIUS);
   object-position: center;
+}
+
+.card-noimage {
+  width: 100%;
+  height: 165px;
+  border-radius: var(--BORDER-RADIUS);
+  background-image: var(--NO-IMAGE);
 }

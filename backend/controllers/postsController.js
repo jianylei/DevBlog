@@ -17,7 +17,6 @@ const getAllPosts = asyncHandler(async (req, res) => {
         const str = post.title + ' ' + post.subHeading + ' ' + post.content
         const wordCnt = wordCount(str)
         const readTime = wordCntToTime(wordCnt)
-        console.log(readTime)
         const user = await User.findById(post.author).lean().exec()
         return { ...post, author: user.username, readTime: readTime }
     }))
