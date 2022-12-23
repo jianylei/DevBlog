@@ -2,6 +2,7 @@ import { Routes, Route } from 'react-router-dom'
 import BlogLayout from './components/BlogLayout'
 import Layout from './components/Layout'
 import NoMatch from './components/NoMatch'
+import Post from './features/posts/Post'
 import PostList from './features/posts/PostList'
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route path='/' element={<BlogLayout />}>
           <Route index element={<PostList />} />
+          <Route path=":title" element={<Post />} />
         </Route>
       </Route>
 

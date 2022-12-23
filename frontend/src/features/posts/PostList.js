@@ -1,5 +1,5 @@
 import { PulseLoader } from 'react-spinners'
-import Post from './Post'
+import PostItem from './PostItem'
 import { useGetPostsQuery } from './postsApiSlice'
 import { STATUS } from '../../config/constants'
 
@@ -30,7 +30,7 @@ const PostList = () => {
         const filteredIds = ids.filter(postId => entities[postId].status === STATUS.Approved)
 
         const postsContent = ids?.length
-            && filteredIds.map(postId => <Post key={postId} postId={postId} />)
+            && filteredIds.map(postId => <PostItem key={postId} postId={postId} />)
 
         content = (
             <div className='content__container'>
