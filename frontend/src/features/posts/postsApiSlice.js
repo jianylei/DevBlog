@@ -86,5 +86,5 @@ const selectPostsData = createSelector(
 export const {
     selectAll: selectAllPosts,
     selectById: selectPostById,
-    selectIds: selectNoteIds
+    selectIds: selectPostIds
 } = postsAdapter.getSelectors(state => selectPostsData(state) ?? initialState)

@@ -131,6 +131,10 @@ button {
 }
 
 /*  || LAYOUT */
+.main__container {
+  margin-top: 20px;
+}
+
 .main-header {
   position: sticky;
   top: 0;
@@ -162,8 +166,18 @@ button {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
-  margin-bottom: 20px;
-  padding: 0 10px;
+  padding: 25px 90px;
+  position: fixed;
+  top: 65px;
+  width: 100%;
+  left: 0;
+  opacity: 1;
+  background-color: var(--BGCOLOR);
+  transition: all 0.1s ease;
+}
+
+.hidden {
+  opacity: 0;
 }
 
 .blog-nav__links {
