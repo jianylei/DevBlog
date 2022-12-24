@@ -1,6 +1,6 @@
+import { useEffect } from "react"
 import { useLocation } from "react-router-dom"
 import { useGetPostsQuery } from "./postsApiSlice"
-import { PulseLoader } from "react-spinners"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from "@fortawesome/free-regular-svg-icons"
 import parse from 'html-react-parser'
@@ -9,6 +9,10 @@ import NoMatch from "../../components/NoMatch"
 
 const Post = () => {
     const { state } = useLocation()
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
     const { post } = useGetPostsQuery('postsList', {
         selectFromResult: ({ data }) => ({

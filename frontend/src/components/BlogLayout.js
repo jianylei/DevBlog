@@ -20,8 +20,8 @@ const BlogLayout = () => {
               // remember current page location to use in the next move
               setLastScrollY(window.scrollY)
             }
-        }
-    
+          }
+
         if (typeof window !== 'undefined') {
             window.addEventListener('scroll', controlNavbar)
     
@@ -34,7 +34,7 @@ const BlogLayout = () => {
 
     return (
         <div className='blog__container'>
-            <div className={`blog-nav__container ${!show ?? 'hidden'}`}>
+            <div className={`blog-nav__container ${!show && 'hidden'}`}>
                 <div className="blog-nav__links">
                     <Link className={ POST_REGEX.test(pathname) 
                         ? 'active' : '' } to='/'>Posts</Link>
