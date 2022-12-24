@@ -391,3 +391,13 @@ button {
   background-color: var(--PRIMARY);
   color: var(--BGCOLOR);
 }
+
+/*  || NO MATCH */
+.no-match {
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.no-match-page {
+  padding: 10px 50px;
+}

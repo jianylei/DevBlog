@@ -1,20 +1,22 @@
-import { useLocation, useParams } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 import { useGetPostsQuery } from "./postsApiSlice"
 import { PulseLoader } from "react-spinners"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from "@fortawesome/free-regular-svg-icons"
 import parse from 'html-react-parser'
+import { TABS } from "../../config/constants"
+import NoMatch from "../../components/NoMatch"
 
 const Post = () => {
     const { state } = useLocation()
 
     const { post } = useGetPostsQuery('postsList', {
         selectFromResult: ({ data }) => ({
-            post: data?.entities[state.id]
+            post: data?.entities[state?.id]
         })
     })
 
-    if (!post) return <PulseLoader color={'#FFF'} />
+    if (!post) return <NoMatch tab={ TABS.Post }/>
 
     const created = new Date(post.createdAt).toLocaleString('en-US', 
         { day: 'numeric', month: 'short', year: 'numeric' })
