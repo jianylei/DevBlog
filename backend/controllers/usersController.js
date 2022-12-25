@@ -7,7 +7,6 @@ const bcrypt = require('bcrypt')
 // @access Public
 const getAllUsers = asyncHandler(async (req, res) => {
     const users = await User.find().select('-password').lean()
-
     if (!users?.length) return res.status(400).json({ message: 'No users found' })
 
     res.json(users)
@@ -23,7 +22,7 @@ const createNewUser = asyncHandler(async (req, res) => {
         firstName, 
         lastName 
     } = req.body
-
+    
     // Confirm data
     if (!username || !password || !firstName || !lastName) {
         return res.status(400).json({ message: 'All fields are required' })
@@ -44,7 +43,7 @@ const createNewUser = asyncHandler(async (req, res) => {
     })
 
     if (user) {
-        res.status(201).json({ messgae: `New user ${username} created` })
+        res.status(201).json({ message: `New user ${username} created` })
     } else {
         res.status(400).json({ message: 'Invalid user data received' })
     }
@@ -92,14 +91,7 @@ const updateUser = asyncHandler(async (req, res) => {
     user.about = about
     user.roles = roles
     user.active = active
-
-    const userImages = images?.profile && images?.cover
-        ? {
-            profile: images?.profile === '' ? undefined : images?.profile,
-            cover: images?.cover === '' ? undefined : images?.cover
-        }
-        : undefined
-    user.images = userImages
+    user.images = images
 
     if (password) user.password = await bcrypt.hash(password, 10)
 

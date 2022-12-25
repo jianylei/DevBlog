@@ -18,7 +18,8 @@ const getAllPosts = asyncHandler(async (req, res) => {
         const wordCnt = wordCount(str)
         const readTime = wordCntToTime(wordCnt)
         const user = await User.findById(post.author).lean().exec()
-        return { ...post, author: user.username, readTime: readTime }
+        const name = user ? user.username : '[deleted]'
+        return { ...post, author: name, readTime: readTime }
     }))
 
     res.json(postWithUser)
@@ -62,8 +63,7 @@ const updatePost = asyncHandler(async (req, res) => {
         subHeading,
         content, 
         cover, 
-        tags,
-        status
+        tags
     } = req.body
 
     if (!id || !title || !subHeading || !content) {
@@ -86,7 +86,6 @@ const updatePost = asyncHandler(async (req, res) => {
     post.title = title
     post.subHeading = subHeading
     post.content = content
-    post.status = status
     post.cover = !cover || cover === '' ? undefined : cover
     post.tags = !Array.isArray(tags) || !tags.length ? undefined : tags
 
