@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom"
 import React, { useState, useEffect } from 'react'
 
 const POST_REGEX = /^\/$/
+const AUTHOR_REGEX = /^\/authors(\/)?$/
 
 const BlogLayout = () => {
     const { pathname } = useLocation()
@@ -38,9 +39,10 @@ const BlogLayout = () => {
                 <div className="blog-nav__links">
                     <Link className={ POST_REGEX.test(pathname) 
                         ? 'active' : '' } to='/'>Posts</Link>
-                    <Link>Authors</Link>
-                    <Link>Review</Link>
+                    <Link className={ AUTHOR_REGEX.test(pathname) 
+                        ? 'active' : '' } to='/authors'>Authors</Link>
                     <Link>Pending</Link>
+                    <Link>Review</Link>
                 </div>
                 { POST_REGEX.test(pathname) 
                     ? <select

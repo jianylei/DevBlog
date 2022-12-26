@@ -4,7 +4,7 @@ const { STATUS } = require('../config/constants')
 
 const postSchema = new mongoose.Schema(
     {
-        author: {
+        user: {
             type: mongoose.Schema.Types.ObjectId,
             required: true,
             ref: 'User'

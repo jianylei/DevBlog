@@ -1,11 +1,12 @@
 import { useGetPostsQuery } from "./postsApiSlice"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { memo } from 'react'
 import { faEye } from "@fortawesome/free-regular-svg-icons"
 import { useNavigate } from "react-router-dom"
 import { strToPathStr } from "../../config/utils"
 
 
-const Post = ({ postId }) => {
+const PostItem = ({ postId }) => {
     const { post } = useGetPostsQuery('postsList', {
         selectFromResult: ({ data }) => ({
             post: data?.entities[postId]
@@ -43,4 +44,6 @@ const Post = ({ postId }) => {
     } else return null
 }
 
-export default Post
+const memoizedPostItem = memo(PostItem)
+
+export default memoizedPostItem

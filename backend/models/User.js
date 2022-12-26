@@ -21,15 +21,8 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    images: {
-        profile: {
-            type: String,
-            required: false
-        },
-        cover: {
-            type: String,
-            required: false
-        },
+    image: {
+        type:String,
         required: false
     },
     roles: {

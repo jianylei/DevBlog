@@ -106,6 +106,7 @@ a:focus-visible {
 
 a.active{
   color: var(--PRIMARY);
+  transition: all 150ms linear;
 }
 
 button {

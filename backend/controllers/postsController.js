@@ -29,10 +29,10 @@ const getAllPosts = asyncHandler(async (req, res) => {
 // @route POST /post
 // @access Private
 const createNewPost = asyncHandler(async (req, res) => {
-    const { author, title, subHeading, content, cover, tags } = req.body
+    const { user, title, subHeading, content, cover, tags } = req.body
 
     // Confirm data
-    if (!author || !title || !subHeading || !content) {
+    if (!user || !title || !subHeading || !content) {
         return res.status(400).json({ message: 'Please enter all required fields' })
     }
 
@@ -44,7 +44,7 @@ const createNewPost = asyncHandler(async (req, res) => {
 
     // Create and store new post
     const postCover = cover === '' ? undefined : cover
-    const post = await Post.create({ author, title, subHeading, content, "cover": postCover, tags })
+    const post = await Post.create({ user, title, subHeading, content, "cover": postCover, tags })
 
     if (post) {
         res.status(201).json({ message: `New post created: ${title}` })

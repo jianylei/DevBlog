@@ -6,6 +6,7 @@ import { faEye } from "@fortawesome/free-regular-svg-icons"
 import parse from 'html-react-parser'
 import { TABS } from "../../config/constants"
 import NoMatch from "../../components/NoMatch"
+import { useGetUsersQuery } from "../users/usersApiSlice"
 
 const Post = () => {
     const { state } = useLocation()
@@ -20,6 +21,12 @@ const Post = () => {
         })
     })
 
+    const { user } = useGetUsersQuery('usersList', {
+        selectFromResult: ({ data }) => ({
+            user: data?.entities
+        })
+    })
+const test = () => console.log(user)
     if (!post) return <NoMatch tab={ TABS.Post }/>
 
     const created = new Date(post.createdAt).toLocaleString('en-US', 
@@ -33,7 +40,7 @@ const Post = () => {
         <button className="post-tag-item" key={idx}>#{tag}</button>)
 
     return (
-        <div className="post__container">
+        <div className="post__container"><button onClick={test}></button>
             <div className="post__header">
                 <h1 className="post__header-title">{post.title}</h1>
                 <p className="post__header-subHeading">{post.subHeading}</p>

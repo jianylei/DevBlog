@@ -59,7 +59,7 @@ const updateUser = asyncHandler(async (req, res) => {
         firstName, 
         lastName,
         about,
-        images,
+        image,
         roles, 
         active, 
         password 
@@ -91,7 +91,7 @@ const updateUser = asyncHandler(async (req, res) => {
     user.about = about
     user.roles = roles
     user.active = active
-    user.images = images
+    user.image = image
 
     if (password) user.password = await bcrypt.hash(password, 10)
 

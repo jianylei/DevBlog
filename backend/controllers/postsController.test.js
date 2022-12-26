@@ -126,9 +126,9 @@ describe('POST /post', () => {
             }
         }
 
-        mockedReq.body.author = ''
+        mockedReq.body.user = ''
         await postsController.createNewPost(mockedReq,mockedRes)
-        mockedReq.body.author = 'testingAuthor'
+        mockedReq.body.user = 'testingAuthor'
         mockedReq.body.title = ''
         await postsController.createNewPost(mockedReq,mockedRes)
         mockedReq.body.title = 'testingTitle'

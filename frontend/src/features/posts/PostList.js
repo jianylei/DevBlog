@@ -11,7 +11,6 @@ const PostList = () => {
         isError,
         error
     } = useGetPostsQuery('postsList', {
-        pollingInterval: 60000 * 30, // 30 minutes
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
     })

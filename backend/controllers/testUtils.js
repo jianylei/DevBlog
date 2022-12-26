@@ -27,7 +27,7 @@ module.exports = {
 
     createPostReq: {
         body: {
-            author: 'testingAuthor',
+            user: 'testingAuthor',
             title: 'testingTitle',
             subHeading: 'testingSub',
             content: 'testingContent',
