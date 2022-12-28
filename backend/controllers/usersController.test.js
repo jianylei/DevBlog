@@ -222,11 +222,9 @@ describe('PATCH /users', () => {
         mockedReq.body.username = ''
         await usersController.updateUser(mockedReq,mockedRes)
         mockedReq.body.username = 'testing123'
-        mockedReq.body.roles = []
+        mockedReq.body.role = ''
         await usersController.updateUser(mockedReq,mockedRes)
-        mockedReq.body.roles = { test: 'test' }
-        await usersController.updateUser(mockedReq,mockedRes)
-        mockedReq.body.roles = ['Author']
+        mockedReq.body.role = 'Author'
         mockedReq.body.active = 'test'
         await usersController.updateUser(mockedReq,mockedRes)
         mockedReq.body.active = true

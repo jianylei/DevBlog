@@ -8,6 +8,7 @@ const LayoutHeader = () => {
                 <h1 className="main-header__title">simpleBlog</h1>
             </Link>
             <nav className="main-header__nav">
+                <Link to={'/new'}>write</Link>
                 <Link>blog</Link>
                 <Link>about</Link>
                 <Link>account</Link>

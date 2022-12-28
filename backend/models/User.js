@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const { ROLES } = require('../config/constants')
 
 const userSchema = new mongoose.Schema({
     username: {
@@ -25,9 +26,10 @@ const userSchema = new mongoose.Schema({
         type:String,
         required: false
     },
-    roles: {
-        type: [String],
-        default : ['Author']
+    role: {
+        type: String,
+        enum: [ROLES.Author, ROLES.Moderator, ROLES.Admin],
+        default : ROLES.Author
     },
     active: {
         type: Boolean,

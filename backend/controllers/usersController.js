@@ -60,14 +60,13 @@ const updateUser = asyncHandler(async (req, res) => {
         lastName,
         about,
         image,
-        roles, 
+        role, 
         active, 
         password 
     } = req.body
     
     // Confirm data 
-    if (!id || !username || !firstName || !lastName || !Array.isArray(roles) 
-        || !roles.length || typeof active !== 'boolean') {
+    if (!id || !username || !firstName || !lastName || !role || typeof active !== 'boolean') {
         return res.status(400).json({ message: 'Please enter all required fields' })
     }
 
@@ -88,10 +87,10 @@ const updateUser = asyncHandler(async (req, res) => {
     user.username = username
     user.firstName = firstName
     user.lastName = lastName
-    user.about = about
-    user.roles = roles
+    user.about = about ? about : undefined
+    user.role = role
     user.active = active
-    user.image = image
+    user.image = image ? image : undefined
 
     if (password) user.password = await bcrypt.hash(password, 10)
 

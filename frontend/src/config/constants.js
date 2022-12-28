@@ -11,15 +11,17 @@ module.exports = {
         Admin: 'Admin'
     }),
 
-    PATH: Object.freeze({
-        Images: './public/images/'
-    }),
-
     TABS: Object.freeze({
         Post: 'Post',
         Author: 'Author',
         Review: 'Review',
         Pending: 'Pending',
         Page: 'Page'
-    })
+    }),
+
+    IMGPATH: Object.freeze({
+        Images: './public/images/'
+    }),
+
+    DELETED: '[deleted]'
 }

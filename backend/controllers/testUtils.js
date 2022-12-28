@@ -16,11 +16,8 @@ module.exports = {
             firstName: 'testingFirst',
             lastName: 'testingLast',
             about: 'testingAbout',
-            images: {
-                profile: 'testingProfileImg',
-                cover: 'testingCoverImg'
-            },
-            roles: ['Author'],
+            image: 'testingImage',
+            role: 'Author',
             active: true
         }
     },

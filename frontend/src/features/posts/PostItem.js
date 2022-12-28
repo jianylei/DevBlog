@@ -4,6 +4,7 @@ import { memo } from 'react'
 import { faEye } from "@fortawesome/free-regular-svg-icons"
 import { useNavigate } from "react-router-dom"
 import { strToPathStr } from "../../config/utils"
+import { DELETED } from '../../config/constants'
 
 
 const PostItem = ({ postId }) => {
@@ -33,7 +34,8 @@ const PostItem = ({ postId }) => {
                     <p className="card-subHeading">{post.subHeading}</p>
                 </div>
                 <div className="card__container-bottom">
-                    <div className="card-author">@{post.author}</div>
+                    <div className={`card-author ${post.author === DELETED 
+                                ? 'deleted' : '' }`}>{post.author}</div>
                     <div className="card-data">
                         <p>{created}</p>
                         <p>{post.readTime} min read • {post.views} <FontAwesomeIcon icon={faEye} /></p>
