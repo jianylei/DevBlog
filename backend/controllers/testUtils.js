@@ -4,7 +4,8 @@ module.exports = {
             username: 'testing123',
             password: 'testing123',
             firstName: 'testingFirst',
-            lastName: 'testingLast'
+            lastName: 'testingLast',
+            email: 'email@email.com'
         }
     },
 

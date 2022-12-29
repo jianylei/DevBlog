@@ -10,17 +10,17 @@ describe('GET /post', () => {
             json: (jsonRes) => {
                 expect(jsonRes).toStrictEqual([
                     {
-                        "author": "testingUser", 
+                        "author": "@testingUser", 
                         "id": 1, 
                         "readTime": 1
                     }, 
                     {
-                        "author": "testingUser", 
+                        "author": "@testingUser", 
                         "id": 2, 
                         "readTime": 1
                     }, 
                     {
-                        "author": "testingUser", 
+                        "author": "@testingUser", 
                         "id": 3, 
                         "readTime": 1
                     }

@@ -8,6 +8,7 @@ import UserList from './features/users/UserList'
 import User from './features/users/User'
 import { TABS } from './config/constants'
 import NewPost from './features/posts/NewPost'
+import Login from './features/auth/Login'
 
 function App() {
   return (
@@ -25,6 +26,8 @@ function App() {
             <Route path=":user" element={<User />} />
           </Route>
         </Route>
+
+        <Route path='/login' element={<Login />}></Route>
 
         <Route path='*' element={<NoMatch tab={ TABS.Page }/>}/>{/* 404 */}
       </Route>
