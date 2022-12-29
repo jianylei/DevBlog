@@ -1,13 +1,12 @@
 const User = require('../models/User')
 const Post = require('../models/Post')
-const asyncHandler = require('express-async-handler')
 const { STATUS } = require('../config/constants') 
 const { wordCntToTime, wordCount } = require('../config/utils')
 
 // @desc Get all post
 // @route GET /post
 // @access Public
-const getAllPosts = asyncHandler(async (req, res) => {
+const getAllPosts = async (req, res) => {
     const posts = await Post.find().lean()
 
     if (!posts?.length) return res.status(400).json({ message: 'No posts found' })
@@ -23,12 +22,12 @@ const getAllPosts = asyncHandler(async (req, res) => {
     }))
 
     res.json(postWithUser)
-});
+}
 
 // @desc Create new post
 // @route POST /post
 // @access Private
-const createNewPost = asyncHandler(async (req, res) => {
+const createNewPost = async (req, res) => {
     const { user, title, subHeading, content, cover, tags } = req.body
 
     // Confirm data
@@ -51,12 +50,12 @@ const createNewPost = asyncHandler(async (req, res) => {
     } else {
         res.status(400).json({ message: 'Invalid post data recieved' })
     }
-})
+}
 
 // @desc Update post
 // @route PATCH /post
 // @access Private
-const updatePost = asyncHandler(async (req, res) => {
+const updatePost = async (req, res) => {
     const { 
         id, 
         title, 
@@ -92,12 +91,12 @@ const updatePost = asyncHandler(async (req, res) => {
     const updatedPost = await post.save()
 
     res.json({ message: `Updated post: ${updatedPost.title}` })
-})
+}
 
 // @desc Update post status
 // @route PATCH /post/status
 // @access Private - Admin/Moderator only
-const updatePostStatus = asyncHandler(async (req, res) => {
+const updatePostStatus = async (req, res) => {
     const { id, status } = req.body
 
     if (!id || !status) return res.status(400).json({ message: 'All fields are required' })
@@ -113,12 +112,12 @@ const updatePostStatus = asyncHandler(async (req, res) => {
     const updatedPost = await post.save()
 
     res.json({ message: `Updated post: ${updatedPost.title} is ${updatedPost.status}` })
-})
+}
 
 // @desc Update view
 // @route PATCH /post/view
 // @access Public
-const updateView = asyncHandler(async (req, res) => {
+const updateView = async (req, res) => {
     const { id } = req.body
 
     if (!id) return res.status(400).json({ message: 'All fields are required' })
@@ -130,12 +129,12 @@ const updateView = asyncHandler(async (req, res) => {
     const updatedPost = await post.save()
 
     res.json({ message: `Updated ${updatedPost.title} view` })
-})
+}
 
 // @desc Delete post
 // @route DELETE /post
 // @access Private
-const deletePost = asyncHandler(async (req, res) => {
+const deletePost = async (req, res) => {
     const { id } = req.body
 
     if (!id) return res.status(400).json({ message: 'Post ID required' })
@@ -149,6 +148,6 @@ const deletePost = asyncHandler(async (req, res) => {
     const reply = `Post ${result.title} with ID ${result._id} deleted`
 
     res.json(reply)
-})
+}
 
 module.exports = { getAllPosts, createNewPost, updatePost, updatePostStatus, updateView, deletePost };

@@ -6,7 +6,7 @@ const asyncHandler = require('express-async-handler')
 // @desc Login
 // @route POST /auth
 // @access Public
-const login = asyncHandler(async (req, res) => {
+const login = async (req, res) => {
     const { username, password } = req.body
 
     if (!username || !password) {
@@ -17,6 +17,10 @@ const login = asyncHandler(async (req, res) => {
     
     if (!foundUser || !foundUser.active) {
         return res.status(401).json({ message: 'Unauthorized' })
+    }
+
+    if (!foundUser.confirmed) {
+        return res.status(401).json({ message: 'Please confirm your email' })
     }
 
     const match = await bcrypt.compare(password, foundUser.password)
@@ -49,7 +53,23 @@ const login = asyncHandler(async (req, res) => {
 
     // Send accessToken containing username and roles
     res.json({ accessToken });
-})
+}
+
+// @desc Verify account
+// @route POST /auth/verification/:token
+// @ access Public
+const verifyAccount = (req, res) => {
+    jwt.verify(
+        req.params.token, 
+        process.env.CONFIRM_TOKEN_SECRET,
+        asyncHandler(async (err, decoded) => {
+            if (err) return res.status(401).json({ message: 'Error' })
+console.log('decoded: '+decoded)
+            await User.findOneAndUpdate({ _id: decoded.id }, { confirmed: true }).exec()
+            return res.status(200).json({ message: 'Account Verified' })
+        })
+    )
+}
 
 // @desc Refresh
 // @route GET /auth/refresh
@@ -105,6 +125,7 @@ const logout = (req, res) => {
 
 module.exports = {
     login,
+    verifyAccount,
     refresh,
     logout
 }

@@ -3,8 +3,6 @@ module.exports = {
         body: {
             username: 'testing123',
             password: 'testing123',
-            firstName: 'testingFirst',
-            lastName: 'testingLast',
             email: 'email@email.com'
         }
     },

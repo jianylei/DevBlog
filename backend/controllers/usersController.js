@@ -1,31 +1,38 @@
 const User = require('../models/User')
-const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcrypt')
+const nodemailer = require('nodemailer')
+const jwt = require('jsonwebtoken')
+
+const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: process.env.EMAIL_USR,
+        pass: process.env.EMAIL_PWD
+    }
+})
 
 // @desc Get all users
 // @route GET /users
 // @access Public
-const getAllUsers = asyncHandler(async (req, res) => {
+const getAllUsers = async (req, res) => {
     const users = await User.find().select('-password').lean()
     if (!users?.length) return res.status(400).json({ message: 'No users found' })
 
     res.json(users)
-});
+}
 
 // @desc Create new user
 // @route POST /users
 // @access Public
-const createNewUser = asyncHandler(async (req, res) => {
+const createNewUser = async (req, res) => {
     const { 
         username, 
         password, 
-        firstName, 
-        lastName,
         email
     } = req.body
     
     // Confirm data
-    if (!username || !password || !firstName || !lastName || !email) {
+    if (!username || !password || !email) {
         return res.status(400).json({ message: 'All fields are required' })
     }
 
@@ -43,20 +50,36 @@ const createNewUser = asyncHandler(async (req, res) => {
 
     // Create and store new user
     const user = await User.create({
-        username, 'password': hashedPwd, firstName, lastName, email
+        username, 'password': hashedPwd, email
     })
+    
+    jwt.sign(
+        { 'id': user.id },
+        process.env.CONFIRM_TOKEN_SECRET,
+        { expiresIn: '1d' },
+        (err, token) => {
+            const url = `http://localhost:3080/auth/verification/${token}`
+
+            transporter.sendMail({
+                to: email,
+                subject: 'Confirm Email',
+                html: `Hello @${username}, please click this url to confirm account
+                    <a href="${url}">${url}</a>`
+            })
+        }
+    )
 
     if (user) {
         res.status(201).json({ message: `New user ${username} created` })
     } else {
         res.status(400).json({ message: 'Invalid user data received' })
     }
-})
+}
 
 // @desc Update user
 // @route PATCH /users
 // @access Private
-const updateUser = asyncHandler(async (req, res) => {
+const updateUser = async (req, res) => {
     const { 
         id, 
         username, 
@@ -101,12 +124,12 @@ const updateUser = asyncHandler(async (req, res) => {
     const updatedUser = await user.save()
 
     res.json({ message: `${updatedUser.username} updated` })
-});
+}
 
 // @desc Delete user
 // @route DELETE /users
 // @access Private
-const deleteUser = asyncHandler(async (req, res) => {
+const deleteUser = async (req, res) => {
     const { id } = req.body
 
     if (!id) return res.status(400).json({ message: 'User ID required' });
@@ -120,6 +143,6 @@ const deleteUser = asyncHandler(async (req, res) => {
     const reply = `Username ${result.username} with ID ${result._id} deleted`;
 
     res.json(reply);
-})
+}
 
 module.exports = { getAllUsers, createNewUser, updateUser, deleteUser }

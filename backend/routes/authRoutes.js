@@ -3,10 +3,12 @@ const router = express.Router();
 const authController = require('../controllers/authController')
 const loginLimiter = require('../middleware/loginLimiter')
 
-router.route('/').post(loginLimiter, authController.login);
-    
-router.route('/refresh').get(authController.refresh);
+router.route('/').post(loginLimiter, authController.login)
 
-router.route('/logout').post(authController.logout);
+router.route('/verification/:token').get(authController.verifyAccount);
+    
+router.route('/refresh').get(authController.refresh)
+
+router.route('/logout').post(authController.logout)
 
 module.exports = router;

@@ -103,18 +103,15 @@ describe('POST /users', () => {
             }
         }
 
-        mockedReq.body.lastName = ''
-        await usersController.createNewUser(mockedReq,mockedRes)
-        mockedReq.body.lastName = 'testingLast'
-        mockedReq.body.firstName = ''
-        await usersController.createNewUser(mockedReq,mockedRes)
-        mockedReq.body.firstName = 'testingFirst'
         mockedReq.body.password = ''
         await usersController.createNewUser(mockedReq,mockedRes)
         mockedReq.body.password = 'testing123'
         mockedReq.body.username = ''
         await usersController.createNewUser(mockedReq,mockedRes)
         mockedReq.body.username = 'testing123'
+        mockedReq.body.email = ''
+        await usersController.createNewUser(mockedReq,mockedRes)
+        mockedReq.body.email = 'email@email.com'
     })
 
     it('error: duplicate username', async () => {

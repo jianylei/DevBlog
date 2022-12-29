@@ -22,7 +22,8 @@ describe('POST /auth', () => {
             exec: jest.fn().mockResolvedValueOnce({
                 username: 'testingUser',
                 password: 'testingPassword',
-                active: true
+                active: true,
+                confirmed: true
             })
         }))
 
@@ -108,6 +109,35 @@ describe('POST /auth', () => {
         await authController.login(mockedReq,mockedRes)
     })
 
+    it('error: email not confirmed', async () => {
+        const mockedReq = { 
+            body: {
+                username: 'testingUser',
+                password: 'testingPassword'
+            }
+        }
+        const mockedRes = { 
+            status: (statusNum) => {
+                expect(statusNum).toEqual(401)
+                return mockedRes
+            },
+            json: (jsonRes) => {
+                expect(jsonRes).toStrictEqual({"message": 'Please confirm your email'})
+            }
+        }
+
+        User.findOne = jest.fn().mockImplementation(() => ({
+            exec: jest.fn().mockResolvedValueOnce({
+                username: 'testingUser',
+                password: 'testingPassword',
+                active: true,
+                confirmed: false
+            })
+        }))
+
+        await authController.login(mockedReq,mockedRes)
+    })
+
     it('error: invalid password', async () => {
         const mockedReq = { 
             body: {
@@ -129,7 +159,8 @@ describe('POST /auth', () => {
             exec: jest.fn().mockResolvedValueOnce({
                 username: 'testingUser',
                 password: 'testingPassword',
-                active: true
+                active: true,
+                confirmed: true
             })
         }))
 
