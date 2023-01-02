@@ -1,4 +1,4 @@
-import { Outlet, Link } from "react-router-dom"
+import { Outlet, Link, useOutletContext } from "react-router-dom"
 import { useLocation } from "react-router-dom"
 import React, { useState, useEffect } from 'react'
 
@@ -7,33 +7,46 @@ const AUTHOR_REGEX = /^\/authors(\/)?$/
 
 const BlogLayout = () => {
     const { pathname } = useLocation()
-    const [show, setShow] = useState(true)
-    const [lastScrollY, setLastScrollY] = useState(0)
-  
-    useEffect(() => {
-        const controlNavbar = () => {
-            if (typeof window !== 'undefined') { 
-              if (window.scrollY > lastScrollY) { // if scroll down hide the navbar
-                setShow(false)
-              } else { // if scroll up show the navbar
-                setShow(true)
-              }
-              // remember current page location to use in the next move
-              setLastScrollY(window.scrollY)
-            }
-          }
-
-        if (typeof window !== 'undefined') {
-            window.addEventListener('scroll', controlNavbar)
-    
-            // cleanup function
-            return () => {
-            window.removeEventListener('scroll', controlNavbar)
-            }
-        }
-    }, [lastScrollY])
+    const [sortOpt, setSortOpt] = useState('new')
+    const [show, setShow] = useOutletContext()
 
     return (
+        <div className='blog__container'>
+            <div className="blog-main__container">
+                <header className={`blog-nav__container ${show 
+                        && 'blog-header-scroll'}`}>
+                    <nav className="blog-nav__links">
+                        <Link className={ POST_REGEX.test(pathname) 
+                            ? 'active' : '' } to='/'>Posts</Link>
+                        <Link className={ AUTHOR_REGEX.test(pathname) 
+                            ? 'active' : '' } to='/authors'>Authors</Link>
+                        <Link>Pending</Link>
+                    </nav>
+                    { POST_REGEX.test(pathname) 
+                        ? <select
+                            id='post-sort'
+                            name='sort'
+                            className='blog-nav__select'
+                            value={sortOpt}
+                            onChange={(e) => setSortOpt(e.target.value)}
+                        >
+                            <option value='new'>New</option>
+                            <option value='trending'>Trending</option>
+                        </select> 
+                        : null 
+                    }
+                </header>
+                <Outlet />
+            </div>
+            <div className="blog-side__container"></div>
+        </div>
+    )
+}
+
+export default BlogLayout
+
+/*
+
         <div className='blog__container'>
             <div className={`blog-nav__container ${!show && 'hidden'}`}>
                 <div className="blog-nav__links">
@@ -58,9 +71,6 @@ const BlogLayout = () => {
                     : null 
                 }
             </div>
-            <Outlet />
-        </div>
-    )
-}
 
-export default BlogLayout
+        </div>
+*/
