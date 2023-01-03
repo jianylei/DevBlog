@@ -30,8 +30,8 @@ const UserList = () => {
             && ids.map(userId => <UserItem key={userId} userId={userId} />)
 
         content = (
-            <div className='content__container'>
-                <div className="card-grid__container">{usersContent}</div>
+            <div className='blog-content__container'>
+                {usersContent}
             </div>
         )
     }

@@ -39,16 +39,15 @@ const PostItem = ({ postId }) => {
                 </div>
                 <div className="post-card__main" onClick={clickHandler}>
                     <div className="post-card-content__container">
-                        <h3 className="post-card-title">{post.title}</h3>
+                        <h2 className="post-card-title">{post.title}</h2>
                         { width > 728
                             ? <p className="post-card-sub">{post.subHeading}</p>
                             : ''
                         }
                     </div>
                     <div
-                        className={`post-card-cover ${post.cover ? 'img-overlay' : ''}`}
+                        className={`image post-card-cover ${post.cover ? 'img-overlay' : ''}`}
                         style={{backgroundImage: coverImg}}
-                        
                     />
                 </div>
                 <div className="post-card__footer">
@@ -68,27 +67,3 @@ const PostItem = ({ postId }) => {
 const memoizedPostItem = memo(PostItem)
 
 export default memoizedPostItem
-
-/*
-        return (
-            <div className="card__container" onClick={clickHandler}>
-                <div className="card__container-top">
-                    { post.cover 
-                        ? <img src={post.cover} alt='Post cover' /> 
-                        : <div className="card-noimage" />
-                    }
-                    <h3 className="card-title">{post.title}</h3>
-                    <p className="card-subHeading">{post.subHeading}</p>
-                </div>
-                <div className="card__container-bottom">
-                    <div className={`card-author ${post.author === DELETED 
-                                ? 'deleted' : '' }`}>{post.author}</div>
-                    <div className="card-data">
-                        <p>{created}</p>
-                        <p>{post.readTime} min read • {post.views} <FontAwesomeIcon icon={faEye} /></p>
-                    </div>
-                </div>
-            </div>
-        )
-    } else return null
-*/

@@ -32,7 +32,7 @@ const PostList = () => {
             && filteredIds.map(postId => <PostItem key={postId} postId={postId} />)
 
         content = (
-            <div className='post__container'>
+            <div className='blog-content__container'>
                 {postsContent}
             </div>
         )

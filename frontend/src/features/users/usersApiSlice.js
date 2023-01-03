@@ -63,6 +63,20 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             invalidatesTags: (result, error, arg) => [
                 { type: 'User', id: arg.id }
             ]
+        }),
+        followUser: builder.mutation({
+            query: ({ id }) => ({
+                url: '/users/follow/:username',
+                method: 'PATCH',
+                body: { id }
+            })
+        }),
+        unFollowUser: builder.mutation({
+            query: ({ id }) => ({
+                url: '/users/unfollow/:username',
+                method: 'PATCH',
+                body: { id }
+            })
         })
     })
 })
