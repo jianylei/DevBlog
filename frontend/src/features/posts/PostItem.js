@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { memo } from 'react'
 import { faEye } from "@fortawesome/free-regular-svg-icons"
 import { useNavigate } from "react-router-dom"
-import { strToPathStr } from "../../config/utils"
+import { getPathStrFromStr, getTimeSince } from "../../config/utils"
 import { DELETED } from '../../config/constants'
+import useWindowDimensions from "../../hooks/useWindowDimensions"
 
 
 const PostItem = ({ postId }) => {
@@ -13,16 +14,62 @@ const PostItem = ({ postId }) => {
             post: data?.entities[postId]
         })
     })
+
+    const { width } = useWindowDimensions()
     
     const navigate = useNavigate()
 
     if (post) {
-        const postUrl = strToPathStr(post.title)
+        const postUrl = getPathStrFromStr(post.title, post.id)
         const clickHandler = () => navigate(`/${postUrl}`,{state: {id: postId}})
     
-        const created = new Date(post.createdAt).toLocaleString('en-US', 
-            { day: 'numeric', month: 'short' })
+        const created = new Date(post.createdAt)
+        const time = getTimeSince(created)
     
+        const coverImg = post.cover 
+            ? `url(${post.cover})`
+            : 'var(--NO-IMAGE)'
+
+        return (
+            <div className="post-card__container">
+                <div className="post-card__header">
+                    <div className={`post-card-author ${post.author === DELETED 
+                        ? 'deleted' : '' }`}>{post.author}</div>
+                    <p className="post-card-date" onClick={clickHandler}>&nbsp;•&nbsp;{time}</p>
+                </div>
+                <div className="post-card__main" onClick={clickHandler}>
+                    <div className="post-card-content__container">
+                        <h3 className="post-card-title">{post.title}</h3>
+                        { width > 728
+                            ? <p className="post-card-sub">{post.subHeading}</p>
+                            : ''
+                        }
+                    </div>
+                    <div
+                        className={`post-card-cover ${post.cover ? 'img-overlay' : ''}`}
+                        style={{backgroundImage: coverImg}}
+                        
+                    />
+                </div>
+                <div className="post-card__footer">
+                    { post.tags?.length 
+                        ? <div className="post-card-topic">{post.tags[0]}</div>
+                        : ''
+                    }
+                    <p onClick={clickHandler}>
+                        {post.readTime} min read&nbsp;•&nbsp;{post.views} <FontAwesomeIcon icon={faEye} />
+                    </p>
+                </div>
+            </div>
+        )
+    } else return null
+}
+
+const memoizedPostItem = memo(PostItem)
+
+export default memoizedPostItem
+
+/*
         return (
             <div className="card__container" onClick={clickHandler}>
                 <div className="card__container-top">
@@ -44,8 +91,4 @@ const PostItem = ({ postId }) => {
             </div>
         )
     } else return null
-}
-
-const memoizedPostItem = memo(PostItem)
-
-export default memoizedPostItem
+*/

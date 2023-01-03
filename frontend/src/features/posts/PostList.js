@@ -32,8 +32,8 @@ const PostList = () => {
             && filteredIds.map(postId => <PostItem key={postId} postId={postId} />)
 
         content = (
-            <div className='content__container'>
-                <div className="card-grid__container">{postsContent}</div>
+            <div className='post__container'>
+                {postsContent}
             </div>
         )
     }

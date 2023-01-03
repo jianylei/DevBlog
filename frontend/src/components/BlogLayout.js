@@ -1,6 +1,8 @@
 import { Outlet, Link, useOutletContext } from "react-router-dom"
 import { useLocation } from "react-router-dom"
 import React, { useState, useEffect } from 'react'
+import SideContent from "./SideContent"
+import useWindowDimensions from "../hooks/useWindowDimensions"
 
 const POST_REGEX = /^\/$/
 const AUTHOR_REGEX = /^\/authors(\/)?$/
@@ -9,6 +11,7 @@ const BlogLayout = () => {
     const { pathname } = useLocation()
     const [sortOpt, setSortOpt] = useState('new')
     const [show, setShow] = useOutletContext()
+    const { width } = useWindowDimensions()
 
     return (
         <div className='blog__container'>
@@ -38,39 +41,9 @@ const BlogLayout = () => {
                 </header>
                 <Outlet />
             </div>
-            <div className="blog-side__container"></div>
+            { width > 904 ? <SideContent /> : '' }
         </div>
     )
 }
 
 export default BlogLayout
-
-/*
-
-        <div className='blog__container'>
-            <div className={`blog-nav__container ${!show && 'hidden'}`}>
-                <div className="blog-nav__links">
-                    <Link className={ POST_REGEX.test(pathname) 
-                        ? 'active' : '' } to='/'>Posts</Link>
-                    <Link className={ AUTHOR_REGEX.test(pathname) 
-                        ? 'active' : '' } to='/authors'>Authors</Link>
-                    <Link>Pending</Link>
-                    <Link>Review</Link>
-                </div>
-                { POST_REGEX.test(pathname) 
-                    ? <select
-                        id='post-sort'
-                        name='sort'
-                        className='blog-nav__select'
-                        value='new'
-                        onChange={(e) => console.log(e.target.value)}
-                    >
-                        <option value='new'>New</option>
-                        <option value='trending'>Trending</option>
-                    </select> 
-                    : null 
-                }
-            </div>
-
-        </div>
-*/
