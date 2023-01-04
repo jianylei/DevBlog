@@ -2,6 +2,7 @@ const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer')
 const jwt = require('jsonwebtoken')
+const ObjectId = require('mongoose').Types.ObjectId
 
 const transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -19,6 +20,17 @@ const getAllUsers = async (req, res) => {
     if (!users?.length) return res.status(400).json({ message: 'No users found' })
 
     res.json(users)
+}
+
+// @desc Get user by username
+// @route GET /users/:username
+// @access Public
+const getUserByUsername = async (req, res) => {
+    const username = req.params.username
+    const user = await User.find({ username }).select('-password').lean()
+    if (!user.length) return res.status(400).json({ message: 'User not found' })
+
+    res.json(user)
 }
 
 // @desc Create new user
@@ -97,6 +109,8 @@ const updateUser = async (req, res) => {
         return res.status(400).json({ message: 'Please enter all required fields' })
     }
 
+    if (!ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid id' })
+
     // Does the user exist to update?
     const user = await User.findById(id).exec()
 
@@ -134,6 +148,8 @@ const deleteUser = async (req, res) => {
 
     if (!id) return res.status(400).json({ message: 'User ID required' })
 
+    if (!ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid id' })
+
     const user = await User.findById(id).exec()
     if (!user) return res.status(400).json({ message: 'User not found' })
 
@@ -154,6 +170,8 @@ const followUser = async (req, res) => {
     if (!id || !username) {
         return res.status(400).json({ message: 'All fields are required' })
     }
+
+    if (!ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid id' })
 
     const user = await User.findById(id).exec()
     if (!user) return res.status(400).json({ message: 'User not found' })
@@ -194,6 +212,8 @@ const unFollowUser = async (req, res) => {
         return res.status(400).json({ message: 'All fields are required' })
     }
 
+    if (!ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid id' })
+
     const user = await User.findById(id).exec()
     if (!user) return res.status(400).json({ message: 'User not found' })
 
@@ -227,6 +247,7 @@ const unFollowUser = async (req, res) => {
 
 module.exports = { 
     getAllUsers, 
+    getUserByUsername,
     createNewUser, 
     updateUser, 
     deleteUser,

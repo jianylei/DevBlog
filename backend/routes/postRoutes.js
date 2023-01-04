@@ -8,6 +8,8 @@ router.route('/')
     .patch(postsController.updatePost)
     .delete(postsController.deletePost)
 
+router.route('/:id').get(postsController.getPostById)
+
 router.route('/status').patch(postsController.updatePostStatus)
 
 router.route('/view').patch(postsController.updateView)

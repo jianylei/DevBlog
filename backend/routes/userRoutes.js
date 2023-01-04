@@ -8,6 +8,10 @@ router.route('/')
     .patch(usersController.updateUser)
     .delete(usersController.deleteUser)
 
+
+router.route('/:username')
+    .get(usersController.getUserByUsername)
+
 router.route('/follow/:username')
     .patch(usersController.followUser)
 
