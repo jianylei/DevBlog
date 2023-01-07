@@ -64,8 +64,9 @@ const verifyAccount = (req, res) => {
         process.env.CONFIRM_TOKEN_SECRET,
         asyncHandler(async (err, decoded) => {
             if (err) return res.status(401).json({ message: 'Error' })
-console.log('decoded: '+decoded)
+
             await User.findOneAndUpdate({ _id: decoded.id }, { confirmed: true }).exec()
+            
             return res.status(200).json({ message: 'Account Verified' })
         })
     )

@@ -2,6 +2,7 @@ const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const nodemailer = require('nodemailer')
 const jwt = require('jsonwebtoken')
+const ObjectId = require('mongoose').Types.ObjectId
 
 const transporter = nodemailer.createTransport({
     service: 'Gmail',
@@ -97,6 +98,8 @@ const updateUser = async (req, res) => {
         return res.status(400).json({ message: 'Please enter all required fields' })
     }
 
+    if (!ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid id' })
+
     // Does the user exist to update?
     const user = await User.findById(id).exec()
 
@@ -118,6 +121,7 @@ const updateUser = async (req, res) => {
     user.role = role
     user.active = active
     user.image = image ? image : undefined
+    user.email = 'switchguy@mail.com'
 
     if (password) user.password = await bcrypt.hash(password, 10)
 
@@ -132,17 +136,110 @@ const updateUser = async (req, res) => {
 const deleteUser = async (req, res) => {
     const { id } = req.body
 
-    if (!id) return res.status(400).json({ message: 'User ID required' });
+    if (!id) return res.status(400).json({ message: 'User ID required' })
 
-    const user = await User.findById(id).exec();
+    if (!ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid id' })
 
-    if (!user) return res.status(400).json({ message: 'User not found' });
+    const user = await User.findById(id).exec()
+    if (!user) return res.status(400).json({ message: 'User not found' })
 
-    const result = await user.deleteOne();
+    const result = await user.deleteOne()
 
-    const reply = `Username ${result.username} with ID ${result._id} deleted`;
+    const reply = `Username ${result.username} with ID ${result._id} deleted`
 
-    res.json(reply);
+    res.json(reply)
 }
 
-module.exports = { getAllUsers, createNewUser, updateUser, deleteUser }
+// @desc Follow user
+// @route PATCH /users/follow/:username
+// @access Private
+const followUser = async (req, res) => {
+    const username = req.params.username
+    const { id } = req.body
+
+    if (!id || !username) {
+        return res.status(400).json({ message: 'All fields are required' })
+    }
+
+    if (!ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid id' })
+
+    const user = await User.findById(id).exec()
+    if (!user) return res.status(400).json({ message: 'User not found' })
+
+    const otherUser = await User.findOne({ username: username })
+    if (!otherUser) {
+        return res.status(400).json(
+            { message: 'User to be followed does not exist' })
+    }
+
+    if (user.id === otherUser.id) {
+        return res.status(409).json(
+            { message: 'Unable to follow own account' })
+    }
+
+    if (user.following?.includes(otherUser.id)) {
+        return res.status(409).json(
+            { message: `Already follwing ${otherUser.username}` })
+    }
+
+    user.following.push(otherUser.id)
+    otherUser.followers.push(user.id)
+
+    const updatedUser = await user.save()
+    const updatedOtherUser = await otherUser.save()
+
+    res.json({ message: `${updatedUser.username} now following ${updatedOtherUser.username}` })
+}
+
+// @desc Unfollow user
+// @route PATCH /users/unfollow/:username
+// @access Private
+const unFollowUser = async (req, res) => {
+    const username = req.params.username
+    const { id } = req.body
+
+    if (!id || !username) {
+        return res.status(400).json({ message: 'All fields are required' })
+    }
+
+    if (!ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid id' })
+
+    const user = await User.findById(id).exec()
+    if (!user) return res.status(400).json({ message: 'User not found' })
+
+    const otherUser = await User.findOne({ username: username }).exec()
+    if (!otherUser) {
+        return res.status(400).json(
+            { message: 'User to be unfollowed does not exist' })
+    }
+
+    if (user.id === otherUser.id) {
+        return res.status(409).json(
+            { message: 'Unable to unfollow own account' })
+    }
+
+    if (!user.following?.includes(otherUser.id)) {
+        return res.status(409).json(
+            { message: `Currently not follwing ${otherUser.username}` })
+    }
+
+    const index = user.following?.indexOf(otherUser.id)
+    const otherIndex = otherUser.followers?.indexOf(user.id)
+
+    user.following?.splice(index, 1)
+    otherUser.followers?.splice(otherIndex, 1)
+
+    const updatedUser = await user.save()
+    const updatedOtherUser = await otherUser.save()
+
+    res.json({ message: `${updatedUser.username} has unfollowed ${updatedOtherUser.username}` })
+}
+
+module.exports = { 
+    getAllUsers, 
+    createNewUser, 
+    updateUser, 
+    deleteUser,
+    followUser,
+    unFollowUser
+}

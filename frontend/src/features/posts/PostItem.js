@@ -2,44 +2,78 @@ import { useGetPostsQuery } from "./postsApiSlice"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { memo } from 'react'
 import { faEye } from "@fortawesome/free-regular-svg-icons"
-import { useNavigate } from "react-router-dom"
-import { strToPathStr } from "../../config/utils"
-import { DELETED } from '../../config/constants'
-
+import { useNavigate, useLocation } from "react-router-dom"
+import { getPathStrFromStr, getTimeSince } from "../../utils/utils"
+import { DELETED, DIMENSIONS, REGEX } from '../../constants/constants'
+import useWindowDimensions from "../../hooks/useWindowDimensions"
 
 const PostItem = ({ postId }) => {
-    const { post } = useGetPostsQuery('postsList', {
+    const { post } = useGetPostsQuery('postsList',{
         selectFromResult: ({ data }) => ({
             post: data?.entities[postId]
         })
     })
+
+    const { width } = useWindowDimensions()
     
     const navigate = useNavigate()
 
+    const { pathname } = useLocation()
+
     if (post) {
-        const postUrl = strToPathStr(post.title)
-        const clickHandler = () => navigate(`/${postUrl}`,{state: {id: postId}})
+        const postUrl = getPathStrFromStr(post.title, post.id)
+        const clickHandlerPost = () => navigate(`/${postUrl}`)
+        const clickHandlerAuthor = () => navigate(`/authors/${post.author}`)
+
+        const created = new Date('fri jan 6, 2023 22:40')
+        const time = getTimeSince(created)
     
-        const created = new Date(post.createdAt).toLocaleString('en-US', 
-            { day: 'numeric', month: 'short' })
-    
+        const coverImg = post.cover 
+            ? `url(${post.cover})`
+            : 'var(--NO-IMAGE)'
+
+        const active = !(post.author === DELETED)
+        const authorRoute = REGEX.ROUTES.AUTHOR.test(pathname)
+
         return (
-            <div className="card__container" onClick={clickHandler}>
-                <div className="card__container-top">
-                    { post.cover 
-                        ? <img src={post.cover} alt='Post cover' /> 
-                        : <div className="card-noimage" />
+            <div className="post-card__container">
+                <div className="post-card__header">
+                    { !authorRoute 
+                        ? <div 
+                            className={`post-card-author ${!active ? 'deleted' : '' }`}
+                            onClick={!active ? undefined : clickHandlerAuthor}
+                        >{post.author}&nbsp;</div>
+                        : undefined
                     }
-                    <h3 className="card-title">{post.title}</h3>
-                    <p className="card-subHeading">{post.subHeading}</p>
+
+                    <p className="post-card-date" onClick={clickHandlerPost}>
+                        { !authorRoute ? '• ' : ''}
+                        {time}
+                        </p>
                 </div>
-                <div className="card__container-bottom">
-                    <div className={`card-author ${post.author === DELETED 
-                                ? 'deleted' : '' }`}>{post.author}</div>
-                    <div className="card-data">
-                        <p>{created}</p>
-                        <p>{post.readTime} min read • {post.views} <FontAwesomeIcon icon={faEye} /></p>
+                <div className="post-card__main">
+                    <div className="post-card-content__container" onClick={clickHandlerPost}>
+                        <h2 className="post-card-title">{post.title}</h2>
+                        { width > DIMENSIONS.WIDTH.S
+                            ? <p 
+                                className="post-card-sub">{post.subHeading}</p>
+                            : ''
+                        }
                     </div>
+                    <div
+                        className={`image post-card-cover ${post.cover ? 'img-overlay' : ''}`}
+                        style={{backgroundImage: coverImg}}
+                        onClick={clickHandlerPost}
+                    />
+                </div>
+                <div className="post-card__footer">
+                    { post.tags?.length 
+                        ? <div className="post-card-topic">{post.tags[0]}</div>
+                        : ''
+                    }
+                    <p onClick={clickHandlerPost}>
+                        {post.readTime} min read&nbsp;•&nbsp;{post.views} <FontAwesomeIcon icon={faEye} />
+                    </p>
                 </div>
             </div>
         )

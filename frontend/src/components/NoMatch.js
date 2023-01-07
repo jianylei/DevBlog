@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import { TABS } from "../config/constants"
+import { TABS } from "../constants/constants"
 
 const NoMatch = ({ tab }) => {
     const navigate = useNavigate()

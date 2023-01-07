@@ -1,3 +1,4 @@
+const ObjectId = require('mongoose').Types.ObjectId
 const User = require('../models/User')
 const Post = require('../models/Post')
 const { STATUS } = require('../config/constants') 
@@ -7,7 +8,7 @@ const { wordCntToTime, wordCount } = require('../config/utils')
 // @route GET /post
 // @access Public
 const getAllPosts = async (req, res) => {
-    const posts = await Post.find().lean()
+    const posts = await Post.find({ status: STATUS.Approved }).lean()
 
     if (!posts?.length) return res.status(400).json({ message: 'No posts found' })
 
@@ -17,7 +18,7 @@ const getAllPosts = async (req, res) => {
         const wordCnt = wordCount(str)
         const readTime = wordCntToTime(wordCnt)
         const user = await User.findById(post.user).lean().exec()
-        const name = user ?'@'+user.username : '[deleted]'
+        const name = user ? user.username : '[deleted]'
         return { ...post, author: name, readTime: readTime }
     }))
 
@@ -69,6 +70,8 @@ const updatePost = async (req, res) => {
         return res.status(400).json({ message: 'Please enter all required fields' })
     }
 
+    if (!ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid id' })
+
     // Does post exist to update?
     const post = await Post.findById(id).exec()
     if (!post) return res.status(400).json({ message: 'Post not found' })
@@ -100,6 +103,8 @@ const updatePostStatus = async (req, res) => {
     const { id, status } = req.body
 
     if (!id || !status) return res.status(400).json({ message: 'All fields are required' })
+
+    if (!ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid id' })
     
     if (!Object.values(STATUS).includes(status)) {
         return res.status(400).json({ message: 'Invalid status' })
@@ -122,6 +127,8 @@ const updateView = async (req, res) => {
 
     if (!id) return res.status(400).json({ message: 'All fields are required' })
 
+    if (!ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid id' })
+
     const post = await Post.findOneAndUpdate({ _id: id }, { $inc: {'views': 1} }).exec()
 
     if (!post) return res.status(400).json({ message: 'Post not found' })
@@ -139,6 +146,8 @@ const deletePost = async (req, res) => {
 
     if (!id) return res.status(400).json({ message: 'Post ID required' })
 
+    if (!ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid id' })
+
     const post = await Post.findById(id).exec()
 
     if (!post) return res.status(400).json({ message: 'Post not found' })
@@ -150,4 +159,11 @@ const deletePost = async (req, res) => {
     res.json(reply)
 }
 
-module.exports = { getAllPosts, createNewPost, updatePost, updatePostStatus, updateView, deletePost };
+module.exports = { 
+    getAllPosts,
+    createNewPost,
+    updatePost,
+    updatePostStatus,
+    updateView,
+    deletePost
+};

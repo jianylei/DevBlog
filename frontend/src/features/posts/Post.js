@@ -1,16 +1,21 @@
 import { useEffect } from "react"
-import { Link, useLocation, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom"
 import { useGetUsersQuery } from "../users/usersApiSlice"
 import { useGetPostsQuery } from "./postsApiSlice"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from "@fortawesome/free-regular-svg-icons"
 import parse from 'html-react-parser'
-import { TABS, DELETED } from "../../config/constants"
+import { TABS, DELETED, DIMENSIONS } from "../../constants/constants"
 import NoMatch from "../../components/NoMatch"
+import { getIdFromPathStr, getTimeSince } from "../../utils/utils"
+import useWindowDimensions from "../../hooks/useWindowDimensions"
 
 
 const Post = () => {
-    const { state } = useLocation()
+    const { title } = useParams();
+    const id = getIdFromPathStr(title)
+
+    const { width } = useWindowDimensions()
 
     const navigate = useNavigate()
 
@@ -20,7 +25,7 @@ const Post = () => {
 
     const { post } = useGetPostsQuery('postsList', {
         selectFromResult: ({ data }) => ({
-            post: data?.entities[state?.id]
+            post: data?.entities[id]
         })
     })
 
@@ -32,58 +37,64 @@ const Post = () => {
 
     if (!post) return <NoMatch tab={ TABS.Post }/>
 
-    const created = new Date(post.createdAt).toLocaleString('en-US', 
-        { day: 'numeric', month: 'short', year: 'numeric' })
+    const created = new Date(post.createdAt)
+    const time = getTimeSince(created)
 
-    const updated = new Date(post.updatedAt).toLocaleString('en-US', 
-        { day: 'numeric', month: 'short', year: 'numeric' })      
-
+    const updated = new Date(post.updatedAt)  
+    const updatedTime = getTimeSince(updated)
 
     const tags = post.tags?.map((tag, idx) => 
-        <button className="post-tag-item" key={idx}>#{tag}</button>)
+        <button className="tag-button" key={idx}>{tag}</button>)
     
-    const clickHandler = () => navigate(`/authors/${user.username}`,{state: {id: user.id}})
+    const clickHandler = () => navigate(`/authors/${user?.username}`)
+    
+    const active = !(post.author === DELETED)
 
-    const setImg = () => {
-        if (post.author === DELETED) return <div className="post__header-profile-noimage deleted" />
-
-        if (user?.image) {
-            return <img src={user.image}  onClick={clickHandler} />
-        }
-        return <div className="post__header-profile-noimage"  onClick={clickHandler} />
-    }
+    const profileImg = user?.image && active
+        ? `url(${user?.image})`
+        : 'var(--NO-IMAGE)'
 
     return (
-        <div className="post__container">
-            <div className="post__header">
-                <h1 className="post__header-title">{post.title}</h1>
-                <p className="post__header-subHeading">{post.subHeading}</p>
-                <div className="post__header-metadata__container">
-                    <div className="post__header-profile__container">
-                        { setImg() }
-                        <div className="post__header-profile-flex__container">
-                            { post.author === DELETED
-                                ? <div className={"post__header-author deleted"}>
-                                    {post.author}</div>
-                                : <div className={"post__header-author"}
-                                    onClick={clickHandler}> {post.author}</div> 
-                            }
-                            <div className="post__header-views">{post.readTime} min read 
-                                • {post.views} <FontAwesomeIcon icon={faEye} /></div>
+        <div className='blog-content__container'>
+            <div className="post-header__container">
+                <div
+                    className={`image author-card-image ${user?.image ? 'img-overlay' : ''} 
+                        ${!active ? 'deleted' : ''}`}
+                    style={{backgroundImage: profileImg}}
+                    onClick={active ? clickHandler: undefined}
+                />
+                <div className="post-header-data__container">
+                    <div className="post-header-data-top">
+                        <div 
+                            className={`post-username ${!active ? 'deleted' : ''}`}
+                            onClick={active ? clickHandler : undefined}
+                        >
+                            {post.author}
                         </div>
+                        { width <= DIMENSIONS.WIDTH.M
+                            ? <button className="post-follow-button">Follow</button>
+                            : undefined
+                        }
                     </div>
-                    <div className="post__header-date__container">
-                        <div className="post__header-date-created">Created {created}</div>
-                        <div className="post__header-date-updated">Updated {updated}</div>
+                    <div className="post-header-data-bottom">
+                        {time}&nbsp;•&nbsp;{post.readTime} min read&nbsp;
+                        •&nbsp;{post.views} <FontAwesomeIcon icon={faEye} />
                     </div>
                 </div>
             </div>
-            <div className="post__content">
-                {parse(post.content)}
+            <div className="post-title__container">
+                <h2 className="post-title">{post.title}</h2>
+                <p className="post-subheading">{post.subHeading}</p>
+                { post.cover ? 
+                    <img className="post-cover" src={post.cover} />
+                     : undefined
+                }
             </div>
-            <div className="post-tags__container">
-                {tags}
+            <div className="post-content__container">
+                <div className="post-content">{parse(post.content)}</div>
+                <div className="post-lastEdited">Last edit: {updatedTime}</div>
             </div>
+            <div className="post-tags__container">{tags}</div>
         </div>
     )
 }
