@@ -8,7 +8,7 @@ const { wordCntToTime, wordCount } = require('../config/utils')
 // @route GET /post
 // @access Public
 const getAllPosts = async (req, res) => {
-    const posts = await Post.find().lean()
+    const posts = await Post.find({ status: STATUS.Approved }).lean()
 
     if (!posts?.length) return res.status(400).json({ message: 'No posts found' })
 
@@ -18,33 +18,6 @@ const getAllPosts = async (req, res) => {
         const wordCnt = wordCount(str)
         const readTime = wordCntToTime(wordCnt)
         const user = await User.findById(post.user).lean().exec()
-        const name = user ? user.username : '[deleted]'
-        return { ...post, author: name, readTime: readTime }
-    }))
-
-    res.json(postWithUser)
-}
-
-// @desc Get users post
-// @route GET /post/:id
-// @access Public
-const getPostById = async (req, res) => {
-    const id = req.params.id
-
-    if (!ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid id' })
-
-    const user = await User.findById(id).lean().exec()
-    if (!user) return res.status(400).json({ message: 'User not found' })
-
-    const posts = await Post.find({ user: id }).lean()
-
-    if (!posts?.length) return res.status(400).json({ message: 'No posts found' })
-
-    // Add username and estimated read time to each post before sending the response 
-    const postWithUser = await Promise.all(posts.map(async (post) => {
-        const str = post.title + ' ' + post.subHeading + ' ' + post.content
-        const wordCnt = wordCount(str)
-        const readTime = wordCntToTime(wordCnt)
         const name = user ? user.username : '[deleted]'
         return { ...post, author: name, readTime: readTime }
     }))
@@ -188,7 +161,6 @@ const deletePost = async (req, res) => {
 
 module.exports = { 
     getAllPosts,
-    getPostById,
     createNewPost,
     updatePost,
     updatePostStatus,

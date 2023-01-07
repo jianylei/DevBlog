@@ -18,6 +18,8 @@
   --COLOR-DARK: rgba(41, 41, 41, 1);
   --COLOR-LIGHT: rgb(255, 255, 255);
   --COLOR-GREY: rgba(117, 117, 117, 1);
+  --COLOR-TAG: rgba(242, 242, 242, 1);
+  --HOVER-TAG: rgb(221, 221, 221);
   --SEPARATOR: rgb(240, 240, 240);
   --IMG-OVERLAY: rgba(0, 0, 0, 4%);
   --SUCCESS: rgb(26, 137, 23);
@@ -61,7 +63,7 @@
   background-repeat: no-repeat;
   background-position: center center; 
   position: relative;
-  z-index: -1;
+  cursor: pointer;
 }
 
 .img-overlay::after {
@@ -143,9 +145,18 @@ a.active{
 
 button {
   cursor: pointer;
+  border: none;
+  border-radius: var(--BORDER-RADIUS-BUBBLE);
+  background-color: var(--SUCCESS);
+  color: var(--COLOR-LIGHT);
+  transition: background-color 300ms ease;
 }
 
-/*  || SCROLLBAR */
+svg{
+  font-size: 12px;
+}
+
+/*  || SCROLLBAR 
 ::-webkit-scrollbar {
   width: 15px;
 }
@@ -161,12 +172,21 @@ button {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--SURFACE-HOVER)
 }
+*/
 
 /* || BUTTONS */
+.login__button,
+.follow-button,
+.signup__button,
+.tag-button {
+  height: 32px;
+  padding: 4px 12px 6px;
+}
+
 .login__button {
   color: var(--LINK-COLOR);
-  border: none;
   background: transparent;
+  padding: 0;
 }
 
 .login__button:hover {
@@ -174,23 +194,41 @@ button {
 }
 
 .follow-button,
+.post-follow-button,
 .signup__button {
-  border: none;
   background-color: var(--SUCCESS);
-  color: var(--COLOR-LIGHT);
-  padding: 4px 12px 6px;
-  border-radius: var(--BORDER-RADIUS-BUBBLE);
-  height: 32px;
-  transition: background-color 300ms ease;
 }
 
 .follow-button:hover,
+.post-follow-button:hover,
 .signup__button:hover {
   background-color: var(--SUCCESS-HOVER);
 }
 
 .follow-button {
   font-size: 14px;
+}
+
+.post-follow-button {
+  padding: 0px 8px 1px;
+  font-size: 13px;
+  height: 23px;
+}
+
+.tag-button {
+  color: var(--COLOR-DARK);
+  background-color: var(--COLOR-TAG);
+  text-transform: capitalize;
+  font-size: 14px;
+}
+
+.tag-button:hover {
+  background-color: var(--HOVER-TAG);
+}
+
+.author-page-button {
+  padding: 7px 16px 9px;
+  height: 37px;
 }
 
 /*  || LAYOUT | NAV */
@@ -234,24 +272,26 @@ button {
 }
 
 /*  || BLOG LAYOUT */
+
 .blog__container {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  min-height: 100vh;
   margin: auto;
   max-width: 1150px;
+  max-height: 100%;
 }
 
 .blog-main__container {
   padding: 0 20px 0 10px;
   border-right: 1px solid var(--SEPARATOR);
+  min-height: calc(100vh - 57px)
 }
 
 .blog-content__container {
   display: flex;
   flex-direction: column;
   padding: 50px 0 0 0;
-  gap: 30px;
+  gap: 25px;
 }
 
 /*  || BLOG LAYOUT NAV */
@@ -266,6 +306,7 @@ button {
   position: sticky;
   top: 0;
   transition: all 0.55s ease;
+  z-index: 1;
 }
 
 .blog-header-scroll {
@@ -317,14 +358,25 @@ button {
   flex-flow: row nowrap;
 }
 
+.post-card-author,
 .post-card-date,
-.post-card__main,
+.post-card-content__container,
 .post-card__footer p {
   cursor: pointer;
 }
 
 .post-card__header{
   font-size: 14px;
+}
+
+.post-card-author {
+  max-width: 300px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-line-clamp: 1;
 }
 
 .post-card-date {
@@ -376,10 +428,6 @@ button {
   align-items: center;
 } 
 
-.post-card__footer svg {
-  font-size: 12px;
-}
-
 .post-card-topic {
   background-color: var(--COLOR-BUBBLE);
   color: var(--COLOR-DARK);
@@ -387,10 +435,86 @@ button {
   border-radius: var(--BORDER-RADIUS-BUBBLE);
 }
 
+/*  || POST PAGE */
+.post-header__container {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 5px;
+}
+
+.post-header-data__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1px 0 2px;
+}
+
+.post-username {
+  display: -webkit-box;
+  font-size: 16px;
+  line-height: 1.3rem;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  max-width: 500px;
+  cursor: pointer;
+}
+
+.post-header-data-top {
+  display: flex;
+  gap: 10px;
+}
+
+.post-header-data-bottom {
+  font-size: 14px;
+  color: var(--COLOR-GREY);
+}
+
+.post-title {
+  font-size: 32px;
+  line-height: 40px;
+  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+}
+
+.post-subheading {
+  font-size: 22px;
+  color: var(--COLOR-GREY);
+  line-height: 28px;
+  margin-bottom: 25px;
+}
+
+.post-cover {
+  width: 100%;
+  margin: 15px 0;
+}
+
+.post-content {
+  font-size: 20px;
+  line-height: 32px;
+  letter-spacing: -0.08px;
+  margin-bottom: 45px;
+}
+
+.post-lastEdited {
+  font-size: 14px;
+  color: var(--COLOR-GREY);
+}
+
+.post-tags__container {
+  display: flex;
+  flex-flow: row wrap;
+  gap: 8px;
+  margin: 10px 0 40px;
+}
+
 /* || AUTHOR CARDS */
 .author-card__container {
   display: flex;
   justify-content: space-between;
+  height: 65px;
 }
 
 .author-card-image {
@@ -408,6 +532,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  cursor: pointer;
 }
 
 .author-card-username,
@@ -430,6 +555,38 @@ button {
   color: var(--COLOR-GREY);
   line-height: 1.15rem;
 }
+
+/*  || AUTHOR PAGE */
+.author-header__container {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--SEPARATOR);
+  padding-bottom: 55px;
+  gap: 25px;
+}
+
+.author-header-userdata {
+  display: flex;
+  gap: 20px;
+}
+
+.author-name__container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.author-name {
+  font-size: 42px;
+  font-weight: 800;
+  word-break: break-word;
+}
+
+.author-followers {
+  font-size: 16px;
+  color: var(--COLOR-GREY);
+  font-weight: 400;
+}
+
 
 /*  || MEDIA QUERIES */
 @media screen and (max-width: 904px) {
@@ -455,9 +612,35 @@ button {
   .post-card-title {
     font-size: 16px;
   }
+  .post-card-author {
+    max-width: 200px;
+  }  
+  .post-username {
+    max-width: 380px;
+  }
+
+  .author-name {
+    font-size: 22px;
+  }
+  .author-header__container {
+    flex-direction: column;
+  }
+  .author-name__container {
+    width: calc(100% - 55px);
+  }
 }
 
+@media screen and (max-width: 600px) {
+  .post-username {
+    max-width: 300px;
+  }
+}
 
+@media screen and (max-width: 500px) {
+  .post-username {
+    max-width: 200px;
+  }
+}
 
 
 

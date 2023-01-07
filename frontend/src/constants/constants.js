@@ -23,5 +23,20 @@ module.exports = {
         Images: './public/images/'
     }),
 
-    DELETED: '[deleted]'
+    DELETED: '[deleted]',
+
+    DIMENSIONS: Object.freeze({
+        WIDTH: {
+            S: 728,
+            M: 904
+        }
+    }),
+
+    REGEX: Object.freeze({
+        ROUTES: {
+            POSTS: /^\/$/,
+            AUTHORS: /^\/authors(\/)?$/,
+            AUTHOR: /^\/authors(\/)?/
+        }
+    })
 }

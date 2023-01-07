@@ -14,22 +14,22 @@ module.exports = {
     getTimeSince: (date) => {
         const seconds = Math.floor((new Date() - date) / 1000);
 
-        let interval = seconds / 31536000;
-
-        if (interval > 1) {
-          return new Date(date).toLocaleString('en-US', 
-            { day: 'numeric', month: 'short', year: 'numeric' })
-        }
-        interval = seconds / 2592000;
+        let interval = seconds / 604800;
         if (interval > 1) {
           return new Date(date).toLocaleString('en-US', 
             { day: 'numeric', month: 'short', year: 'numeric' })
         }
         interval = seconds / 86400;
+        if (interval < 2 && interval > 1) {
+          return Math.floor(interval) + " day ago";
+        }
         if (interval > 1) {
           return Math.floor(interval) + " days ago";
         }
         interval = seconds / 3600;
+        if (interval < 2 && interval > 1) {
+          return Math.floor(interval) + " hour ago";
+        }
         if (interval > 1) {
           return Math.floor(interval) + " hours ago";
         }

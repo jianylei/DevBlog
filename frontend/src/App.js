@@ -6,7 +6,7 @@ import Post from './features/posts/Post'
 import PostList from './features/posts/PostList'
 import UserList from './features/users/UserList'
 import User from './features/users/User'
-import { TABS } from './config/constants'
+import { TABS } from './constants/constants'
 import NewPost from './features/posts/NewPost'
 import Login from './features/auth/Login'
 
@@ -23,7 +23,7 @@ function App() {
 
           <Route path='/authors' >
             <Route index element={<UserList />} />
-            <Route path=":user" element={<User />} />
+            <Route path=":username" element={<User />} />
           </Route>
         </Route>
 

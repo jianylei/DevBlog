@@ -3,9 +3,7 @@ import { useLocation } from "react-router-dom"
 import React, { useState, useEffect } from 'react'
 import SideContent from "./SideContent"
 import useWindowDimensions from "../hooks/useWindowDimensions"
-
-const POST_REGEX = /^\/$/
-const AUTHOR_REGEX = /^\/authors(\/)?$/
+import { DIMENSIONS, REGEX } from "../constants/constants"
 
 const BlogLayout = () => {
     const { pathname } = useLocation()
@@ -19,13 +17,13 @@ const BlogLayout = () => {
                 <header className={`blog-nav__container ${show 
                         && 'blog-header-scroll'}`}>
                     <nav className="blog-nav__links">
-                        <Link className={ POST_REGEX.test(pathname) 
+                        <Link className={ REGEX.ROUTES.POSTS.test(pathname) 
                             ? 'active' : '' } to='/'>Posts</Link>
-                        <Link className={ AUTHOR_REGEX.test(pathname) 
+                        <Link className={ REGEX.ROUTES.AUTHORS.test(pathname) 
                             ? 'active' : '' } to='/authors'>Authors</Link>
                         <Link>Pending</Link>
                     </nav>
-                    { POST_REGEX.test(pathname) 
+                    { REGEX.ROUTES.POSTS.test(pathname) 
                         ? <select
                             id='post-sort'
                             name='sort'
@@ -41,7 +39,7 @@ const BlogLayout = () => {
                 </header>
                 <Outlet />
             </div>
-            { width > 904 ? <SideContent /> : '' }
+            { width > DIMENSIONS.WIDTH.M ? <SideContent /> : '' }
         </div>
     )
 }

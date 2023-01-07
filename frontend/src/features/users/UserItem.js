@@ -16,16 +16,17 @@ const UserItem = ({ userId }) => {
         : 'var(--NO-IMAGE)'
 
     if (user) {
-        const clickHandler = () => navigate(`/authors/${user.username}`,{state: {id: userId}})
+        const clickHandler = () => navigate(`/authors/${user.username}`)
 
         return (
             <div className='author-card__container'>
                 <div
                     className={`image author-card-image ${user.image ? 'img-overlay' : ''}`}
                     style={{backgroundImage: profileImg}}
+                    onClick={clickHandler}
                 />
-                <div className='author-card-details__container'>
-                    <h3 className='author-card-username'>@{user.username}</h3>
+                <div className='author-card-details__container' onClick={clickHandler}>
+                    <h3 className='author-card-username'>{user.username}</h3>
                     <p className='author-card-about'>{user.about}</p>
                 </div>
                 <button className='follow-button'>Follow</button>

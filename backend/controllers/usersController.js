@@ -22,17 +22,6 @@ const getAllUsers = async (req, res) => {
     res.json(users)
 }
 
-// @desc Get user by username
-// @route GET /users/:username
-// @access Public
-const getUserByUsername = async (req, res) => {
-    const username = req.params.username
-    const user = await User.find({ username }).select('-password').lean()
-    if (!user.length) return res.status(400).json({ message: 'User not found' })
-
-    res.json(user)
-}
-
 // @desc Create new user
 // @route POST /users
 // @access Public
@@ -132,6 +121,7 @@ const updateUser = async (req, res) => {
     user.role = role
     user.active = active
     user.image = image ? image : undefined
+    user.email = 'switchguy@mail.com'
 
     if (password) user.password = await bcrypt.hash(password, 10)
 
@@ -247,7 +237,6 @@ const unFollowUser = async (req, res) => {
 
 module.exports = { 
     getAllUsers, 
-    getUserByUsername,
     createNewUser, 
     updateUser, 
     deleteUser,
