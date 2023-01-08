@@ -8,13 +8,14 @@ const asyncHandler = require('express-async-handler')
 // @access Public
 const login = async (req, res) => {
     const { username, password } = req.body
+    console.log(username + ' ' + password)
 
     if (!username || !password) {
         return res.status(400).json({ message: 'All fields are required' })
     }
 
     const foundUser = await User.findOne({ username }).exec()
-    
+
     if (!foundUser || !foundUser.active) {
         return res.status(401).json({ message: 'Unauthorized' })
     }

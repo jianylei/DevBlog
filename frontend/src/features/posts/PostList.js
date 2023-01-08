@@ -26,6 +26,8 @@ const PostList = () => {
     if (isSuccess) {
         const { ids, entities } = posts
 
+        const filteredIds = ids.filter(postId => entities[postId].status === STATUS.Approved)
+
         const postsContent = ids?.length
             && ids.map(postId => <PostItem key={postId} postId={postId} />)
 

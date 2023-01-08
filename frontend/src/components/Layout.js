@@ -1,9 +1,12 @@
 import { Outlet, Link } from 'react-router-dom'
 import { useEffect, useState } from "react"
+import Modal from './modals/Modal'
+import { MODAL } from '../constants/constants'
 
 const Layout = () => {
     const [show, setShow] = useState(false)
     const [lastScrollY, setLastScrollY] = useState(0)
+    const [openModal, setOpenModal] = useState(false)
   
     useEffect(() => {
         const controlNavbar = () => {
@@ -30,13 +33,14 @@ const Layout = () => {
 
     return (
         <>
+            <Modal modalState={[openModal, setOpenModal]} type={MODAL.TYPE.SignIn}/>
             <header className={`main-header__container ${show 
                     && 'main-header-scroll'}`}>
                 <Link to='/'>
                     <h1 className="main-header__title">KeeBlog</h1>
                 </Link>
                 <nav className="main-header__nav">
-                    <button className="login__button">Sign In</button>
+                    <button className="login__button" onClick={() => setOpenModal(true)}>Sign In</button>
                     <button className="signup__button">Sign Up</button>
                 </nav>
             </header>

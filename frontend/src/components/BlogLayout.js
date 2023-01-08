@@ -1,6 +1,6 @@
 import { Outlet, Link, useOutletContext } from "react-router-dom"
 import { useLocation } from "react-router-dom"
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import SideContent from "./SideContent"
 import useWindowDimensions from "../hooks/useWindowDimensions"
 import { DIMENSIONS, REGEX } from "../constants/constants"

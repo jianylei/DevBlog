@@ -19,6 +19,13 @@ module.exports = {
         Page: 'Page'
     }),
 
+    MODAL: Object.freeze({
+        TYPE: {
+            SignIn: 'SignIn',
+            SignUp: 'SignUp'
+        }
+    }),
+
     IMGPATH: Object.freeze({
         Images: './public/images/'
     }),

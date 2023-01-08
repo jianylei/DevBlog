@@ -1,8 +1,8 @@
+import { memo } from 'react'
+import { useNavigate, useLocation } from "react-router-dom"
 import { useGetPostsQuery } from "./postsApiSlice"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { memo } from 'react'
 import { faEye } from "@fortawesome/free-regular-svg-icons"
-import { useNavigate, useLocation } from "react-router-dom"
 import { getPathStrFromStr, getTimeSince } from "../../utils/utils"
 import { DELETED, DIMENSIONS, REGEX } from '../../constants/constants'
 import useWindowDimensions from "../../hooks/useWindowDimensions"
@@ -25,7 +25,7 @@ const PostItem = ({ postId }) => {
         const clickHandlerPost = () => navigate(`/${postUrl}`)
         const clickHandlerAuthor = () => navigate(`/authors/${post.author}`)
 
-        const created = new Date('fri jan 6, 2023 22:40')
+        const created = new Date(post.createdAt)
         const time = getTimeSince(created)
     
         const coverImg = post.cover 

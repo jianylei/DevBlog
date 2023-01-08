@@ -7,13 +7,15 @@ import { faEye } from "@fortawesome/free-regular-svg-icons"
 import parse from 'html-react-parser'
 import { TABS, DELETED, DIMENSIONS } from "../../constants/constants"
 import NoMatch from "../../components/NoMatch"
-import { getIdFromPathStr, getTimeSince } from "../../utils/utils"
+import { getIdFromPathStr, getPathStrFromStr, getTimeSince } from "../../utils/utils"
 import useWindowDimensions from "../../hooks/useWindowDimensions"
 
 
 const Post = () => {
     const { title } = useParams();
     const id = getIdFromPathStr(title)
+
+    const { pathname } = useLocation();
 
     const { width } = useWindowDimensions()
 
@@ -35,7 +37,9 @@ const Post = () => {
         })
     })
 
-    if (!post) return <NoMatch tab={ TABS.Post }/>
+    if (!post || ('/'+getPathStrFromStr(post.title, post.id) !== pathname)) {
+        return <NoMatch tab={ TABS.Post }/>
+    }
 
     const created = new Date(post.createdAt)
     const time = getTimeSince(created)
@@ -94,7 +98,10 @@ const Post = () => {
                 <div className="post-content">{parse(post.content)}</div>
                 <div className="post-lastEdited">Last edit: {updatedTime}</div>
             </div>
-            <div className="post-tags__container">{tags}</div>
+            { tags?.length 
+                ? <div className="post-tags__container">{tags}</div>
+                : undefined
+            }
         </div>
     )
 }
