@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useLoginMutation } from "../../features/auth/authApiSlice"
 import { setCredentials } from "../../features/auth/authSlice"
+import { selectCurrentOpen, setOpen, setType } from "./modalSlice"
 import { MODAL } from "../../constants/constants"
 
-const SignIn = ({ modalState, setType }) => {
+const SignIn = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [errMsg, setErrMsg] = useState('')
-    const [openModal, setOpenModal] = modalState
+
+    const openModal = useSelector(selectCurrentOpen)
 
     const dispatch = useDispatch()
 
@@ -34,7 +36,7 @@ const SignIn = ({ modalState, setType }) => {
             dispatch(setCredentials({ accessToken }))
             setUsername('')
             setPassword('')
-            setOpenModal(false)
+            dispatch(setOpen({ open: false }))
 
         } catch (err) {
             if (!err.status) setErrMsg('No server response')
@@ -83,11 +85,11 @@ const SignIn = ({ modalState, setType }) => {
             </form>
             <div className="form-nav-signup">
                 No account? 
-                <span onClick={() => setType(MODAL.TYPE.SignUp)}>&nbsp;Create one</span>
+                <span onClick={() => dispatch(setType({ type: MODAL.TYPE.SignUp }))}>&nbsp;Create one</span>
             </div>
             <div className="form-nav-reset">
                 Forgot password?&nbsp;
-                <span onClick={() => setType(MODAL.TYPE.SignUp)}>Get help.</span>
+                <span onClick={() => dispatch(setType({ type: MODAL.TYPE.SignUp }))}>Get help.</span>
             </div>
         </div>
     )

@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react"
 import { Outlet, Link } from 'react-router-dom'
+import { useDispatch } from "react-redux"
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
+import { setOpen, setType } from "../features/modal/modalSlice"
 import useAuth from '../hooks/useAuth'
-import Modal from './modals/Modal'
+import Modal from '../features/modal/Modal'
 import { MODAL } from '../constants/constants'
 
 const Layout = () => {
     const [show, setShow] = useState(false)
     const [lastScrollY, setLastScrollY] = useState(0)
-    const [openModal, setOpenModal] = useState(false)
   
-    const { role } = useAuth()
+    const { username, role } = useAuth()
+
+    const dispatch = useDispatch()
 
     const [sendLogout, {
         isLoading,
@@ -42,9 +45,14 @@ const Layout = () => {
         }
     }, [lastScrollY])
 
+    const clickHandle = (t) => {
+        dispatch(setType({ type: t }))
+        dispatch(setOpen({ open: true }))
+    }
+
     return (
         <>
-            <Modal modalState={[openModal, setOpenModal]} type={MODAL.TYPE.SignIn}/>
+            <Modal />
             <header className={`main-header__container ${show 
                     && 'main-header-scroll'}`}>
                 <Link to='/'>
@@ -53,12 +61,17 @@ const Layout = () => {
                 <nav className="main-header__nav">
                     {   !role
                         ? <>
-                            <button className="login__button" onClick={() => setOpenModal(true)}>Sign In</button>
-                            <button className="signup__button">Sign Up</button>
+                            <button className="login__button" onClick={() => clickHandle(MODAL.TYPE.SignIn)}>
+                                Sign In</button>
+                            <button className="signup__button" onClick={() => clickHandle(MODAL.TYPE.SignUp)}>
+                                Sign Up</button>
                         </>
-                        : <button className="login__button" onClick={sendLogout}>Log off</button>
+                        : <>
+                            {username}
+                            <button className="login__button">Write</button>
+                            <button className="login__button" onClick={sendLogout}>Log off</button>
+                        </>
                     }
-
                 </nav>
             </header>
             <div className='main__container'>

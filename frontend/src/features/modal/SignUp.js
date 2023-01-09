@@ -1,15 +1,20 @@
 import { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { useAddNewUserMutation } from "../../features/users/usersApiSlice"
+import { selectCurrentOpen, setOpen, setType } from "./modalSlice"
 import { MODAL } from "../../constants/constants"
 import { useNavigate } from "react-router-dom"
 
-const SignUp = ({ modalState, setType }) => {
+const SignUp = () => {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPwd, setConfirmPwd] = useState('')
     const [errMsg, setErrMsg] = useState('')
-    const [openModal, setOpenModal] = modalState
+
+    const openModal = useSelector(selectCurrentOpen)
+
+    const dispatch = useDispatch()
 
     const [addNewUser, {
         isLoading,
@@ -41,6 +46,7 @@ const SignUp = ({ modalState, setType }) => {
             setPassword('')
             setConfirmPwd('')
             setErrMsg('')
+            dispatch(setOpen({ open: false }))
         }
     }, [isSuccess, navigate])
 
@@ -124,7 +130,7 @@ const SignUp = ({ modalState, setType }) => {
             </form>
             <div className="form-nav-signup">
                 Already have an account? 
-                <span onClick={() => setType(MODAL.TYPE.SignIn)}>&nbsp;Sign in</span>
+                <span onClick={() => dispatch(setType({ type: MODAL.TYPE.SignIn }))}>&nbsp;Sign in</span>
             </div>
         </div>
     )
