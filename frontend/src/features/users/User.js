@@ -64,10 +64,7 @@ const User = () => {
                             }
                             <div className="author-name__container">
                                 <h1 className="author-name">
-                                    { user.firstName && user.lastName
-                                        ? `${user.firstName} ${user.lastName}`
-                                        : user.username
-                                    }
+                                    { user.username }
                                     { width <= DIMENSIONS.WIDTH.S
                                             ? <p className="author-followers">{followerCnt} Followers</p>
                                             : undefined
