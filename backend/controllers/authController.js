@@ -8,7 +8,6 @@ const asyncHandler = require('express-async-handler')
 // @access Public
 const login = async (req, res) => {
     const { username, password } = req.body
-    console.log(username + ' ' + password)
 
     if (!username || !password) {
         return res.status(400).json({ message: 'All fields are required' })
@@ -32,7 +31,7 @@ const login = async (req, res) => {
         {
             'UserInfo': {
                 'username': foundUser.username,
-                'roles': foundUser.role
+                'role': foundUser.role
             }
         },
         process.env.ACCESS_TOKEN_SECRET,
@@ -79,7 +78,7 @@ const verifyAccount = (req, res) => {
 const refresh = (req, res) => {
     const cookies = req.cookies
     
-    if (!cookies?.jwt) return res.status(401).json({ message: 'Unauthorized' })
+    if (!cookies?.jwt) return res.status(401).json({ message: 'token not found' })
 
     const refreshToken = cookies.jwt
 
@@ -87,12 +86,12 @@ const refresh = (req, res) => {
         refreshToken,
         process.env.REFRESH_TOKEN_SECRET,
         asyncHandler(async (err, decoded) => {
-            if (err) return res.status(401).json({ message: 'Forbidden' })
+            if (err) return res.status(403).json({ message: 'Forbidden' })
 
             const foundUser = await User.findOne({ username: decoded.username })
 
             if (!foundUser) return res.status(401).json({ message: 'Unauthorized' })
-
+            
             const accessToken = jwt.sign(
                 {
                     'UserInfo': {

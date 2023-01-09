@@ -57,7 +57,7 @@ const createNewUser = async (req, res) => {
     jwt.sign(
         { 'id': user.id },
         process.env.CONFIRM_TOKEN_SECRET,
-        { expiresIn: '1d' },
+        { expiresIn: '2h' },
         (err, token) => {
             const url = `http://localhost:3080/auth/verification/${token}`
 
@@ -94,7 +94,7 @@ const updateUser = async (req, res) => {
     } = req.body
     
     // Confirm data 
-    if (!id || !username || !firstName || !lastName || !role || typeof active !== 'boolean') {
+    if (!id || !username || !role || typeof active !== 'boolean') {
         return res.status(400).json({ message: 'Please enter all required fields' })
     }
 
@@ -115,8 +115,8 @@ const updateUser = async (req, res) => {
     }
 
     user.username = username
-    user.firstName = firstName
-    user.lastName = lastName
+    user.firstName = firstName ? firstName : undefined
+    user.lastName = lastName ? lastName : undefined
     user.about = about ? about : undefined
     user.role = role
     user.active = active

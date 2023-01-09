@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useAddNewUserMutation } from "../../features/users/usersApiSlice"
 import { MODAL } from "../../constants/constants"
 import { useNavigate } from "react-router-dom"

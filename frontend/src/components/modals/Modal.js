@@ -8,7 +8,6 @@ const Modal = ({ modalState, type }) => {
     const wrapperRef = useRef(null);
     const [openModal, setOpenModal] = modalState
     const [modalType, setModalType] = useState(type)
-    console.log(modalType)
 
     const handleClick = () => setOpenModal(false)
 

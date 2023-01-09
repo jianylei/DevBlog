@@ -1,5 +1,7 @@
-import { Outlet, Link } from 'react-router-dom'
 import { useEffect, useState } from "react"
+import { Outlet, Link } from 'react-router-dom'
+import { useSendLogoutMutation } from '../features/auth/authApiSlice'
+import useAuth from '../hooks/useAuth'
 import Modal from './modals/Modal'
 import { MODAL } from '../constants/constants'
 
@@ -8,6 +10,15 @@ const Layout = () => {
     const [lastScrollY, setLastScrollY] = useState(0)
     const [openModal, setOpenModal] = useState(false)
   
+    const { role } = useAuth()
+
+    const [sendLogout, {
+        isLoading,
+        isSuccess,
+        isError,
+        error
+    }] = useSendLogoutMutation()
+
     useEffect(() => {
         const controlNavbar = () => {
             if (typeof window !== 'undefined') { 
@@ -40,8 +51,14 @@ const Layout = () => {
                     <h1 className="main-header__title">KeeBlog</h1>
                 </Link>
                 <nav className="main-header__nav">
-                    <button className="login__button" onClick={() => setOpenModal(true)}>Sign In</button>
-                    <button className="signup__button">Sign Up</button>
+                    {   !role
+                        ? <>
+                            <button className="login__button" onClick={() => setOpenModal(true)}>Sign In</button>
+                            <button className="signup__button">Sign Up</button>
+                        </>
+                        : <button className="login__button" onClick={sendLogout}>Log off</button>
+                    }
+
                 </nav>
             </header>
             <div className='main__container'>

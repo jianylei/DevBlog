@@ -11,7 +11,7 @@ const UserList = () => {
         error
     } = useGetUsersQuery('usersList', {
         refetchOnFocus: true,
-        refetchOnMountOrArgChange: true
+        refetchOnMountOrArgChange: 1
     })
 
     let content 

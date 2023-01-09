@@ -1,8 +1,8 @@
-import { Outlet, Link, useOutletContext } from "react-router-dom"
-import { useLocation } from "react-router-dom"
-import React, { useState } from 'react'
-import SideContent from "./SideContent"
+import { useState } from 'react'
+import { Outlet, Link, useOutletContext, useLocation } from "react-router-dom"
+import useAuth from "../hooks/useAuth"
 import useWindowDimensions from "../hooks/useWindowDimensions"
+import SideContent from "./SideContent"
 import { DIMENSIONS, REGEX } from "../constants/constants"
 
 const BlogLayout = () => {
@@ -11,6 +11,7 @@ const BlogLayout = () => {
     const [show, setShow] = useOutletContext()
     const { width } = useWindowDimensions()
 
+    const { isMod } = useAuth()
     return (
         <div className='blog__container'>
             <div className="blog-main__container">
@@ -21,7 +22,10 @@ const BlogLayout = () => {
                             ? 'active' : '' } to='/'>Posts</Link>
                         <Link className={ REGEX.ROUTES.AUTHORS.test(pathname) 
                             ? 'active' : '' } to='/authors'>Authors</Link>
-                        <Link>Pending</Link>
+                        { isMod
+                            ? <Link>Pending</Link>
+                            : undefined
+                        }
                     </nav>
                     { REGEX.ROUTES.POSTS.test(pathname) 
                         ? <select

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { useLoginMutation } from "../../features/auth/authApiSlice"
 import { setCredentials } from "../../features/auth/authSlice"
@@ -34,6 +34,7 @@ const SignIn = ({ modalState, setType }) => {
             dispatch(setCredentials({ accessToken }))
             setUsername('')
             setPassword('')
+            setOpenModal(false)
 
         } catch (err) {
             if (!err.status) setErrMsg('No server response')

@@ -9,10 +9,12 @@ import User from './features/users/User'
 import { TABS } from './constants/constants'
 import NewPost from './features/posts/NewPost'
 import Login from './features/auth/Login'
+import PersistLogin from './features/auth/PersistLogin'
 
 function App() {
   return (
     <Routes>
+      <Route element={<PersistLogin />}>
       <Route path="/" element={<Layout />}>
         <Route path='/' element={<BlogLayout />}>
           <Route path='/' >
@@ -31,7 +33,7 @@ function App() {
 
         <Route path='*' element={<NoMatch tab={ TABS.Page }/>}/>{/* 404 */}
       </Route>
-
+      </Route>
       
     </Routes>
   )
