@@ -745,6 +745,40 @@ body .modal-open {
   font-weight: 400;
 }
 
+/* || FORM */
+.form {
+  height: calc(100vh - 112px);
+  display: flex;
+  flex-direction: column;
+  max-width: 780px;
+  margin: 55px auto auto;
+  gap: 25px;
+}
+
+.form__input {
+  font-size: 24px;
+  padding: 12px 12px;
+  width: 100%;
+  border: none;
+}
+
+.form-tags-note{
+  padding-left: 12px;
+  color: var(--COLOR-GREY);
+  font-size: 13px;
+}
+
+.form__textarea {
+  height: 100%;
+}
+
+.tox:not([dir=rtl]) {
+  direction: ltr;
+  text-align: left;
+  outline: 0 !important;
+  border: none;
+}
+
 
 /*  || MEDIA QUERIES */
 @media screen and (max-width: 904px) {
@@ -802,6 +836,12 @@ body .modal-open {
   }
 }
 
+/* || HEIGHT */
+@media screen and (max-height: 800px) {
+  .form__textarea {
+    min-height: 400px;
+  }
+}
 
 
 
@@ -836,6 +876,7 @@ body .modal-open {
 .card__container-author-noimage {
   background-image: var(--NO-IMAGE);
 }
+
 
 /*  || LAYOUT 
 .main-header {

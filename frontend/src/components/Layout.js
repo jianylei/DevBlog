@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Outlet, Link } from 'react-router-dom'
+import { Outlet, Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from "react-redux"
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import { setOpen, setType } from "../features/modal/modalSlice"
@@ -14,6 +14,8 @@ const Layout = () => {
     const { username, role } = useAuth()
 
     const dispatch = useDispatch()
+
+    const navigate = useNavigate()
 
     const [sendLogout, {
         isLoading,
@@ -68,7 +70,7 @@ const Layout = () => {
                         </>
                         : <>
                             {username}
-                            <button className="login__button">Write</button>
+                            <button className="login__button" onClick={() => navigate('/write')}>Write</button>
                             <button className="login__button" onClick={sendLogout}>Log off</button>
                         </>
                     }

@@ -48,7 +48,7 @@ const SignUp = () => {
             setErrMsg('')
             dispatch(setOpen({ open: false }))
         }
-    }, [isSuccess, navigate])
+    }, [isSuccess, navigate, dispatch])
 
     const canSave = [email, username, password].every(Boolean) && !isLoading
 
