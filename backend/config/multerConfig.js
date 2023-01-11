@@ -11,8 +11,14 @@ const whitelist = [
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        if (req.body.name) {
-            const path = PATH.AdminImages
+        const { name } = req.body
+
+        if (name) {
+            const cover = req.body.cover
+
+            const path = PATH.AdminImages  + '/' + name + '/'
+                + (file.fieldname === 'users' ? '' : cover ? 'cover' : 'content')
+
             try {
                 if (!fs.existsSync(path)) {
                     fs.mkdirSync(path, { recursive: true })

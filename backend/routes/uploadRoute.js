@@ -15,7 +15,7 @@ router.route('/').post(createUploadDir, upload, (req, res) => {
 
     const fieldname = users ? 'users' : 'posts'
 
-    const newPath = PATH.Images + fieldname + '/' + name
+    const newPath = PATH.Images + fieldname
 
     try {
         if (fs.existsSync(newPath)) {
