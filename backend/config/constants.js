@@ -12,6 +12,7 @@ module.exports = {
     }),
 
     PATH: Object.freeze({
-        Images: './public/images/'
+        Images: './public/images/',
+        AdminImages: './public/images/admin/img'
     })
 }

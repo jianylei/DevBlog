@@ -11,15 +11,13 @@ const whitelist = [
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        console.log(file)
-        const name = req.body?.name
-        if (name) {
-            const path = PATH.Images + file.fieldname + '/' + name
+        if (req.body.name) {
+            const path = PATH.AdminImages
             try {
-                if (fs.existsSync(path)) {
-                    fs.rmSync(path, { recursive: true, force: true })
+                if (!fs.existsSync(path)) {
+                    fs.mkdirSync(path, { recursive: true })
                 }
-                fs.mkdirSync(path, { recursive: true })
+
                 cb(null, path)
             } catch (err) {
                 console.log("An error occurred uploading image")
