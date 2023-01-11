@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Toto&display=swap');
 @font-face {
   font-family: 'gt-super';
   src: url(../public/fonts/GT-Super-Regular.otf) format('opentype');
@@ -306,8 +307,8 @@ body .modal-open {
   letter-spacing: -0.03em;
   text-align: center;
   font-family: 'gt-super', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-  sans-serif;
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
   margin-bottom: 60px;
 }
 
@@ -766,6 +767,46 @@ body .modal-open {
   padding-left: 12px;
   color: var(--COLOR-GREY);
   font-size: 13px;
+}
+
+.form-input__container {
+  font-family: 'Noto Serif Toto', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  position: relative;
+}
+
+.form__input + .title-span:after {
+  content: 'Title';
+  left: -38px;
+}
+
+.form__input + .sub-span:after {
+  content: 'Sub';
+  left: -33px;
+}
+
+.form__input + .tags-span:after {
+  content: 'Tags';
+  left: -38px;
+}
+
+.form__input + span:after {
+  position: absolute;
+  top: 19px;
+  font-size: 13px;
+  border-right: 1px solid var(--COLOR-DARK);
+  padding-right: 5px;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.form__input:focus + span:after {
+  opacity: 1;
+}
+
+.form-cover__container {
+  padding: 12px;
 }
 
 .form__textarea {
