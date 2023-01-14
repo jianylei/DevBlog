@@ -1,7 +1,7 @@
 const ObjectId = require('mongoose').Types.ObjectId
 const User = require('../models/User')
 const Post = require('../models/Post')
-const { STATUS } = require('../config/constants') 
+const { STATUS, ROLES } = require('../config/constants') 
 const { wordCntToTime, wordCount } = require('../config/utils')
 
 // @desc Get all post
@@ -25,12 +25,33 @@ const getAllPosts = async (req, res) => {
     res.json(postWithUser)
 }
 
+// @desc Get pending post
+// @route GET /post/pending
+// @access Public
+const getPendingPosts = async (req, res) => {
+    const posts = await Post.find({ status: STATUS.Pending }).lean()
+
+    if (!posts?.length) return res.status(400).json({ message: 'No posts found' })
+
+    // Add username and estimated read time to each post before sending the response 
+    const postWithUser = await Promise.all(posts.map(async (post) => {
+        const str = post.title + ' ' + post.subHeading + ' ' + post.content
+        const wordCnt = wordCount(str)
+        const readTime = wordCntToTime(wordCnt)
+        const user = await User.findById(post.user).lean().exec()
+        const name = user ? user.username : '[deleted]'
+        return { ...post, author: name, readTime: readTime }
+    }))
+
+    res.json(postWithUser)
+}
+
 // @desc Create new post
 // @route POST /post
 // @access Private
 const createNewPost = async (req, res) => {
     const { user, title, subHeading, content, cover, tags } = req.body
-
+    const role = req.role
     // Confirm data
     if (!user || !title || !subHeading || !content) {
         return res.status(400).json({ message: 'Please enter all required fields' })
@@ -44,7 +65,19 @@ const createNewPost = async (req, res) => {
 
     // Create and store new post
     const postCover = cover === '' ? undefined : cover
-    const post = await Post.create({ user, title, subHeading, content, "cover": postCover, tags })
+    const status = role === ROLES.Admin || role === ROLES.Moderator
+        ? STATUS.Approved
+        : STATUS.Pending
+
+    const post = await Post.create({
+        user,
+        title,
+        subHeading,
+        content,
+        "cover": postCover,
+        tags,
+        status
+    })
 
     if (post) {
         res.status(201).json({ message: `New post created: ${title}` })
@@ -161,6 +194,7 @@ const deletePost = async (req, res) => {
 
 module.exports = { 
     getAllPosts,
+    getPendingPosts,
     createNewPost,
     updatePost,
     updatePostStatus,
