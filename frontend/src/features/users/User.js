@@ -15,10 +15,6 @@ const User = () => {
     const { username } = useParams()
     const { width } = useWindowDimensions()
 
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [])
-
     const {
         data: posts,
         isSuccess,

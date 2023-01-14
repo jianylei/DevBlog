@@ -5,7 +5,12 @@ import {
     parseImgFromHTML,
     dataURLtoFile
 } from "../../utils/postFormUtils"
+import useAuth from '../../hooks/useAuth'
+import { useGetUsersQuery } from "../users/usersApiSlice"
+import { useAddNewPostMutation } from "./postsApiSlice"
 import { useUploadMutation } from "../uploads/uploadApiSlice"
+import { getPathStrFromStr, getBase64 } from "../../utils/utils"
+import { IMGPATH } from "../../constants/constants"
 
 const NewPost = () => {
     const [title, setTitle] = useState('')
@@ -13,33 +18,91 @@ const NewPost = () => {
     const [content, setContent] = useState('')
     const [tags, setTags] = useState('')
     const [cover , setCover] = useState('')
+    const [coverFile , setCoverFile] = useState('')
+
+    const { username } = useAuth()
 
     const [upload, {
-      isError,
-      error
+      isLoading: uploadLoading,
+      isSuccess: uploadSuccess,
+      isError: uploadIsError,
+      error: uploadError
     }] = useUploadMutation()
+
+    const {
+      data: users,
+      isSuccess: usersIsSuccess,
+    } = useGetUsersQuery('usersList')
+
+    const [addNewPost, {
+      isLoading: addPostLoading,
+      isSuccess: addPostSuccess,
+      isError: addPostIsError,
+      error: addPostError
+    }] = useAddNewPostMutation()
+
+    const canSave = [title, subhead, content].every(Boolean) && usersIsSuccess
 
     const handleSubmit = async (e) => {
       e.preventDefault()
 
-      const tagsList = stringToTags(tags)
-      const { str, imageList, imageNames } = parseImgFromHTML(content)
-      const data = new FormData()
-      data.append('test', 'tesetset')
-      data.append('name', 'jianyonglei')
+      if (canSave) {
+        const { ids, entities } = users
+        const userId = ids.find(id => entities[id]?.username === username)
 
-      for (const idx in imageList) {
-        const file = dataURLtoFile(imageList[idx], imageNames[idx])
-        console.log(file)
-        data.append('posts', file)
-      }        data.append('users', 'file')
+        const name = getPathStrFromStr(title)
 
-      await upload(data)
+        if (userId) {
+          const { str, imageList, imageNames } = parseImgFromHTML(content, name)
+
+          const tagsList = stringToTags(tags)
+
+          let coverUrl = ''
+
+          if (imageList?.length || cover) {
+            const data = new FormData()
+
+            data.append('name', name)
+  
+            if (imageList) {
+              for (const idx in imageList) {
+                const file = dataURLtoFile(imageList[idx], imageNames[idx])
+                data.append('posts', file)
+              }
+            }
+  
+            if (cover) {
+              const coverName = Date.now() + '-' + Math.round(Math.random() * 1E9) + '.jpg'
+              var newCover = new File([coverFile], coverName, { type: 'image/jpg' })
+              data.append('posts', newCover)
+              coverUrl = IMGPATH.Images + 'posts/' + name + '/' + coverName
+            }
+  
+            await upload(data)
+            if (uploadIsError) console.log(uploadError.status)
+          }
+          
+          await addNewPost({
+            user: userId,
+            title, subHeading:
+            subhead,
+            content: str,
+            tags: tagsList,
+            cover: coverUrl
+          })
+        }
+      }
+    }
+
+    const handleCoverRemove = () => {
+      setCover('')
+      setCoverFile('')
     }
 
     const onImageChange = (e) => {
       if (e.target.files && e.target.files[0]) {
         setCover(URL.createObjectURL(e.target.files[0]))
+        setCoverFile(e.target.files[0])
       }
     }
 
@@ -88,14 +151,27 @@ const NewPost = () => {
                       onChange={(e) => setTags(e.target.value)}
                   />
                   <span className="tags-span"></span>
-                  <p className="form-tags-note">*Tags are space and/or comma seperated</p>
+                  <p className="form-tags-note">*Space and/or comma seperated</p>
                 </div>
                 <label className="form-cover__container" htmlFor="cover">
-                    <input id='cover' type='file' accept="image/*" onChange={onImageChange} hidden/>
+                    <input 
+                      id='cover'
+                      type='file'
+                      accept="image/*"
+                      onChange={onImageChange}
+                      hidden
+                    />
                     <div
                         className={`image post-card-cover ${cover ? 'img-overlay' : ''}`}
                         style={{backgroundImage: coverImg}}
-                    />
+                    >
+                      <button
+                        className={`form-input-unselect ${cover ? 'show' : undefined}`}
+                        onClick={handleCoverRemove}
+                      >
+                          remove
+                      </button>
+                    </div>
                 </label>
                 <div className="form__textarea">
                     <Editor apiKey='fo5qm0cg8ib5w52ryt8bkwt18xm5lwwjj90gxlu7q1zh9ir6'

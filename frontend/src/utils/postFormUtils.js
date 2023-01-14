@@ -15,7 +15,7 @@ export const dataURLtoFile = (dataurl, filename) => {
     return new File([u8arr], filename, {type:mime});
 }
 
-export const parseImgFromHTML = (str) => {
+export const parseImgFromHTML = (str, postsName) => {
     const imageList = []
     const imageNames = []
     let newStr = ''
@@ -32,7 +32,8 @@ export const parseImgFromHTML = (str) => {
         imageList.push(before)
         imageNames.push(name)
 
-        newStr += 'src="' + IMGPATH.Images + name + '"' + after
+        newStr += 'src="' + IMGPATH.Images + 'posts/' + postsName + '/' + name 
+            + '"' + after
     }
 
     return ({
