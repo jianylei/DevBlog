@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
         if (name) {
             const cover = req.body.cover
 
-            const path = PATH.AdminImages  + '/' + name
+            const path = PATH.AdminImages
 
             try {
                 if (!fs.existsSync(path)) {

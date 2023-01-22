@@ -15,6 +15,17 @@ export const dataURLtoFile = (dataurl, filename) => {
     return new File([u8arr], filename, {type:mime});
 }
 
+export const imgFileToBase64 = (file, cb) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = function () {
+        cb(reader.result)
+    }
+    reader.onerror = function (error) {
+      console.log('Error: ', error)
+    }
+}
+
 export const parseImgFromHTML = (str, postsName) => {
     const imageList = []
     const imageNames = []

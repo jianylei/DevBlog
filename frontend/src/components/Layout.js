@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
-import { Outlet, Link, useNavigate } from 'react-router-dom'
-import { useDispatch } from "react-redux"
+import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
+import { useDispatch, useSelector } from "react-redux"
 import { useSendLogoutMutation } from '../features/auth/authApiSlice'
 import { setOpen, setType } from "../features/modal/modalSlice"
 import useAuth from '../hooks/useAuth'
 import Modal from '../features/modal/Modal'
-import { MODAL } from '../constants/constants'
+import { MODAL, REGEX } from '../constants/constants'
+import PublishButton from "../features/posts/PublishButton"
 
 const Layout = () => {
     const [show, setShow] = useState(false)
@@ -16,6 +17,8 @@ const Layout = () => {
     const dispatch = useDispatch()
 
     const navigate = useNavigate()
+
+    const { pathname } = useLocation()
 
     const [sendLogout, {
         isLoading,
@@ -52,6 +55,29 @@ const Layout = () => {
         dispatch(setOpen({ open: true }))
     }
 
+    const navRight = () => {
+        if (!role) {
+            return (
+                <nav className="main-header__nav">
+                    <button className="login__button" onClick={() => clickHandle(MODAL.TYPE.SignIn)}>
+                        Sign In</button>
+                    <button className="signup__button" onClick={() => clickHandle(MODAL.TYPE.SignUp)}>
+                        Sign Up</button>
+                </nav>
+            )
+        }
+
+        return (
+            <nav className="main-header__nav">
+                { REGEX.ROUTES.WRITE.test(pathname)
+                    ? <PublishButton />
+                    : <button className="login__button" onClick={() => navigate('/write')}>Write</button>
+                }
+                <button className="login__button" onClick={sendLogout}>Log off</button>
+            </nav>
+        )
+    }
+
     return (
         <>
             <Modal />
@@ -60,21 +86,7 @@ const Layout = () => {
                 <Link to='/'>
                     <h1 className="main-header__title">KeeBlog</h1>
                 </Link>
-                <nav className="main-header__nav">
-                    {   !role
-                        ? <>
-                            <button className="login__button" onClick={() => clickHandle(MODAL.TYPE.SignIn)}>
-                                Sign In</button>
-                            <button className="signup__button" onClick={() => clickHandle(MODAL.TYPE.SignUp)}>
-                                Sign Up</button>
-                        </>
-                        : <>
-                            {username}
-                            <button className="login__button" onClick={() => navigate('/write')}>Write</button>
-                            <button className="login__button" onClick={sendLogout}>Log off</button>
-                        </>
-                    }
-                </nav>
+                {navRight()}
             </header>
             <div className='main__container'>
                 <Outlet context={[show, setShow]} />

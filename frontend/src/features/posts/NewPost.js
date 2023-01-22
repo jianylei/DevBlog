@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react"
 import { Editor } from "@tinymce/tinymce-react"
+import { imgFileToBase64 } from "../../utils/postFormUtils"
+import { useDispatch } from "react-redux"
 import {
-    stringToTags,
-    parseImgFromHTML,
-    dataURLtoFile
-} from "../../utils/postFormUtils"
-import useAuth from '../../hooks/useAuth'
-import { useGetUsersQuery } from "../users/usersApiSlice"
-import { useAddNewPostMutation } from "./postsApiSlice"
-import { useUploadMutation } from "../uploads/uploadApiSlice"
-import { getPathStrFromStr, getBase64 } from "../../utils/utils"
-import { IMGPATH } from "../../constants/constants"
+  setTitle as setPostTitle,
+  setSubhead as setPostSub,
+  setContent as setPostContent,
+  setCover as setPostCover,
+  setTags as setPostTags,
+  reset
+} from "./postSlice"
 
 const NewPost = () => {
     const [title, setTitle] = useState('')
@@ -18,92 +17,45 @@ const NewPost = () => {
     const [content, setContent] = useState('')
     const [tags, setTags] = useState('')
     const [cover , setCover] = useState('')
-    const [coverFile , setCoverFile] = useState('')
 
-    const { username } = useAuth()
+    const dispatch = useDispatch()
 
-    const [upload, {
-      isLoading: uploadLoading,
-      isSuccess: uploadSuccess,
-      isError: uploadIsError,
-      error: uploadError
-    }] = useUploadMutation()
+    useEffect(() => {
+      window.scrollTo(0, 0)
+      dispatch(reset())
+    }, [])
 
-    const {
-      data: users,
-      isSuccess: usersIsSuccess,
-    } = useGetUsersQuery('usersList')
-
-    const [addNewPost, {
-      isLoading: addPostLoading,
-      isSuccess: addPostSuccess,
-      isError: addPostIsError,
-      error: addPostError
-    }] = useAddNewPostMutation()
-
-    const canSave = [title, subhead, content].every(Boolean) && usersIsSuccess
-
-    const handleSubmit = async (e) => {
-      e.preventDefault()
-
-      if (canSave) {
-        const { ids, entities } = users
-        const userId = ids.find(id => entities[id]?.username === username)
-
-        const name = getPathStrFromStr(title)
-
-        if (userId) {
-          const { str, imageList, imageNames } = parseImgFromHTML(content, name)
-
-          const tagsList = stringToTags(tags)
-
-          let coverUrl = ''
-
-          if (imageList?.length || cover) {
-            const data = new FormData()
-
-            data.append('name', name)
-  
-            if (imageList) {
-              for (const idx in imageList) {
-                const file = dataURLtoFile(imageList[idx], imageNames[idx])
-                data.append('posts', file)
-              }
-            }
-  
-            if (cover) {
-              const coverName = Date.now() + '-' + Math.round(Math.random() * 1E9) + '.jpg'
-              var newCover = new File([coverFile], coverName, { type: 'image/jpg' })
-              data.append('posts', newCover)
-              coverUrl = IMGPATH.Images + 'posts/' + name + '/' + coverName
-            }
-  
-            await upload(data)
-            if (uploadIsError) console.log(uploadError.status)
-          }
-          
-          await addNewPost({
-            user: userId,
-            title, subHeading:
-            subhead,
-            content: str,
-            tags: tagsList,
-            cover: coverUrl
-          })
-        }
-      }
+    const handleTitleChange = (e) => {
+      setTitle(e.target.value)
+      dispatch(setPostTitle({ title: e.target.value }))
     }
 
-    const handleCoverRemove = () => {
-      setCover('')
-      setCoverFile('')
+    const handleSubChange = (e) => {
+      setSubhead(e.target.value)
+      dispatch(setPostSub({ subHeading: e.target.value }))
+    }
+
+    const handleContentChange = (e) => {
+      setContent(e.target.getContent())
+      dispatch(setPostContent({ content: e.target.getContent() }))
+    }
+
+    const handleTagsChange = (e) => {
+      setTags(e.target.value)
+      dispatch(setPostTags({ tags: e.target.value }))
     }
 
     const onImageChange = (e) => {
       if (e.target.files && e.target.files[0]) {
         setCover(URL.createObjectURL(e.target.files[0]))
-        setCoverFile(e.target.files[0])
+        const base64t = imgFileToBase64(e.target.files[0], (cover) => {
+          dispatch(setPostCover({ cover }))
+        })
       }
+    }
+
+    const handleCoverRemove = () => {
+      setCover('')
     }
 
     const coverImg = cover
@@ -112,7 +64,7 @@ const NewPost = () => {
 
     return (
         <div className="form__container">
-            <form className="form" onSubmit={handleSubmit}>
+            <form className="form">
               <div className="form-input__container">
                 <input
                       className="form__input"
@@ -122,7 +74,7 @@ const NewPost = () => {
                       placeholder="Title"
                       autoComplete="off"
                       value={title}
-                      onChange={(e) => setTitle(e.target.value)}
+                      onChange={handleTitleChange}
                   />
                    <span className="title-span"></span>
               </div>
@@ -135,7 +87,7 @@ const NewPost = () => {
                       placeholder="Subheading"
                       autoComplete="off"
                       value={subhead}
-                      onChange={(e) => setSubhead(e.target.value)}
+                      onChange={handleSubChange}
                   />
                   <span className="sub-span"></span>
                 </div>
@@ -148,7 +100,7 @@ const NewPost = () => {
                       placeholder="Tags"
                       autoComplete="off"
                       value={tags}
-                      onChange={(e) => setTags(e.target.value)}
+                      onChange={handleTagsChange}
                   />
                   <span className="tags-span"></span>
                   <p className="form-tags-note">*Space and/or comma seperated</p>
@@ -184,9 +136,9 @@ const NewPost = () => {
                             "&display=swap'); body { font-family: 'Noto Serif Toto', sans-serif; }",
                           placeholder: 'Tell your story...',
                         }}
-                        onChange={(e) => setContent(e.target.getContent())}
+                        onChange={handleContentChange}
                     />
-                </div><button type="submit">asdasd</button>
+                </div>
             </form>
         </div>
     )

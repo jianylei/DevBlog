@@ -43,7 +43,8 @@ module.exports = {
         ROUTES: {
             POSTS: /^\/$/,
             AUTHORS: /^\/authors(\/)?$/,
-            AUTHOR: /^\/authors(\/)?/
+            AUTHOR: /^\/authors(\/)?/,
+            WRITE: /^\/write(\/)?$/
         }
     })
 }

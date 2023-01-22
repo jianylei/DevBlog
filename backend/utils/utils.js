@@ -4,7 +4,6 @@ module.exports = {
         return match ? match.length : 0
     },
 
-
     wordCntToTime: (cnt) => {
         const timeArr = ('' + cnt/200).split('.')
         let min = 1 * timeArr[0]
@@ -13,5 +12,12 @@ module.exports = {
             min = sec > .3 ? min + 1 : min
         }
         return min > 0 ? min : 1
+    },
+
+    formatTitle: (str, id) => {
+        return str.replace(/-|\||%|\/|\?|:|\\|\.|,+/g, ' ')
+            .replace(/ +/g, '-')
+            .replace(/-$/, '')
+            .toLowerCase() + (id ? '-' + id : '')
     }
 }

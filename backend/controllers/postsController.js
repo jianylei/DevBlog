@@ -2,7 +2,8 @@ const ObjectId = require('mongoose').Types.ObjectId
 const User = require('../models/User')
 const Post = require('../models/Post')
 const { STATUS, ROLES } = require('../config/constants') 
-const { wordCntToTime, wordCount } = require('../config/utils')
+const { wordCntToTime, wordCount, formatTitle } = require('../utils/utils')
+const { removePostDirByName } = require('../utils/postControllerUtils')
 
 // @desc Get all post
 // @route GET /post
@@ -185,11 +186,24 @@ const deletePost = async (req, res) => {
 
     if (!post) return res.status(400).json({ message: 'Post not found' })
 
+    removePostDirByName(formatTitle(post.title))
+
     const result = await post.deleteOne()
 
     const reply = `Post ${result.title} with ID ${result._id} deleted`
 
     res.json(reply)
+}
+
+// @desc Delete all post
+// @route DELETE /post/all
+// @access Private - TESTING ONLY
+const deleteALLPost = async (req, res) => {
+    Post.deleteMany({}).then(() => {
+        res.json({ message: 'all post removed' })
+    }).catch((err) => {
+        console.log(err)
+    })
 }
 
 module.exports = { 
@@ -199,5 +213,6 @@ module.exports = {
     updatePost,
     updatePostStatus,
     updateView,
-    deletePost
+    deletePost,
+    deleteALLPost
 };
