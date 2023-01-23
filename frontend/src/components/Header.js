@@ -1,48 +1,30 @@
-import { useEffect, useState } from "react"
-import { Outlet, Link, useNavigate, useLocation } from 'react-router-dom'
-import { useDispatch, useSelector } from "react-redux"
-import { useSendLogoutMutation } from '../features/auth/authApiSlice'
-import { setOpen, setType } from "../features/modal/modalSlice"
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import useAuth from '../hooks/useAuth'
-import Modal from '../features/modal/Modal'
-import { MODAL, REGEX } from '../constants/constants'
+import {  REGEX } from '../constants/constants'
 import PublishButton from "../features/posts/PublishButton"
 import useControlShow from "../hooks/useControlShow"
+import SignInButton from '../features/modal/SignInButton'
+import SignUpButton from '../features/modal/SignUpButton'
+import SignOffButton from '../features/auth/SignOffButton'
+import WriteButton from '../features/posts/WriteButton'
 
 const Header = ({ showState }) => {
     const [show, setShow] = showState
-    const [lastScrollY, setLastScrollY] = useState(0)
   
-    const { username, role } = useAuth()
-
-    const dispatch = useDispatch()
+    const { role } = useAuth()
 
     const navigate = useNavigate()
 
     const { pathname } = useLocation()
 
-    const [sendLogout, {
-        isLoading,
-        isSuccess,
-        isError,
-        error
-    }] = useSendLogoutMutation()
-
     useControlShow(setShow)
-
-    const clickHandle = (t) => {
-        dispatch(setType({ type: t }))
-        dispatch(setOpen({ open: true }))
-    }
 
     const navRight = () => {
         if (!role) {
             return (
                 <nav className="main-header__nav">
-                    <button className="login__button" onClick={() => clickHandle(MODAL.TYPE.SignIn)}>
-                        Sign In</button>
-                    <button className="signup__button" onClick={() => clickHandle(MODAL.TYPE.SignUp)}>
-                        Sign Up</button>
+                    <SignInButton />
+                    <SignUpButton />
                 </nav>
             )
         }
@@ -51,9 +33,9 @@ const Header = ({ showState }) => {
             <nav className="main-header__nav">
                 { REGEX.ROUTES.WRITE.test(pathname)
                     ? <PublishButton />
-                    : <button className="login__button" onClick={() => navigate('/write')}>Write</button>
+                    : <WriteButton />
                 }
-                <button className="login__button" onClick={sendLogout}>Log off</button>
+                <SignOffButton />
             </nav>
         )
     }
