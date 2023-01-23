@@ -70,6 +70,9 @@ const createNewPost = async (req, res) => {
         ? STATUS.Approved
         : STATUS.Pending
 
+        console.log('role :' +role)
+    console.log('status :' +status)
+
     const post = await Post.create({
         user,
         title,

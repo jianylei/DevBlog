@@ -84,7 +84,7 @@ const Layout = () => {
             <header className={`main-header__container ${show 
                     && 'main-header-scroll'}`}>
                 <Link to='/'>
-                    <h1 className="main-header__title">KeeBlog</h1>
+                    <h1 className="main-header__title">devspot</h1>
                 </Link>
                 {navRight()}
             </header>
