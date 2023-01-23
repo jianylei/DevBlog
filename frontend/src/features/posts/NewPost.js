@@ -3,8 +3,6 @@ import { Editor } from "@tinymce/tinymce-react"
 import { imgFileToBase64 } from "../../utils/postFormUtils"
 import { useDispatch, useSelector } from "react-redux"
 import {
-  setTitle as setPostTitle,
-  setSubhead as setPostSub,
   setContent as setPostContent,
   setCover as setPostCover,
   setTags as setPostTags,
@@ -12,6 +10,9 @@ import {
   resetError,
   selectCurrentPostErr
 } from "./postSlice"
+import Title from "./form/Title"
+import Subhead from "./form/Subhead"
+import Tags from "./form/Tags"
 
 const NewPost = () => {
     const [title, setTitle] = useState('')
@@ -29,18 +30,21 @@ const NewPost = () => {
 
     useEffect(() => {
       window.scrollTo(0, 0)
-      setTitle('')
-      setErrContent(false)
-      setSubhead('')
-      setErrSub(false)
-      setContent('')
-      setErrContent(false)
-      setTags('')
-      setCover('')
-      dispatch(reset())
+      return () => {
+        setTitle('')
+        setErrContent(false)
+        setSubhead('')
+        setErrSub(false)
+        setContent('')
+        setErrContent(false)
+        setTags('')
+        setCover('')
+        dispatch(reset())
+      }
     }, [])
 
     useEffect(() => {
+      console.log('err: '+isError)
       if (isError) {
         if (!title) setErrTitle(true)
         if (!subhead) setErrSub(true)
@@ -57,17 +61,8 @@ const NewPost = () => {
       }
     }
 
-    const handleTitleChange = (e) => {
-      setTitle(e.target.value)
-      dispatch(setPostTitle({ title: e.target.value }))
-      resetInputErr()
-    }
 
-    const handleSubChange = (e) => {
-      setSubhead(e.target.value)
-      dispatch(setPostSub({ subHeading: e.target.value }))
-      resetInputErr()
-    }
+
 
     const handleContentChange = (e) => {
       setContent(e.target.getContent())
@@ -75,10 +70,7 @@ const NewPost = () => {
       resetInputErr()
     }
 
-    const handleTagsChange = (e) => {
-      setTags(e.target.value)
-      dispatch(setPostTags({ tags: e.target.value }))
-    }
+
 
     const onImageChange = (e) => {
       if (e.target.files && e.target.files[0]) {
@@ -100,50 +92,9 @@ const NewPost = () => {
     return (
         <div className="form__container">
             <form className="form">
-              <div className={`form-input__container ${errTitle ? 'errborder' : ''}`}>
-                { isError && errMsg
-                  ? <div className="errmsg">{errMsg}</div>
-                  : undefined
-                }
-                <input
-                      className="form__input"
-                      id="title"
-                      name="title"
-                      type="text"
-                      placeholder="Title"
-                      autoComplete="off"
-                      value={title}
-                      onChange={handleTitleChange}
-                  />
-                   <span className="title-span"></span>
-              </div>
-                <div className={`form-input__container ${errSub ? 'errborder' : ''}`}>
-                  <input
-                      className="form__input"
-                      id="subheading"
-                      name="subheading"
-                      type="text"
-                      placeholder="Subheading"
-                      autoComplete="off"
-                      value={subhead}
-                      onChange={handleSubChange}
-                  />
-                  <span className="sub-span"></span>
-                </div>
-                <div className="form-input__container">
-                  <input
-                      className="form__input"
-                      id="tags"
-                      name="tags"
-                      type="text"
-                      placeholder="Tags"
-                      autoComplete="off"
-                      value={tags}
-                      onChange={handleTagsChange}
-                  />
-                  <span className="tags-span"></span>
-                  <p className="form-tags-note">*Space and/or comma seperated</p>
-                </div>
+                <Title titleState={[title, setTitle]} err={errTitle} resetInputErr={resetInputErr} />
+                <Subhead subState={[subhead, setSubhead]} err={errSub} resetInputErr={resetInputErr} />
+                <Tags tagsState={[tags, setTags]} />
                 <label className="form-cover__container" htmlFor="cover">
                     <input 
                       id='cover'

@@ -14,10 +14,6 @@ const Modal = () => {
     const currType = useSelector(selectCurrentType)
     const currOpen = useSelector(selectCurrentOpen)
 
-    const handleClick = () => dispatch(setOpen({ open: false }))
-
-    useOutsideAlerter(wrapperRef, handleClick);
-
     useEffect(() => {
         if (currOpen) {
             document.body.style.overflow = 'hidden'
@@ -25,15 +21,18 @@ const Modal = () => {
         return () => document.body.style.overflow = 'unset'
     }, [currOpen])
 
+    const handleClick = () => dispatch(setOpen({ open: false }))
+
+    useOutsideAlerter(wrapperRef, handleClick);
 
     let content
+    
     if (currType === MODAL.TYPE.SignIn) {
         content = <SignIn />
     }
     else if (currType === MODAL.TYPE.SignUp) {
         content = <SignUp />
     }
-        
 
     return (
         <div className={`modal__container ${currOpen?'modal-open':''}`}>
