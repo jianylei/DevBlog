@@ -7,6 +7,7 @@ import useAuth from '../hooks/useAuth'
 import Modal from '../features/modal/Modal'
 import { MODAL, REGEX } from '../constants/constants'
 import PublishButton from "../features/posts/PublishButton"
+import useControlShow from "../hooks/useControlShow"
 
 const Header = ({ showState }) => {
     const [show, setShow] = showState
@@ -27,28 +28,7 @@ const Header = ({ showState }) => {
         error
     }] = useSendLogoutMutation()
 
-    useEffect(() => {
-        const controlNavbar = () => {
-            if (typeof window !== 'undefined') { 
-              if (window.scrollY > lastScrollY) { // if scroll down hide the navbar
-                setShow(false)
-              } else { // if scroll up show the navbar
-                if (window.scrollY > 104) {
-                  setShow(true)
-                }
-              }
-              setLastScrollY(window.scrollY)
-            }
-          }
-  
-        if (typeof window !== 'undefined') {
-            window.addEventListener('scroll', controlNavbar)
-
-            return () => {
-                window.removeEventListener('scroll', controlNavbar)
-            }
-        }
-    }, [lastScrollY])
+    useControlShow(setShow)
 
     const clickHandle = (t) => {
         dispatch(setType({ type: t }))
