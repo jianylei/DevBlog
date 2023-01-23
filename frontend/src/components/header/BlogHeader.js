@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {  Link, useLocation } from "react-router-dom"
-import useAuth from "../hooks/useAuth"
-import { REGEX } from "../constants/constants"
+import useAuth from "../../hooks/useAuth"
+import { REGEX } from "../../constants/constants"
 
 const BlogHeader = ({ show }) => {
     const [sortOpt, setSortOpt] = useState('new')
@@ -34,7 +34,7 @@ const BlogHeader = ({ show }) => {
                     <option value='new'>New</option>
                     <option value='trending'>Trending</option>
                 </select> 
-                : null 
+                : undefined 
             }
         </header>
     )

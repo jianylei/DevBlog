@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Outlet } from 'react-router-dom'
 import Modal from '../features/modal/Modal'
-import Header from "./Header"
+import Header from "./header/Header"
 
 const Layout = () => {
     const [show, setShow] = useState(false)

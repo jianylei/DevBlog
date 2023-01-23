@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-const useControlShow = ( setShow) => {
+const useControlShow = (setShow) => {
     const [lastScrollY, setLastScrollY] = useState(0)
 
     useEffect(() => {
@@ -24,7 +24,7 @@ const useControlShow = ( setShow) => {
                 window.removeEventListener('scroll', controlNavbar)
             }
         }
-    }, [lastScrollY])
+    }, [lastScrollY, setShow])
 }
 
 export default useControlShow

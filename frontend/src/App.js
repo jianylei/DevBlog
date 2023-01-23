@@ -8,33 +8,30 @@ import UserList from './features/users/UserList'
 import User from './features/users/User'
 import { TABS } from './constants/constants'
 import NewPost from './features/posts/NewPost'
-import Login from './features/auth/Login'
 import PersistLogin from './features/auth/PersistLogin'
 
 function App() {
   return (
     <Routes>
       <Route element={<PersistLogin />}>
-      <Route path="/" element={<Layout />}>
+        <Route path="/" element={<Layout />}>
 
-        <Route path="/write" element={<NewPost />} />
+          <Route path="/write" element={<NewPost />} />
 
-        <Route path='/' element={<BlogLayout />}>
-          <Route path='/' >
-            <Route index element={<PostList />} />
-            <Route path=":title" element={<Post />} />
+          <Route path='/' element={<BlogLayout />}>
+            <Route path='/' >
+              <Route index element={<PostList />} />
+              <Route path=":title" element={<Post />} />
+            </Route>
+
+            <Route path='/authors' >
+              <Route index element={<UserList />} />
+              <Route path=":username" element={<User />} />
+            </Route>
           </Route>
 
-          <Route path='/authors' >
-            <Route index element={<UserList />} />
-            <Route path=":username" element={<User />} />
-          </Route>
+          <Route path='*' element={<NoMatch tab={ TABS.Page }/>}/>{/* 404 */}
         </Route>
-
-        <Route path='/login' element={<Login />}></Route>
-
-        <Route path='*' element={<NoMatch tab={ TABS.Page }/>}/>{/* 404 */}
-      </Route>
       </Route>
       
     </Routes>

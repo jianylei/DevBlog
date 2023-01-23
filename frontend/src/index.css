@@ -390,8 +390,10 @@ body .modal-open {
 
 .modal-error {
   position: absolute;
-  top: 0;
+  top: 100px;
   left: 0;
+  width: 100%;
+  text-align: center;
 }
 
 /*  || LAYOUT | NAV */

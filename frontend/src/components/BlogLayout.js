@@ -2,7 +2,7 @@ import { Outlet, useOutletContext } from "react-router-dom"
 import useWindowDimensions from "../hooks/useWindowDimensions"
 import SideContent from "./SideContent"
 import { DIMENSIONS } from "../constants/constants"
-import BlogHeader from './BlogHeader'
+import BlogHeader from './header/BlogHeader'
 
 const BlogLayout = () => {
     const [show, setShow] = useOutletContext()
