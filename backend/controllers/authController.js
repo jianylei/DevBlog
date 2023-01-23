@@ -41,7 +41,7 @@ const login = async (req, res) => {
     const refreshToken = jwt.sign(
         { 'username': foundUser.username },
         process.env.REFRESH_TOKEN_SECRET,
-        { expiresIn: '7d' }
+        { expiresIn: '365d' }
     )
 
     res.cookie('jwt', refreshToken, {

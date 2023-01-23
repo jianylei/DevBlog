@@ -6,12 +6,10 @@ const modalSlice = createSlice({
     reducers: {
         setOpen: (state, action) => {
             const { open } = action.payload
-            console.log(open)
             state.open = open
         },
         setType: (state, action) => {
             const { type } = action.payload
-            console.log(type)
             state.type = type
         }
     }

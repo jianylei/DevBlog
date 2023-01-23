@@ -27,7 +27,7 @@ module.exports = {
     }),
 
     IMGPATH: Object.freeze({
-        Images: './public/images/'
+        Images: 'http://localhost:3080/images/'
     }),
 
     DELETED: '[deleted]',
@@ -43,7 +43,8 @@ module.exports = {
         ROUTES: {
             POSTS: /^\/$/,
             AUTHORS: /^\/authors(\/)?$/,
-            AUTHOR: /^\/authors(\/)?/
+            AUTHOR: /^\/authors(\/)?/,
+            WRITE: /^\/write(\/)?$/
         }
     })
 }

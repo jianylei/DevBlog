@@ -16,11 +16,13 @@ function App() {
     <Routes>
       <Route element={<PersistLogin />}>
       <Route path="/" element={<Layout />}>
+
+        <Route path="/write" element={<NewPost />} />
+
         <Route path='/' element={<BlogLayout />}>
           <Route path='/' >
             <Route index element={<PostList />} />
             <Route path=":title" element={<Post />} />
-            <Route path="/new" element={<NewPost />} />
           </Route>
 
           <Route path='/authors' >
