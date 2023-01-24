@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport({
 // @route GET /users
 // @access Public
 const getAllUsers = async (req, res) => {
-    const users = await User.find().select('-password').lean()
+    const users = await User.find({ confirmed: true }).select('-password').lean()
     if (!users?.length) return res.status(400).json({ message: 'No users found' })
 
     res.json(users)
@@ -40,11 +40,11 @@ const createNewUser = async (req, res) => {
     // Check for duplicates
     const duplicateUsername = await User.findOne({ username })
         .collation({ locale: 'en', strength: 2 }).lean().exec()
-    if (duplicateUsername) return res.status(409).json({ message: 'Duplicate username' })
+    if (duplicateUsername) return res.status(409).json({ message: 'User with this username already exist' })
 
     const duplicateEmail = await User.findOne({ email })
         .collation({ locale: 'en', strength: 2 }).lean().exec()
-    if (duplicateEmail) return res.status(409).json({ message: 'Duplicate email' })
+    if (duplicateEmail) return res.status(409).json({ message: 'User with this email already exist' })
 
     // Hash password
     const hashedPwd = await bcrypt.hash(password, 10);

@@ -1,6 +1,6 @@
 import { PulseLoader } from 'react-spinners'
 import UserItem from './UserItem'
-import { useGetUsersQuery } from "./usersApiSlice"
+import { useGetUsersQuery } from "../usersApiSlice"
 
 const UserList = () => {
     const {
@@ -23,7 +23,6 @@ const UserList = () => {
     }
 
     if (isSuccess) {
-
         const { ids } = users
 
         const usersContent = ids?.length

@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { Outlet } from "react-router-dom"
 import { useSelector } from 'react-redux'
-import { useRefreshMutation } from "./authApiSlice"
-import { selectCurrentToken } from "./authSlice"
+import { useRefreshMutation } from "../authApiSlice"
+import { selectCurrentToken } from "../authSlice"
 import { PulseLoader } from "react-spinners"
 
 const PersistLogin = () => {

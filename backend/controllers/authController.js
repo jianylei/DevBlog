@@ -16,7 +16,7 @@ const login = async (req, res) => {
     const foundUser = await User.findOne({ username }).exec()
 
     if (!foundUser || !foundUser.active) {
-        return res.status(401).json({ message: 'Unauthorized' })
+        return res.status(401).json({ message: 'The username or password you entered is incorrect' })
     }
 
     if (!foundUser.confirmed) {
@@ -25,7 +25,7 @@ const login = async (req, res) => {
 
     const match = await bcrypt.compare(password, foundUser.password)
 
-    if (!match) return res.status(401).json({ message: 'Unauthorized' })
+    if (!match) return res.status(401).json({ message: 'The username or password you entered is incorrect' })
 
     const accessToken = jwt.sign(
         {

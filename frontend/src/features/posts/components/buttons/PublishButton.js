@@ -1,12 +1,12 @@
 import { useDispatch, useSelector } from "react-redux"
-import { useAddNewPostMutation } from "./postsApiSlice"
-import { selectCurrentPost, setError, resetError, reset, selectCurrentPostErr } from "./postSlice"
-import { useGetUsersQuery } from "../users/usersApiSlice"
-import { useUploadMutation } from "../uploads/uploadApiSlice"
-import { stringToTags, parseImgFromHTML, dataURLtoFile, imgFileToBase64 } from "../../utils/postFormUtils"
-import { getPathStrFromStr } from "../../utils/utils"
-import useAuth from "../../hooks/useAuth"
-import { IMGPATH } from "../../constants/constants"
+import { useAddNewPostMutation } from "../../postsApiSlice"
+import { selectCurrentPost, setError } from "../../postSlice"
+import { useGetUsersQuery } from "../../../users/usersApiSlice"
+import { useUploadMutation } from "../../../uploads/uploadApiSlice"
+import { stringToTags, parseImgFromHTML, dataURLtoFile } from "../../../../utils/postFormUtils"
+import { getPathStrFromStr } from "../../../../utils/utils"
+import useAuth from "../../../../hooks/useAuth"
+import { IMGPATH } from "../../../../constants/constants"
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 
@@ -18,7 +18,7 @@ const PublishButton = () => {
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
-    const [tmp, tmpp] = useSelector(selectCurrentPostErr)
+
     const {
         data: users,
         isSuccess: usersSuccess,
@@ -26,9 +26,7 @@ const PublishButton = () => {
 
     const [upload, {
         isLoading: uploadLoading,
-        isSuccess: uploadSuccess,
         isError: uploadIsError,
-        error: uploadError
     }] = useUploadMutation()
     
 
