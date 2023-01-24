@@ -38,6 +38,7 @@ const Cover = ({ state }) => {
                 style={{backgroundImage: coverImg}}
             >
             <button
+                type="button"
                 className={`form-input-unselect ${cover ? 'show' : undefined}`}
                 onClick={handleRemove}
             >
