@@ -746,7 +746,7 @@ body .modal-open {
 
 .author-name__container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 }
 
 .author-name {

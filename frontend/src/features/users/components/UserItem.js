@@ -5,6 +5,8 @@ import { useGetUsersQuery } from '../usersApiSlice'
 import { setOpen, setType } from '../../modal/modalSlice'
 import useAuth from '../../../hooks/useAuth'
 import { MODAL } from '../../../constants/constants'
+import UserItemImage from './userItem/UserItemImage'
+import UserItemMain from './userItem/UserItemMain'
 
 const UserItem = ({ userId }) => {
     const { user } = useGetUsersQuery('usersList', {
@@ -20,7 +22,7 @@ const UserItem = ({ userId }) => {
     const dispatch = useDispatch()
 
     if (user) {
-        const clickHandler = () => navigate(`/authors/${user.username}`)
+        const navHandler = () => navigate(`/authors/${user.username}`)
 
         const followHandler = () => {
             if (role) {
@@ -31,25 +33,13 @@ const UserItem = ({ userId }) => {
             }
         }
 
-        const profileImg = user.image 
-        ? `url(${user.image})`
-        : 'var(--NO-IMAGE)'
-
         return (
             <div className='author-card__container'>
-                <div
-                    className={`image author-card-image ${user.image ? 'img-overlay' : ''}`}
-                    style={{backgroundImage: profileImg}}
-                    onClick={clickHandler}
-                />
-                <div className='author-card-details__container' onClick={clickHandler}>
-                    <h3 className='author-card-username'>{user.username}</h3>
-                    <p className='author-card-about'>{user.about}</p>
-                </div>
+                <UserItemImage user={user} navHandler={navHandler} />
+                <UserItemMain user={user} navHandler={navHandler} />
                 <button className='follow-button' onClick={followHandler}>Follow</button>
             </div>
         )
-
     } else return undefined
 }
 
