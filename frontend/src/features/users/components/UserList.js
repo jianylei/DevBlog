@@ -23,7 +23,6 @@ const UserList = () => {
     }
 
     if (isSuccess) {
-
         const { ids } = users
 
         const usersContent = ids?.length
