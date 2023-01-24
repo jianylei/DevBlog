@@ -14,7 +14,7 @@ const Textarea = ({ setState, err, resetInputErr }) => {
     return (
         <div className={`form__textarea ${err ? 'errborder' : ''}`}>
             <Editor
-                apiKey='fo5qm0cg8ib5w52ryt8bkwt18xm5lwwjj90gxlu7q1zh9ir6'
+                apiKey={process.env.REACT_APP_TINYMCE_KEY}
                 onChange={handleChange}
                 init={{
                 plugins: 'link image lists',

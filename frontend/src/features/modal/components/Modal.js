@@ -4,7 +4,7 @@ import { setOpen, selectCurrentType, selectCurrentOpen } from '../modalSlice';
 import { MODAL } from '../../../constants/constants';
 import useOutsideAlerter from '../../../hooks/useOutsideAlerter'
 import SignIn from '../../auth/components/signin/SignIn'
-import SignUp from '../../users/components/SignUp';
+import SignUp from '../../users/components/signup/SignUp';
 
 const Modal = () => {
     const wrapperRef = useRef(null);
