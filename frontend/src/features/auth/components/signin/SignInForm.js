@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { setCredentials } from "../authSlice"
-import { selectCurrentOpen, setOpen } from "../../modal/modalSlice"
+import { setCredentials } from "../../authSlice"
+import { selectCurrentOpen, setOpen } from "../../../modal/modalSlice"
 
 const SignInForm = ({ setErrMsg, login }) => {
     const [username, setUsername] = useState('')

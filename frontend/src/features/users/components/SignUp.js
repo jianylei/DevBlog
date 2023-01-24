@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useAddNewUserMutation } from "./usersApiSlice"
-import { selectCurrentOpen, setOpen, setType } from "../modal/modalSlice"
-import { MODAL } from "../../constants/constants"
+import { useAddNewUserMutation } from "../usersApiSlice"
+import { selectCurrentOpen, setOpen, setType } from "../../modal/modalSlice"
+import { MODAL } from "../../../constants/constants"
 import { useNavigate } from "react-router-dom"
 
 const SignUp = () => {

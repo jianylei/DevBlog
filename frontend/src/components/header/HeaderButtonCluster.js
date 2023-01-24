@@ -1,11 +1,11 @@
 import useAuth from '../../hooks/useAuth'
 import { useLocation } from 'react-router-dom'
 import { REGEX } from '../../constants/constants'
-import SignInButton from '../../features/modal/SignInButton'
-import SignUpButton from '../../features/modal/SignUpButton'
-import SignOffButton from '../../features/auth/SignOffButton'
-import WriteButton from '../../features/posts/WriteButton'
-import PublishButton from "../../features/posts/PublishButton"
+import SignInButton from '../../features/modal/components/SignInButton'
+import SignUpButton from '../../features/modal/components/SignUpButton'
+import SignOffButton from '../../features/auth/components/SignOffButton'
+import WriteButton from '../../features/posts/components/buttons/WriteButton'
+import PublishButton from "../../features/posts/components/buttons/PublishButton"
 
 const HeaderButtonCluster = () => {
     const { role } = useAuth()

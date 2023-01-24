@@ -1,10 +1,10 @@
 import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { useGetUsersQuery } from '../users/usersApiSlice'
-import { setOpen, setType } from '../modal/modalSlice'
-import useAuth from '../../hooks/useAuth'
-import { MODAL } from '../../constants/constants'
+import { useGetUsersQuery } from '../usersApiSlice'
+import { setOpen, setType } from '../../modal/modalSlice'
+import useAuth from '../../../hooks/useAuth'
+import { MODAL } from '../../../constants/constants'
 
 const UserItem = ({ userId }) => {
     const { user } = useGetUsersQuery('usersList', {
@@ -50,7 +50,7 @@ const UserItem = ({ userId }) => {
             </div>
         )
 
-    } else return null
+    } else return undefined
 }
 
 const memoizedUserItem = memo(UserItem)

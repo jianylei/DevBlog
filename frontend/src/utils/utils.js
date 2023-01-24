@@ -1,9 +1,11 @@
 module.exports = { 
     getPathStrFromStr: (str, id) => {
-        return str.replace(/-|\||%|\/|\?|:|\\|\.|,+/g, ' ')
+        if (str) {
+            return str.replace(/-|\||%|\/|\?|:|\\|\.|,+/g, ' ')
             .replace(/ +/g, '-')
             .replace(/-$/, '')
             .toLowerCase() + (id ? '-' + id : '')
+        }
     },
 
     getBase64(file, cb) {

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSendLogoutMutation } from './authApiSlice'
+import { useSendLogoutMutation } from '../authApiSlice'
 
 const SignOffButton = () => {
     const [sendLogout, {

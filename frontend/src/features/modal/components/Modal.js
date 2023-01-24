@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setOpen, selectCurrentType, selectCurrentOpen } from './modalSlice';
-import { MODAL } from '../../constants/constants';
-import useOutsideAlerter from '../../hooks/useOutsideAlerter'
-import SignIn from '../auth/SignIn/SignIn'
-import SignUp from '../users/SignUp';
+import { setOpen, selectCurrentType, selectCurrentOpen } from '../modalSlice';
+import { MODAL } from '../../../constants/constants';
+import useOutsideAlerter from '../../../hooks/useOutsideAlerter'
+import SignIn from '../../auth/components/signin/SignIn'
+import SignUp from '../../users/components/SignUp';
 
 const Modal = () => {
     const wrapperRef = useRef(null);

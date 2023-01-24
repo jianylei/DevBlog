@@ -49,14 +49,14 @@
   margin-bottom: 0.5em;
 }
 
-.errborder {
-  border: 2px solid var(--ERROR);
-  border-radius: 2px;
-}
-
 .errmsg a:any-link {
   color: var(--ERROR);
   text-decoration: underline;
+}
+
+.errborder {
+  border: 2px solid var(--ERROR);
+  border-radius: 2px;
 }
 
 .nowrap {
@@ -826,7 +826,6 @@ label.form-cover__container {
 .form-input-unselect.show {
   display: block;
 }
-
 
 /*  || MEDIA QUERIES */
 @media screen and (min-width: 870px) {

@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { Outlet } from 'react-router-dom'
-import Modal from '../features/modal/Modal'
+import Modal from '../features/modal/components/Modal'
 import Header from "./header/Header"
 
 const Layout = () => {

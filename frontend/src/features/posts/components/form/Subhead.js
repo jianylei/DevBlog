@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux'
-import { setSubhead as setPostSub } from '../postSlice'
+import { setSubhead as setPostSub } from '../../postSlice'
 
-const Subhead = ({ subState, err, resetInputErr }) => {
-    const [subhead, setSubhead] = subState
+const Subhead = ({ state, err, resetInputErr }) => {
+    const [subhead, setSubhead] = state
 
     const dispatch = useDispatch()
 

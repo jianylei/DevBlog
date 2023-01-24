@@ -1,15 +1,10 @@
-import { useLocation, useParams } from "react-router-dom"
-import { useEffect } from "react"
-import { selectAllUsers, useGetUsersQuery } from "../users/usersApiSlice"
-import { TABS } from "../../constants/constants"
-import NoMatch from "../../components/NoMatch"
-import { useGetPostsQuery } from "../posts/postsApiSlice"
-import { useGetPostByUsernameQuery } from "../posts/postsApiSlice"
-import { useGetUserByUsernameQuery } from "../users/usersApiSlice"
-import { useSelector } from "react-redux"
-import { DIMENSIONS, TAB } from "../../constants/constants"
-import PostItem from '../posts/PostItem'
-import useWindowDimensions from "../../hooks/useWindowDimensions"
+import { useParams } from "react-router-dom"
+import { useGetUsersQuery } from "../usersApiSlice"
+import NoMatch from "../../../components/NoMatch"
+import { useGetPostsQuery } from "../../posts/postsApiSlice"
+import { DIMENSIONS, TABS } from "../../../constants/constants"
+import PostItem from '../../posts/components/postItem/PostItem'
+import useWindowDimensions from "../../../hooks/useWindowDimensions"
 
 const User = () => {
     const { username } = useParams()

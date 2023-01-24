@@ -1,20 +1,20 @@
 import { useDispatch } from "react-redux"
-import { setOpen, setType } from "./modalSlice"
-import { MODAL } from '../../constants/constants'
+import { setOpen, setType } from "../modalSlice"
+import { MODAL } from '../../../constants/constants'
 
-const SignInButton = () => {
+const SignUpButton = () => {
     const dispatch = useDispatch()
 
     const clickHandle = () => {
-        dispatch(setType({ type: MODAL.TYPE.SignIn }))
+        dispatch(setType({ type: MODAL.TYPE.SignUp }))
         dispatch(setOpen({ open: true }))
     }
 
     return (
         <button className="login__button" onClick={() => clickHandle()}>
-            Sign In
+            Sign Up
         </button>
     )
 }
 
-export default SignInButton
+export default SignUpButton

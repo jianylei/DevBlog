@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux"
-import { setTags as setPostTags } from "../postSlice"
+import { setTags as setPostTags } from "../../postSlice"
 
-const Tags = ({ tagsState }) => {
-    const [tags, setTags] = tagsState
+const Tags = ({ state }) => {
+    const [tags, setTags] = state
 
     const dispatch = useDispatch()
 
