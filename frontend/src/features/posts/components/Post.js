@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useLocation, useParams } from "react-router-dom"
+import { useLocation, useNavigate, useParams } from "react-router-dom"
 import { useGetUsersQuery } from "../../users/usersApiSlice"
 import { useGetPostsQuery } from "../postsApiSlice"
 import { TABS } from "../../../constants/constants"
@@ -15,7 +15,9 @@ const Post = () => {
     const { title } = useParams();
     const id = getIdFromPathStr(title)
 
-    const { pathname } = useLocation();
+    const { pathname } = useLocation()
+
+    const navigate = useNavigate()
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -39,6 +41,7 @@ const Post = () => {
   
     return (
         <div className='blog-content__container'>
+            <button onClick={() => navigate('/write/'+getPathStrFromStr(post.title, post.id))}>edit</button>
             <PostHeader user={user} post={post} />
             <PostTitle post={post} />
             <PostContent post={post} />

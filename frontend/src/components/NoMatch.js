@@ -4,35 +4,15 @@ import { TABS } from "../constants/constants"
 const NoMatch = ({ tab }) => {
     const navigate = useNavigate()
 
-    let str = !tab ? TABS.Page.toLowerCase()
-        : tab === TABS.Review || tab === TABS.Pending
-        ? TABS.Post.toLowerCase()
-        : tab.toLowerCase()
-
-    let path
-    if (tab === TABS.Author) {
-        path = '/authors'
-    } else if (tab === TABS.Pending) {
-        path = '/pending'
-    } else if (tab === TABS.Review) {
-        path = '/review'
-    } else {
-        path = '/'
-    }
-
-    const clickHandler = () => navigate(path)
-
     return (
-        <div className={ str === TABS.Page.toLowerCase() 
-            ? 'no-match-page' 
-            : 'no-match' }
-        >
+        <div>
             <h3>
-                This {str} is not available
+                This page is not available
             </h3>
-            <p>The link may be broken, or the {str} may have been removed. 
+            <p>The link may be broken, or the post / user may have been removed. 
                 Check to see if the link you're trying to open is correct.</p>
-            <button onClick={clickHandler}>back</button>
+            <button onClick={() => navigate(-1)}>back</button>
+            <button onClick={() => navigate('/')}>home</button>
         </div>
     )
 }
