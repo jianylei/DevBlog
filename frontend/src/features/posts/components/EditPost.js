@@ -16,6 +16,7 @@ import Subhead from "./form/Subhead"
 import Tags from "./form/Tags"
 import Cover from "./form/Cover"
 import Textarea from "./form/Textarea"
+import { imgFileToBase64 } from "../../../utils/postFormUtils";
 
 const EditPost = () => {
     const [title, setTitle] = useState('')
@@ -66,17 +67,58 @@ const EditPost = () => {
             setTitle(post.title)
             setSubhead(post.subHeading)
             setTags(tagsStr)
-            setCover(post.cover)
             setContent(post.content)
+            setCover(post.cover)
 
-            dispatch(setPost({
-                id,
-                title: post.title,
-                subHeading: post.subHeading,
-                tags: tagsStr,
-                cover: post.cover,
-                content: post.content
-            }))
+            const fetchImage = async (dataUrl) => {
+                const blob = await (await fetch(dataUrl)).blob()
+                console.log(blob)
+                imgFileToBase64(blob, (_cover) => {
+                    dispatch(setPost({
+                        id,
+                        title: post.title,
+                        subHeading: post.subHeading,
+                        tags: tagsStr,
+                        cover: _cover,
+                        content: post.content
+                    }))
+                })
+            }
+
+            if (post.cover) fetchImage(post.cover)
+            else {
+                dispatch(setPost({
+                    id,
+                    title: post.title,
+                    subHeading: post.subHeading,
+                    tags: tagsStr,
+                    cover: post.cover,
+                    content: post.content
+                }))
+            }
+/*
+            if (post.cover) {
+                setCover(post.cover)
+                imgFileToBase64(post.cover, (_cover) => {
+                    dispatch(setPost({
+                        id,
+                        title: post.title,
+                        subHeading: post.subHeading,
+                        tags: tagsStr,
+                        cover: _cover,
+                        content: post.content
+                    }))
+                })
+            } else {
+                dispatch(setPost({
+                    id,
+                    title: post.title,
+                    subHeading: post.subHeading,
+                    tags: tagsStr,
+                    cover: post.cover,
+                    content: post.content
+                }))
+            }*/
         }
     }, [isSuccess])
 
@@ -98,6 +140,10 @@ const EditPost = () => {
     if (isSuccess && post) {
         pageContent = (
             <div className="form__container">
+                <button onClick={(e) => {
+                    e.preventDefault()
+                    console.log(cover)
+                }}>asdasdasd</button>
                 <form className="form">
                     <Title
                         state={[title, setTitle]}

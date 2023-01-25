@@ -1,12 +1,13 @@
 import { IMGPATH } from "../constants/constants"
 
-
 export const stringToTags = (str) => {
     const tags = str.toLowerCase().split(/\s?[, ]\s?/)
     return tags.filter(n => n)
 }
 
 export const dataURLtoFile = (dataurl, filename) => {
+    //const regex = /^http:\/\/.*.jpg$/
+
     var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
     bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
     while(n--){

@@ -17,6 +17,7 @@ const Cover = ({ state }) => {
     }
 
     const handleRemove = () => {
+        dispatch(setPostCover(''))
         setCover('')
     }
 
