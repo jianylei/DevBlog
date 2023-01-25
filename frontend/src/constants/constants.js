@@ -44,7 +44,8 @@ module.exports = {
             POSTS: /^\/$/,
             AUTHORS: /^\/authors(\/)?$/,
             AUTHOR: /^\/authors(\/)?/,
-            WRITE: /^\/write(\/)?$/
+            WRITE: /^\/write(\/)?$/,
+            EDIT: /^\/write\/.*$/,
         }
     })
 }

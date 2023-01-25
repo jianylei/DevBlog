@@ -6,6 +6,7 @@ import SignUpButton from '../../features/modal/components/SignUpButton'
 import SignOffButton from '../../features/auth/components/SignOffButton'
 import WriteButton from '../../features/posts/components/buttons/WriteButton'
 import PublishButton from "../../features/posts/components/buttons/PublishButton"
+import UpdateButton from '../../features/posts/components/buttons/UpdateButton'
 
 const HeaderButtonCluster = () => {
     const { role } = useAuth()
@@ -21,12 +22,17 @@ const HeaderButtonCluster = () => {
         )
     }
 
+    const routeButton = () => {
+        if (REGEX.ROUTES.WRITE.test(pathname)) return <PublishButton />
+        else if (REGEX.ROUTES.EDIT.test(pathname)) {
+            return <UpdateButton />
+        }
+        return <WriteButton />
+    }
+
     return (
         <nav className="main-header__nav">
-            { REGEX.ROUTES.WRITE.test(pathname)
-                ? <PublishButton />
-                : <WriteButton />
-            }
+            {routeButton()}
             <SignOffButton />
         </nav>
     )

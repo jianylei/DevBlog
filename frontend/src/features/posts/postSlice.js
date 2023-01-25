@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const postSlice = createSlice({
     name: 'post',
     initialState: {
+        id: '',
         title: '',
         subHeading: '',
         content: '',
@@ -12,6 +13,23 @@ const postSlice = createSlice({
         errMsg: ''
      },
     reducers: {
+        setPost: (state, action) => {
+            const {
+                id,
+                title,
+                subHeading,
+                tags,
+                cover,
+                content
+            } = action.payload
+
+            state.id = id
+            state.title = title
+            state.subHeading = subHeading
+            state.tags = tags
+            state.cover = cover
+            state.content = content
+        },
         setTitle: (state, action) => {
             const { title } = action.payload
 
@@ -48,6 +66,7 @@ const postSlice = createSlice({
             state.errMsg = ''
         },
         reset: (state, action) => {
+            state.id = ''
             state.title = ''
             state.subHeading = ''
             state.content = ''
@@ -60,6 +79,7 @@ const postSlice = createSlice({
 })
 
 export const {
+    setPost,
     setTitle,
     setSubhead,
     setContent,

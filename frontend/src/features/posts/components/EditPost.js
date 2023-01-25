@@ -1,8 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams, useLocation } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
-import { reset, resetError, selectCurrentPostErr } from "../postSlice"
 import { useGetPostsQuery } from "../postsApiSlice"
+import {
+    setPost,
+    resetError,
+    reset,
+    selectCurrentPostErr,
+} from "../postSlice"
 import NoMatch from "../../../components/NoMatch"
 import { TABS } from "../../../constants/constants"
 import { getIdFromPathStr, getPathStrFromStr } from "../../../utils/utils"
@@ -11,7 +16,6 @@ import Subhead from "./form/Subhead"
 import Tags from "./form/Tags"
 import Cover from "./form/Cover"
 import Textarea from "./form/Textarea"
-import EditTextarea from "./form/EditTextare";
 
 const EditPost = () => {
     const [title, setTitle] = useState('')
@@ -22,8 +26,6 @@ const EditPost = () => {
     const [errContent, setErrContent] = useState(false)
     const [tags, setTags] = useState('')
     const [cover , setCover] = useState('')
-
-    const [initVal, setInitVal] = useState('')
 
     const { title: paramsTitle  } = useParams()
     const id = getIdFromPathStr(paramsTitle)
@@ -44,16 +46,37 @@ const EditPost = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-    }, [])
+        return () => {
+            setTitle('')
+            setErrContent(false)
+            setSubhead('')
+            setErrSub(false)
+            setContent('')
+            setErrContent(false)
+            setTags('')
+            setCover('')
+            dispatch(reset())
+          }
+    }, [dispatch])
 
     // TODO: check back end to see how unchanged cover saves
     useEffect(() => {
-        if (isSuccess) {
+        if (isSuccess && post) {
+            const tagsStr = post.tags?.join() || ''
             setTitle(post.title)
             setSubhead(post.subHeading)
-            setTags(post.tags)
+            setTags(tagsStr)
             setCover(post.cover)
             setContent(post.content)
+
+            dispatch(setPost({
+                id,
+                title: post.title,
+                subHeading: post.subHeading,
+                tags: tagsStr,
+                cover: post.cover,
+                content: post.content
+            }))
         }
     }, [isSuccess])
 
@@ -72,7 +95,7 @@ const EditPost = () => {
         pageContent = <NoMatch tab={ TABS.Post }/>
     } 
 
-    if (isSuccess) {
+    if (isSuccess && post) {
         pageContent = (
             <div className="form__container">
                 <form className="form">
@@ -88,7 +111,7 @@ const EditPost = () => {
                     />
                     <Tags state={[tags, setTags]} />
                     <Cover state={[cover, setCover]} />
-                    <EditTextarea
+                    <Textarea
                         state={[content, setContent]}
                         err={errContent}
                         resetInputErr={resetInputErr}
@@ -98,34 +121,6 @@ const EditPost = () => {
         )
     }
     
-    
-    /*
-    else {
-        pageContent = (
-            <div className="form__container">
-                <form className="form">
-                    <Title
-                    state={[title, setTitle]}
-                    err={errTitle}
-                    resetInputErr={resetInputErr}
-                    />
-                    <Subhead
-                    state={[subhead, setSubhead]}
-                    err={errSub}
-                    resetInputErr={resetInputErr}
-                    />
-                    <Tags state={[tags, setTags]} />
-                    <Cover state={[cover, setCover]} />
-                    <Textarea
-                    setState={setContent}
-                    err={errContent}
-                    resetInputErr={resetInputErr}
-                    />
-                </form>
-            </div>
-        )
-    }*/
-
     return pageContent
 }
 

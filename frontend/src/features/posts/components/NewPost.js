@@ -6,6 +6,7 @@ import Subhead from "./form/Subhead"
 import Tags from "./form/Tags"
 import Cover from "./form/Cover"
 import Textarea from "./form/Textarea"
+import EditTextarea from "./form/Textarea"
 
 const NewPost = () => {
     const [title, setTitle] = useState('')
@@ -69,7 +70,7 @@ const NewPost = () => {
                 <Tags state={[tags, setTags]} />
                 <Cover state={[cover, setCover]} />
                 <Textarea
-                  setState={setContent}
+                  state={[content, setContent]}
                   err={errContent}
                   resetInputErr={resetInputErr}
                 />

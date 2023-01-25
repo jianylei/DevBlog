@@ -23,9 +23,12 @@ const Post = () => {
         window.scrollTo(0, 0)
     }, [])
 
-    const { post } = useGetPostsQuery('postsList', {
-        selectFromResult: ({ data }) => ({
-            post: data?.entities[id]
+    const { post, isLoading, isSuccess, isError } = useGetPostsQuery('postsList', {
+        selectFromResult: ({ data, isLoading, isSuccess, isError }) => ({
+            post: data?.entities[id],
+            isLoading,
+            isSuccess, 
+            isError
         })
     })
 
@@ -35,19 +38,24 @@ const Post = () => {
         })
     })
 
-    if (!post || ('/'+getPathStrFromStr(post.title, post.id) !== pathname)) {
-        return <NoMatch tab={ TABS.Post }/>
+    let content
+    if (!isLoading && (!post || ('/'+getPathStrFromStr(post.title, post.id) !== pathname))) {
+        content = <NoMatch tab={ TABS.Post }/>
     }
-  
-    return (
-        <div className='blog-content__container'>
-            <button onClick={() => navigate('/write/'+getPathStrFromStr(post.title, post.id))}>edit</button>
-            <PostHeader user={user} post={post} />
-            <PostTitle post={post} />
-            <PostContent post={post} />
-            <PostTags post={post} />
-        </div>
-    )
+    
+    if (isSuccess && post) {
+        content = (
+            <div className='blog-content__container'>
+                <button onClick={() => navigate('/write/'+getPathStrFromStr(post.title, post.id))}>edit</button>
+                <PostHeader user={user} post={post} />
+                <PostTitle post={post} />
+                <PostContent post={post} />
+                <PostTags post={post} />
+            </div>
+        )
+    }
+
+    return content
 }
 
 export default Post
