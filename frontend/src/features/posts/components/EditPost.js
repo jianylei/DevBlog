@@ -10,13 +10,13 @@ import {
 } from "../postSlice"
 import NoMatch from "../../../components/NoMatch"
 import { TABS } from "../../../constants/constants"
-import { getIdFromPathStr, getPathStrFromStr } from "../../../utils/utils"
 import Title from "./form/Title"
 import Subhead from "./form/Subhead"
 import Tags from "./form/Tags"
 import Cover from "./form/Cover"
 import Textarea from "./form/Textarea"
-import { imgFileToBase64, parseImgFromHTML, fetchImageBlob, parseAndSetImgFromHTML } from "../../../utils/postFormUtils"
+import { imgFileToBase64, fetchImageBlob } from "../../../utils/postFormUtils"
+import { getIdFromPathStr, getPathStrFromStr } from "../../../utils/utils"
 
 const EditPost = () => {
     const [title, setTitle] = useState('')
@@ -114,10 +114,10 @@ const EditPost = () => {
     if (isSuccess && post) {
         pageContent = (
             <div className="form__container">
-                <button onClick={(e) => {
-                    e.preventDefault()
-                    console.log(cover)
-                }}>asdasdasd</button>
+                { isError && errMsg
+                    ? <div className="errmsg">{errMsg}</div>
+                    : undefined
+                }   
                 <form className="form">
                     <Title
                         state={[title, setTitle]}

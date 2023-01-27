@@ -49,6 +49,10 @@ const NewPost = () => {
 
     return (
         <div className="form__container">
+            { isError && errMsg
+                ? <div className="errmsg">{errMsg}</div>
+                : undefined
+            }
             <form className="form">
                 <Title
                   state={[title, setTitle]}
