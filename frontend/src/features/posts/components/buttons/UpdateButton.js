@@ -50,7 +50,7 @@ const UpdateButton = () => {
             await asyncParseImgFromHTML(content, name, async(obj) => {
                 const { str, imageList, imageNames } = obj
 
-                await delay(1000)
+                await delay(300)
 
                 if (imageList?.length || cover) {
                     const data = new FormData()
@@ -70,8 +70,7 @@ const UpdateButton = () => {
                         data.append('posts', newFile)
                         coverUrl = IMGPATH.Images + 'posts/' + name + '/' + coverName
                     }
-                    console.log('yayyyyy')
-                    console.log(str)
+
                     updatePost({
                         id,
                         title,
@@ -85,8 +84,6 @@ const UpdateButton = () => {
                         console.log(error)
                     })
                 } else {
-                    console.log('noooooo')
-                    console.log(str)
                     updatePost({
                         id,
                         title,
@@ -98,7 +95,6 @@ const UpdateButton = () => {
                 }
             })
         } else {
-            console.log('asdasd')
             dispatch(setError({ errMsg: '' }))
         }
     }
