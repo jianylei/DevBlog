@@ -9,6 +9,8 @@ import PostHeader from "./post/PostHeader"
 import PostTitle from "./post/PostTitle"
 import PostContent from "./post/PostContent"
 import PostTags from "./post/PostTags"
+import EditButton from "./buttons/EditButton"
+import useRequireAuthUser from "../../../hooks/useRequireAuthUser"
 
 
 const Post = () => {
@@ -23,7 +25,7 @@ const Post = () => {
         window.scrollTo(0, 0)
     }, [])
 
-    const { post, isLoading, isSuccess, isError } = useGetPostsQuery('postsList', {
+    const { post, isLoading, isSuccess } = useGetPostsQuery('postsList', {
         selectFromResult: ({ data, isLoading, isSuccess, isError }) => ({
             post: data?.entities[id],
             isLoading,
@@ -46,7 +48,7 @@ const Post = () => {
     if (isSuccess && post) {
         content = (
             <div className='blog-content__container'>
-                <button onClick={() => navigate('/write/'+getPathStrFromStr(post.title, post.id))}>edit</button>
+                <EditButton post={post} />
                 <PostHeader user={user} post={post} />
                 <PostTitle post={post} />
                 <PostContent post={post} />

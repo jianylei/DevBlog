@@ -4,9 +4,15 @@ import { getTimeSince } from "../../../../utils/utils"
 import { DELETED, DIMENSIONS } from "../../../../constants/constants"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from "@fortawesome/free-regular-svg-icons"
+import useAuth from "../../../../hooks/useAuth"
+import { getPathStrFromStr } from "../../../../utils/utils"
 
 const PostHeader = ({ user, post }) => {
     const { width } = useWindowDimensions()
+
+    const { id } = useAuth()
+
+    console.log(id)
 
     const navigate = useNavigate()
 
@@ -19,6 +25,12 @@ const PostHeader = ({ user, post }) => {
     const profileImg = user?.image && active
         ? `url(${user?.image})`
         : 'var(--NO-IMAGE)'
+
+    const headerButton = () => {
+        if (post.user !== id) {
+            return <button className="post-follow-button">Follow</button>
+        }
+    }
 
     return (
         <div className="post-header__container">
@@ -37,7 +49,7 @@ const PostHeader = ({ user, post }) => {
                         {post.author}
                     </div>
                     { width <= DIMENSIONS.WIDTH.M
-                        ? <button className="post-follow-button">Follow</button>
+                        ? headerButton()
                         : undefined
                     }
                 </div>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useParams, useLocation } from "react-router-dom"
+import { useParams, useLocation, useNavigate } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { useGetPostsQuery } from "../postsApiSlice"
 import {
@@ -17,6 +17,7 @@ import Cover from "./form/Cover"
 import Textarea from "./form/Textarea"
 import { imgFileToBase64, fetchImageBlob } from "../../../utils/postFormUtils"
 import { getIdFromPathStr, getPathStrFromStr } from "../../../utils/utils"
+import useAuth from "../../../hooks/useAuth";
 
 const EditPost = () => {
     const [title, setTitle] = useState('')
@@ -38,6 +39,10 @@ const EditPost = () => {
 
     const dispatch = useDispatch()
 
+    const auth = useAuth()
+
+    const navigate = useNavigate()
+
     const { post, isLoading, isSuccess } = useGetPostsQuery('postsList', {
         selectFromResult: ({ data, isLoading, isSuccess }) => ({
             post: data?.entities[id],
@@ -55,6 +60,8 @@ const EditPost = () => {
 
     useEffect(() => {
         if (isSuccess && post) {
+            if (auth.id !== post.user) navigate('/', { replace: true })
+
             const tagsStr = post.tags?.join() || ''
             setTitle(post.title)
             setSubhead(post.subHeading)

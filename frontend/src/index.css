@@ -613,6 +613,7 @@ body .modal-open {
   flex-direction: column;
   justify-content: space-between;
   padding: 1px 0 2px;
+  width: 100%;
 }
 
 .post-username {
@@ -631,6 +632,7 @@ body .modal-open {
 .post-header-data-top {
   display: flex;
   gap: 10px;
+  width: 100%;
 }
 
 .post-header-data-bottom {
@@ -930,7 +932,7 @@ label.form-cover__container {
 
 
 
-
+/*
 
 .card__container img,
 .card-noimage,
@@ -957,7 +959,7 @@ label.form-cover__container {
 .card-noimage,
 .card__container-author-noimage {
   background-image: var(--NO-IMAGE);
-}
+}*/
 
 
 /*  || LAYOUT 
