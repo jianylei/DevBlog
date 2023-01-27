@@ -6,28 +6,39 @@ export const stringToTags = (str) => {
 }
 
 export const dataURLtoFile = (dataurl, filename) => {
-    //const regex = /^http:\/\/.*.jpg$/
-
     var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-    bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+    bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n)
     while(n--){
-        u8arr[n] = bstr.charCodeAt(n);
+        u8arr[n] = bstr.charCodeAt(n)
     }
-    return new File([u8arr], filename, {type:mime});
+    return new File([u8arr], filename, {type:mime})
 }
 
 export const imgFileToBase64 = (file, cb) => {
     const reader = new FileReader()
     reader.readAsDataURL(file)
-    reader.onload = function () {
+    reader.onload = () => {
         cb(reader.result)
     }
-    reader.onerror = function (error) {
+    reader.onerror = (error) => {
       console.log('Error: ', error)
     }
 }
 
+export const fetchImageBlob = async (dataUrl, cb) => {
+    if (!dataUrl || !cb) return
+
+    const blob = await (await fetch(dataUrl)).blob()
+    cb(blob)
+}
+
 export const parseImgFromHTML = (str, postsName) => {
+    if (!str || ! postsName) return ({
+        str: '',
+        imageList: [],
+        imageNames: []
+    })
+
     const imageList = []
     const imageNames = []
     let newStr = ''
@@ -49,6 +60,49 @@ export const parseImgFromHTML = (str, postsName) => {
     }
 
     return ({
+        str: newStr,
+        imageList,
+        imageNames
+    })
+}
+
+export const asyncParseImgFromHTML =  async (str, postsName, cb) => {
+    if (!str || !postsName || ! cb) return ({
+        str: '',
+        imageList: [],
+        imageNames: []
+    })
+
+    const imageList = []
+    const imageNames = []
+    let newStr = ''
+
+    const subStr = str.split('src="')
+
+    newStr += subStr[0]
+
+    for (let i = 1; i < subStr.length; i++) {
+        const before = subStr[i].slice(0, subStr[i].indexOf('"'))
+        const after = subStr[i].slice(subStr[i].indexOf('"') + 1)
+        const name = Date.now() + '-' + Math.round(Math.random() * 1E9) + '.jpg'
+
+        imageNames.push(name)
+            
+        newStr += 'src="' + IMGPATH.Images + 'posts/' + postsName + '/' + name 
+            + '"' + after
+
+        if (/^http:\/\/.*.jpg$/.test(before)) {
+            await fetchImageBlob(before, (blob) => {
+                imgFileToBase64(blob, (image) => {
+                    imageList.push(image)
+                })
+            }) 
+        } else {
+            imageList.push(before)
+        }
+    }
+
+    cb ({
         str: newStr,
         imageList,
         imageNames

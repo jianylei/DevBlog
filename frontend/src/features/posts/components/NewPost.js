@@ -25,14 +25,7 @@ const NewPost = () => {
     useEffect(() => {
       window.scrollTo(0, 0)
       return () => {
-        setTitle('')
-        setErrContent(false)
-        setSubhead('')
-        setErrSub(false)
-        setContent('')
-        setErrContent(false)
-        setTags('')
-        setCover('')
+
         dispatch(reset())
       }
     }, [dispatch])

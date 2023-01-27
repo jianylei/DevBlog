@@ -1,5 +1,4 @@
 import { Editor } from "@tinymce/tinymce-react"
-import { useState } from "react"
 import { useDispatch } from "react-redux"
 import { setContent as setPostContent } from "../../postSlice"
 

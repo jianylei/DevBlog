@@ -16,7 +16,7 @@ import Subhead from "./form/Subhead"
 import Tags from "./form/Tags"
 import Cover from "./form/Cover"
 import Textarea from "./form/Textarea"
-import { imgFileToBase64 } from "../../../utils/postFormUtils";
+import { imgFileToBase64, parseImgFromHTML, fetchImageBlob, parseAndSetImgFromHTML } from "../../../utils/postFormUtils"
 
 const EditPost = () => {
     const [title, setTitle] = useState('')
@@ -48,19 +48,10 @@ const EditPost = () => {
     useEffect(() => {
         window.scrollTo(0, 0)
         return () => {
-            setTitle('')
-            setErrContent(false)
-            setSubhead('')
-            setErrSub(false)
-            setContent('')
-            setErrContent(false)
-            setTags('')
-            setCover('')
             dispatch(reset())
           }
     }, [dispatch])
 
-    // TODO: check back end to see how unchanged cover saves
     useEffect(() => {
         if (isSuccess && post) {
             const tagsStr = post.tags?.join() || ''
@@ -70,22 +61,30 @@ const EditPost = () => {
             setContent(post.content)
             setCover(post.cover)
 
-            const fetchImage = async (dataUrl) => {
-                const blob = await (await fetch(dataUrl)).blob()
-                console.log(blob)
-                imgFileToBase64(blob, (_cover) => {
-                    dispatch(setPost({
-                        id,
-                        title: post.title,
-                        subHeading: post.subHeading,
-                        tags: tagsStr,
-                        cover: _cover,
-                        content: post.content
-                    }))
+/*
+            parseAndSetImgFromHTML(post.content, (obj) => {
+                console.log(obj.imageList)
+                //setContent(obj.str)
+            })*/
+            //const { str, imageList, imageNames } = parseAndSetImgFromHTML(post.content, name)
+            
+            //console.log(imageList)
+
+//test()
+            if (post.cover) {
+                fetchImageBlob(post.cover, (blob) => {
+                    imgFileToBase64(blob, (_cover) => {
+                        dispatch(setPost({
+                            id,
+                            title: post.title,
+                            subHeading: post.subHeading,
+                            tags: tagsStr,
+                            cover: _cover,
+                            content: post.content
+                        }))
+                    })
                 })
             }
-
-            if (post.cover) fetchImage(post.cover)
             else {
                 dispatch(setPost({
                     id,
@@ -96,31 +95,8 @@ const EditPost = () => {
                     content: post.content
                 }))
             }
-/*
-            if (post.cover) {
-                setCover(post.cover)
-                imgFileToBase64(post.cover, (_cover) => {
-                    dispatch(setPost({
-                        id,
-                        title: post.title,
-                        subHeading: post.subHeading,
-                        tags: tagsStr,
-                        cover: _cover,
-                        content: post.content
-                    }))
-                })
-            } else {
-                dispatch(setPost({
-                    id,
-                    title: post.title,
-                    subHeading: post.subHeading,
-                    tags: tagsStr,
-                    cover: post.cover,
-                    content: post.content
-                }))
-            }*/
         }
-    }, [isSuccess])
+    }, [isSuccess, id, post, dispatch])
 
     const resetInputErr = () => {
         if (isError) {

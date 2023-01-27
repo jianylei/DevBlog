@@ -97,7 +97,7 @@ const PublishButton = () => {
                         console.log(error)
                     })
                 } else {
-                    await addNewPost({
+                    addNewPost({
                         user: userId,
                         title,
                         subHeading,
@@ -106,12 +106,10 @@ const PublishButton = () => {
                         cover: coverUrl
                     })
                 }
-                
             }        
         } else {
             dispatch(setError({ errMsg: '' }))
         }
-        
     }
 
     return (
