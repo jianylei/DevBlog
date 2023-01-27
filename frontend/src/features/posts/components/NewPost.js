@@ -24,14 +24,7 @@ const NewPost = () => {
     useEffect(() => {
       window.scrollTo(0, 0)
       return () => {
-        setTitle('')
-        setErrContent(false)
-        setSubhead('')
-        setErrSub(false)
-        setContent('')
-        setErrContent(false)
-        setTags('')
-        setCover('')
+
         dispatch(reset())
       }
     }, [dispatch])
@@ -55,6 +48,10 @@ const NewPost = () => {
 
     return (
         <div className="form__container">
+            { isError && errMsg
+                ? <div className="errmsg">{errMsg}</div>
+                : undefined
+            }
             <form className="form">
                 <Title
                   state={[title, setTitle]}
@@ -69,7 +66,7 @@ const NewPost = () => {
                 <Tags state={[tags, setTags]} />
                 <Cover state={[cover, setCover]} />
                 <Textarea
-                  setState={setContent}
+                  state={[content, setContent]}
                   err={errContent}
                   resetInputErr={resetInputErr}
                 />

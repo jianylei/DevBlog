@@ -9,7 +9,7 @@ const { removePostDirByName } = require('../utils/postControllerUtils')
 // @route GET /post
 // @access Public
 const getAllPosts = async (req, res) => {
-    const posts = await Post.find({ status: STATUS.Approved }).lean()
+    const posts = await Post.find({ status: STATUS.Approved }).sort({_id:-1}).lean()
 
     if (!posts?.length) return res.status(400).json({ message: 'No posts found' })
 
@@ -69,9 +69,6 @@ const createNewPost = async (req, res) => {
     const status = role === ROLES.Admin || role === ROLES.Moderator
         ? STATUS.Approved
         : STATUS.Pending
-
-        console.log('role :' +role)
-    console.log('status :' +status)
 
     const post = await Post.create({
         user,

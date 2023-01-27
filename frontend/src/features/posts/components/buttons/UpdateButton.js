@@ -1,70 +1,57 @@
 import { useDispatch, useSelector } from "react-redux"
-import { useAddNewPostMutation } from "../../postsApiSlice"
+import { useUpdatePostMutation } from "../../postsApiSlice"
 import { selectCurrentPost, setError } from "../../postSlice"
-import { useGetUsersQuery } from "../../../users/usersApiSlice"
 import { useUploadMutation } from "../../../uploads/uploadApiSlice"
-import { stringToTags, parseImgFromHTML, dataURLtoFile } from "../../../../utils/postFormUtils"
-import { getPathStrFromStr } from "../../../../utils/utils"
-import useAuth from "../../../../hooks/useAuth"
+import { stringToTags, dataURLtoFile, asyncParseImgFromHTML } from "../../../../utils/postFormUtils"
+import { getPathStrFromStr, delay } from "../../../../utils/utils"
 import { IMGPATH } from "../../../../constants/constants"
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 
-const PublishButton = () => {
+const UpdateButton = () => {
     const post = useSelector(selectCurrentPost)
-
-    const { username } = useAuth()
 
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
 
-    const {
-        data: users,
-        isSuccess: usersSuccess,
-    } = useGetUsersQuery('usersList')
-
     const [upload, {
         isLoading: uploadLoading,
         isError: uploadIsError,
     }] = useUploadMutation()
-    
 
-    const [addNewPost, {
-        isLoading: addPostLoading,
-        isSuccess: addPostSuccess,
-        isError: addPostIsError,
-        error: addPostError
-    }] = useAddNewPostMutation()
+    const [updatePost, {
+        isSuccess: updatePostSuccess,
+        isError: updatePostIsError,
+        error: updatePostError
+    }] = useUpdatePostMutation()
 
     useEffect(() => {
-        if (addPostSuccess && !uploadLoading && !uploadIsError) {
+        if (updatePostSuccess && !uploadLoading && !uploadIsError) {
             navigate('/')
         }
-    }, [navigate, addPostSuccess, uploadIsError, uploadLoading])
+    }, [navigate, updatePostSuccess, uploadIsError, uploadLoading])
 
     useEffect(() => {
-        if (addPostIsError) dispatch(setError({ errMsg: addPostError.data?.message }))
-    }, [addPostLoading, addPostError, dispatch, addPostIsError])
+        if (updatePostIsError) dispatch(setError({ errMsg: updatePostError.data?.message }))
+    }, [dispatch, updatePostError, updatePostIsError])
 
-    const canSave = [post.title, post.subHeading, post.content].every(Boolean) && usersSuccess
+    const canSave = [post.title, post.subHeading, post.content].every(Boolean)
 
     const handlePublish = async (e) => {
         e.preventDefault()
 
         if (canSave) {
-            const { ids, entities } = users
-            const userId = ids.find(id => entities[id]?.username === username)
-    
-            if (userId) {
-                const { title, subHeading, content, tags, cover } = post
-                const name = getPathStrFromStr(title)
-                const { str, imageList, imageNames } = parseImgFromHTML(content, name)
-    
-                const tagsList = stringToTags(tags)
-    
-                let coverUrl = ''
-    
+            const { id, title, subHeading, content, tags, cover } = post
+            const name = getPathStrFromStr(title)
+            const tagsList = stringToTags(tags)
+            let coverUrl = ''
+
+            await asyncParseImgFromHTML(content, name, async(obj) => {
+                const { str, imageList, imageNames } = obj
+
+                await delay(300)
+
                 if (imageList?.length || cover) {
                     const data = new FormData()
         
@@ -84,8 +71,8 @@ const PublishButton = () => {
                         coverUrl = IMGPATH.Images + 'posts/' + name + '/' + coverName
                     }
 
-                    addNewPost({
-                        user: userId,
+                    updatePost({
+                        id,
                         title,
                         subHeading,
                         content: str,
@@ -97,8 +84,8 @@ const PublishButton = () => {
                         console.log(error)
                     })
                 } else {
-                    addNewPost({
-                        user: userId,
+                    updatePost({
+                        id,
                         title,
                         subHeading,
                         content: str,
@@ -106,15 +93,15 @@ const PublishButton = () => {
                         cover: coverUrl
                     })
                 }
-            }        
+            })
         } else {
             dispatch(setError({ errMsg: '' }))
         }
     }
 
     return (
-        <button className="login__button" onClick={handlePublish}>Publish</button>
+        <button className="login__button" onClick={handlePublish}>Update</button>
     )
 }
 
-export default PublishButton
+export default UpdateButton

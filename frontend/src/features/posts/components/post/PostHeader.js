@@ -4,9 +4,13 @@ import { getTimeSince } from "../../../../utils/utils"
 import { DELETED, DIMENSIONS } from "../../../../constants/constants"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from "@fortawesome/free-regular-svg-icons"
+import useAuth from "../../../../hooks/useAuth"
+import EditButton from "../buttons/EditButton"
 
 const PostHeader = ({ user, post }) => {
     const { width } = useWindowDimensions()
+
+    const { id } = useAuth()
 
     const navigate = useNavigate()
 
@@ -20,16 +24,34 @@ const PostHeader = ({ user, post }) => {
         ? `url(${user?.image})`
         : 'var(--NO-IMAGE)'
 
+    const headerButton = () => {
+        if (post.user !== id) {
+            return <button className="post-follow-button">Follow</button>
+        } else {
+            return (
+                <div className="post-button__container">
+                    <EditButton post={post} />
+                </div>
+            )
+        }
+    }
+
     return (
         <div className="post-header__container">
             <div
-                className={`image author-card-image ${user?.image ? 'img-overlay' : ''} 
+                className={`image post-image ${user?.image ? 'img-overlay' : ''} 
                     ${!active ? 'deleted' : ''}`}
                 style={{backgroundImage: profileImg}}
                 onClick={active ? navHandler: undefined}
             />
             <div className="post-header-data__container">
-                <div className="post-header-data-top">
+                <div
+                    className="post-header-data-top"
+                    style={ post.user !== id
+                        ? {justifyContent: 'flex-start'}
+                        : {justifyContent: 'space-between'}
+                    }
+                >
                     <div 
                         className={`post-username ${!active ? 'deleted' : ''}`}
                         onClick={active ? navHandler : undefined}
@@ -37,7 +59,7 @@ const PostHeader = ({ user, post }) => {
                         {post.author}
                     </div>
                     { width <= DIMENSIONS.WIDTH.M
-                        ? <button className="post-follow-button">Follow</button>
+                        ? headerButton()
                         : undefined
                     }
                 </div>

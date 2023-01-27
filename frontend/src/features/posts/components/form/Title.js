@@ -1,9 +1,8 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { setTitle as setPostTitle, selectCurrentPostErr } from '../../postSlice'
+import { useDispatch } from 'react-redux'
+import { setTitle as setPostTitle } from '../../postSlice'
 
 const Title = ({ state, err, resetInputErr }) => {
     const [title, setTitle] = state
-    const [isError, errMsg] = useSelector(selectCurrentPostErr)
 
     const dispatch = useDispatch()
 
@@ -15,10 +14,6 @@ const Title = ({ state, err, resetInputErr }) => {
 
     return (
         <div className={`form-input__container ${err ? 'errborder' : ''}`}>
-            { isError && errMsg
-                ? <div className="errmsg">{errMsg}</div>
-                : undefined
-            }
             <input
                 className="form__input"
                 id="title"
