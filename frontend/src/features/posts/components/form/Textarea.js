@@ -2,7 +2,7 @@ import { Editor } from "@tinymce/tinymce-react"
 import { useDispatch } from "react-redux"
 import { setContent as setPostContent } from "../../postSlice"
 
-const Textarea = ({ state, err, resetInputErr }) => {
+const Textarea = ({ state, err, resetInputErr, initVal }) => {
     const [content, setContent] = state
     const dispatch = useDispatch()
 
@@ -17,7 +17,7 @@ const Textarea = ({ state, err, resetInputErr }) => {
             <Editor
                 apiKey={process.env.REACT_APP_TINYMCE_KEY}
                 onChange={handleChange}
-                initialValue={content}
+                initialValue={initVal || ''}
                 init={{
                 plugins: 'link image lists',
                 toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | numlist bullist | h1 h2 h3',

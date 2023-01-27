@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { setTitle as setPostTitle, selectCurrentPostErr } from '../../postSlice'
+import { useDispatch } from 'react-redux'
+import { setTitle as setPostTitle } from '../../postSlice'
 
 const Title = ({ state, err, resetInputErr }) => {
     const [title, setTitle] = state

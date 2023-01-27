@@ -92,8 +92,8 @@ export const asyncParseImgFromHTML =  async (str, postsName, cb) => {
             + '"' + after
 
         if (/^http:\/\/.*.jpg$/.test(before)) {
-            await fetchImageBlob(before, (blob) => {
-                imgFileToBase64(blob, (image) => {
+            await fetchImageBlob(before, async (blob) => {
+                await imgFileToBase64(blob, (image) => { 
                     imageList.push(image)
                 })
             }) 

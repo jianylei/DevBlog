@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams, useLocation } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { useGetPostsQuery } from "../postsApiSlice"
@@ -27,6 +27,7 @@ const EditPost = () => {
     const [errContent, setErrContent] = useState(false)
     const [tags, setTags] = useState('')
     const [cover , setCover] = useState('')
+    const initContentVal = useRef('')
 
     const { title: paramsTitle  } = useParams()
     const id = getIdFromPathStr(paramsTitle)
@@ -59,6 +60,7 @@ const EditPost = () => {
             setSubhead(post.subHeading)
             setTags(tagsStr)
             setContent(post.content)
+            initContentVal.current = post.content
             setCover(post.cover)
 
             if (post.cover) {
@@ -135,6 +137,7 @@ const EditPost = () => {
                         state={[content, setContent]}
                         err={errContent}
                         resetInputErr={resetInputErr}
+                        initVal={initContentVal.current}
                     />
                 </form>
             </div>

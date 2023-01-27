@@ -2,8 +2,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { useUpdatePostMutation } from "../../postsApiSlice"
 import { selectCurrentPost, setError } from "../../postSlice"
 import { useUploadMutation } from "../../../uploads/uploadApiSlice"
-import { stringToTags, parseImgFromHTML, dataURLtoFile, asyncParseImgFromHTML } from "../../../../utils/postFormUtils"
-import { getPathStrFromStr } from "../../../../utils/utils"
+import { stringToTags, dataURLtoFile, asyncParseImgFromHTML } from "../../../../utils/postFormUtils"
+import { getPathStrFromStr, delay } from "../../../../utils/utils"
 import { IMGPATH } from "../../../../constants/constants"
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
@@ -21,7 +21,6 @@ const UpdateButton = () => {
     }] = useUploadMutation()
 
     const [updatePost, {
-        isLoading: updatePostLoading,
         isSuccess: updatePostSuccess,
         isError: updatePostIsError,
         error: updatePostError
@@ -48,9 +47,11 @@ const UpdateButton = () => {
             const tagsList = stringToTags(tags)
             let coverUrl = ''
 
-            asyncParseImgFromHTML(content, name, (obj) => {
+            await asyncParseImgFromHTML(content, name, async(obj) => {
                 const { str, imageList, imageNames } = obj
-            
+
+                await delay(1000)
+
                 if (imageList?.length || cover) {
                     const data = new FormData()
         
@@ -69,7 +70,8 @@ const UpdateButton = () => {
                         data.append('posts', newFile)
                         coverUrl = IMGPATH.Images + 'posts/' + name + '/' + coverName
                     }
-    
+                    console.log('yayyyyy')
+                    console.log(str)
                     updatePost({
                         id,
                         title,
@@ -83,6 +85,8 @@ const UpdateButton = () => {
                         console.log(error)
                     })
                 } else {
+                    console.log('noooooo')
+                    console.log(str)
                     updatePost({
                         id,
                         title,
