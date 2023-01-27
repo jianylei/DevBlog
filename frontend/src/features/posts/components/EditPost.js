@@ -61,16 +61,6 @@ const EditPost = () => {
             setContent(post.content)
             setCover(post.cover)
 
-/*
-            parseAndSetImgFromHTML(post.content, (obj) => {
-                console.log(obj.imageList)
-                //setContent(obj.str)
-            })*/
-            //const { str, imageList, imageNames } = parseAndSetImgFromHTML(post.content, name)
-            
-            //console.log(imageList)
-
-//test()
             if (post.cover) {
                 fetchImageBlob(post.cover, (blob) => {
                     imgFileToBase64(blob, (_cover) => {
@@ -98,6 +88,14 @@ const EditPost = () => {
         }
     }, [isSuccess, id, post, dispatch])
 
+    useEffect(() => {
+        if (isError) {
+          if (!title) setErrTitle(true)
+          if (!subhead) setErrSub(true)
+          if (!content) setErrContent(true)
+        }
+    }, [isError, errMsg]) // eslint-disable-line react-hooks/exhaustive-deps
+  
     const resetInputErr = () => {
         if (isError) {
           setErrTitle(false)

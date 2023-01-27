@@ -4,7 +4,7 @@ import { setTitle as setPostTitle, selectCurrentPostErr } from '../../postSlice'
 const Title = ({ state, err, resetInputErr }) => {
     const [title, setTitle] = state
     const [isError, errMsg] = useSelector(selectCurrentPostErr)
-console.log(err)
+
     const dispatch = useDispatch()
 
     const handleChange = (e) => {
