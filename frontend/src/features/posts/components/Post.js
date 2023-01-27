@@ -48,7 +48,6 @@ const Post = () => {
     if (isSuccess && post) {
         content = (
             <div className='blog-content__container'>
-                <EditButton post={post} />
                 <PostHeader user={user} post={post} />
                 <PostTitle post={post} />
                 <PostContent post={post} />

@@ -267,6 +267,16 @@ svg{
   margin: auto;
 }
 
+svg.post-edit__button{
+    font-size: 18px;
+    color: var(--COLOR-GREY);
+    cursor: pointer;
+}
+
+svg.post-edit__button:hover{
+  color: var(--COLOR-DARK);
+}
+
 /*  || MODAL */
 .modal__container {
   position: fixed;
@@ -599,6 +609,7 @@ body .modal-open {
   color: var(--COLOR-DARK);
   padding: 4px 8px;
   border-radius: var(--BORDER-RADIUS-BUBBLE);
+  text-transform: capitalize;
 }
 
 /*  || POST PAGE */
@@ -633,6 +644,7 @@ body .modal-open {
   display: flex;
   gap: 10px;
   width: 100%;
+  justify-content: space-between;
 }
 
 .post-header-data-bottom {
@@ -685,6 +697,18 @@ body .modal-open {
   gap: 8px;
   margin-bottom: 40px;
 }
+
+.post-button__container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.post-image {
+  min-width: 48px;
+  min-height: 48px;
+  border-radius: var(--BORDER-RADIUS-BUBBLE);
+}
+
 
 /* || AUTHOR CARDS */
 .author-card__container {

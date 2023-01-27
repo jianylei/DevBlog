@@ -1,4 +1,6 @@
 import { useNavigate } from "react-router-dom"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPenToSquare } from "@fortawesome/free-regular-svg-icons"
 import { getPathStrFromStr } from "../../../../utils/utils"
 
 const EditButton = ({ post }) => {
@@ -13,12 +15,7 @@ const EditButton = ({ post }) => {
     }
 
     return (
-        <button
-            className="post-follow-button"
-            onClick={navHandle}
-        >
-            Edit
-        </button>
+        <FontAwesomeIcon className="post-edit__button" icon={faPenToSquare} onClick={navHandle} />
     )
 }
 

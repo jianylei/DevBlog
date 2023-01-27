@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from "@fortawesome/free-regular-svg-icons"
 import useAuth from "../../../../hooks/useAuth"
 import { getPathStrFromStr } from "../../../../utils/utils"
+import EditButton from "../buttons/EditButton"
 
 const PostHeader = ({ user, post }) => {
     const { width } = useWindowDimensions()
@@ -29,19 +30,31 @@ const PostHeader = ({ user, post }) => {
     const headerButton = () => {
         if (post.user !== id) {
             return <button className="post-follow-button">Follow</button>
+        } else {
+            return (
+                <div className="post-button__container">
+                    <EditButton post={post} />
+                </div>
+            )
         }
     }
 
     return (
         <div className="post-header__container">
             <div
-                className={`image author-card-image ${user?.image ? 'img-overlay' : ''} 
+                className={`image post-image ${user?.image ? 'img-overlay' : ''} 
                     ${!active ? 'deleted' : ''}`}
                 style={{backgroundImage: profileImg}}
                 onClick={active ? navHandler: undefined}
             />
             <div className="post-header-data__container">
-                <div className="post-header-data-top">
+                <div
+                    className="post-header-data-top"
+                    style={ post.user !== id
+                        ? {justifyContent: 'flex-start'}
+                        : {justifyContent: 'space-between'}
+                    }
+                >
                     <div 
                         className={`post-username ${!active ? 'deleted' : ''}`}
                         onClick={active ? navHandler : undefined}

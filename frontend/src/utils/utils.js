@@ -1,6 +1,6 @@
 export const getPathStrFromStr = (str, id) => {
   if (str) {
-      return str.replace(/-|\||%|\/|\?|:|\\|\.|,+/g, ' ')
+      return str.replace(/-|\||%|\/|\?|:|\\|\.|"|,+/g, ' ')
       .replace(/ +/g, '-')
       .replace(/-$/, '')
       .toLowerCase() + (id ? '-' + id : '')
