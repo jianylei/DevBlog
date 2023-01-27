@@ -685,6 +685,10 @@ body .modal-open {
   object-fit: contain;
 }
 
+.post-content ul{
+  padding-left: 10px;
+}
+
 .post-lastEdited {
   font-size: 14px;
   color: var(--COLOR-GREY);

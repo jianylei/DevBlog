@@ -5,15 +5,12 @@ import { DELETED, DIMENSIONS } from "../../../../constants/constants"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from "@fortawesome/free-regular-svg-icons"
 import useAuth from "../../../../hooks/useAuth"
-import { getPathStrFromStr } from "../../../../utils/utils"
 import EditButton from "../buttons/EditButton"
 
 const PostHeader = ({ user, post }) => {
     const { width } = useWindowDimensions()
 
     const { id } = useAuth()
-
-    console.log(id)
 
     const navigate = useNavigate()
 

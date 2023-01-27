@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useLocation, useNavigate, useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom"
 import { useGetUsersQuery } from "../../users/usersApiSlice"
 import { useGetPostsQuery } from "../postsApiSlice"
 import { TABS } from "../../../constants/constants"
@@ -9,17 +9,12 @@ import PostHeader from "./post/PostHeader"
 import PostTitle from "./post/PostTitle"
 import PostContent from "./post/PostContent"
 import PostTags from "./post/PostTags"
-import EditButton from "./buttons/EditButton"
-import useRequireAuthUser from "../../../hooks/useRequireAuthUser"
-
 
 const Post = () => {
     const { title } = useParams();
     const id = getIdFromPathStr(title)
 
     const { pathname } = useLocation()
-
-    const navigate = useNavigate()
 
     useEffect(() => {
         window.scrollTo(0, 0)
