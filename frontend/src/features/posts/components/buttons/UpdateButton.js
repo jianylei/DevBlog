@@ -71,7 +71,7 @@ const UpdateButton = () => {
                         const coverName = Date.now() + '-' + Math.round(Math.random() * 1E9) + '.jpg'
                         const newFile = dataURLtoFile(cover, coverName)
                         data.append('posts', newFile)
-                        coverUrl = IMGPATH.Images + 'posts/' + name + '/' + coverName
+                        coverUrl = IMGPATH.IMAGES + 'posts/' + name + '/' + coverName
                     }
 
                     updatePost({

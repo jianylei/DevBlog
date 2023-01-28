@@ -1,51 +1,50 @@
-module.exports = { 
-    STATUS: Object.freeze({
-        Approved: 'Approved',
-        Denied: 'Denied',
-        Pending: 'Pending'
-    }),
+export const STATUS = Object.freeze({
+    APPROVED: 'Approved',
+    DENIED: 'Denied',
+    PENDING: 'Pending'
+})
 
-    ROLES: Object.freeze({
-        Author: 'Author',
-        Moderator: 'Moderator',
-        Admin: 'Admin'
-    }),
+export const ROLES = Object.freeze({
+    AUTHOR: 'Author',
+    MODERATOR: 'Moderator',
+    ADMIN: 'Admin',
+    AUTH: [this.Moderator, this.Admin]
+})
 
-    TABS: Object.freeze({
-        Post: 'Post',
-        Author: 'Author',
-        Review: 'Review',
-        Pending: 'Pending',
-        Page: 'Page'
-    }),
+export const TABS = Object.freeze({
+    POST: 'Post',
+    AUTHOR: 'Author',
+    REVIEW: 'Review',
+    PENDING: 'Pending',
+    PAGE: 'Page'
+})
 
-    MODAL: Object.freeze({
-        TYPE: {
-            SignIn: 'SignIn',
-            SignUp: 'SignUp'
-        }
-    }),
+export const MODAL = Object.freeze({
+    TYPE: {
+        SIGNIN: 'SignIn',
+        SIGNUP: 'SignUp'
+    }
+})
 
-    IMGPATH: Object.freeze({
-        Images: 'http://localhost:3080/images/'
-    }),
+export const IMGPATH = Object.freeze({
+    IMAGES: 'http://localhost:3080/images/'
+})
 
-    DELETED: '[deleted]',
+export const DELETED = '[deleted]'
 
-    DIMENSIONS: Object.freeze({
-        WIDTH: {
-            S: 728,
-            M: 904
-        }
-    }),
+export const DIMENSIONS = Object.freeze({
+    WIDTH: {
+        S: 728,
+        M: 904
+    }
+})
 
-    REGEX: Object.freeze({
-        ROUTES: {
-            POSTS: /^\/$/,
-            AUTHORS: /^\/authors(\/)?$/,
-            AUTHOR: /^\/authors(\/)?/,
-            WRITE: /^\/write(\/)?$/,
-            EDIT: /^\/write\/.*$/,
-        }
-    })
-}
+export const REGEX = Object.freeze({
+    ROUTES: {
+        POSTS: /^\/$/,
+        AUTHORS: /^\/authors(\/)?$/,
+        AUTHOR: /^\/authors(\/)?/,
+        WRITE: /^\/write(\/)?$/,
+        EDIT: /^\/write\/.*$/,
+    }
+})

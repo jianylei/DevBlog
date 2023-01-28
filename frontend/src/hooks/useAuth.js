@@ -12,8 +12,8 @@ const useAuth = () => {
         const decoded = jwtDecode(token)
         const { id, username, role } = decoded.UserInfo
         
-        isMod = role === ROLES.Moderator || role === ROLES.Admin
-        isAdmin = role === ROLES.Admin
+        isMod = role === ROLES.MODERATOR || role === ROLES.ADMIN
+        isAdmin = role === ROLES.ADMIN
 
         return { id, username, role, isMod, isAdmin }
     }

@@ -60,7 +60,7 @@ const EditPost = () => {
 
     useEffect(() => {
         if (isSuccess && post) {
-            if (auth.id !== post.user) navigate('/', { replace: true })
+            if ((auth.id !== post.user) ) navigate('/', { replace: true })
 
             const tagsStr = post.tags?.join() || ''
             setTitle(post.title)
@@ -117,7 +117,7 @@ const EditPost = () => {
     let pageContent
     if (!isLoading && (!post || ('/write/'
         + getPathStrFromStr(post.title, post.id) !== pathname))) {
-        pageContent = <NoMatch tab={ TABS.Post }/>
+        pageContent = <NoMatch tab={ TABS.POST }/>
     } 
 
     if (isSuccess && post) {

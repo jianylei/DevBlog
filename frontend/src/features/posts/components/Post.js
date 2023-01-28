@@ -36,11 +36,9 @@ const Post = () => {
     })
 
     let content
-    if (!isLoading && (!post || ('/'+getPathStrFromStr(post.title, post.id) !== pathname))) {
-        content = <NoMatch tab={ TABS.Post }/>
-    }
+
     
-    if (isSuccess && post) {
+    if (isSuccess && post && ('/'+getPathStrFromStr(post.title, post.id) === pathname)) {
         content = (
             <div className='blog-content__container'>
                 <PostHeader user={user} post={post} />
@@ -49,7 +47,7 @@ const Post = () => {
                 <PostTags post={post} />
             </div>
         )
-    }
+    } else if (!isLoading) content = <NoMatch tab={ TABS.POST }/>
 
     return content
 }

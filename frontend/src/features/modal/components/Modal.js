@@ -27,10 +27,10 @@ const Modal = () => {
 
     let content
     
-    if (currType === MODAL.TYPE.SignIn) {
+    if (currType === MODAL.TYPE.SIGNIN) {
         content = <SignIn />
     }
-    else if (currType === MODAL.TYPE.SignUp) {
+    else if (currType === MODAL.TYPE.SIGNUP) {
         content = <SignUp />
     }
 

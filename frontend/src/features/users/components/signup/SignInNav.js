@@ -8,7 +8,7 @@ const SignInNav = () => {
     return (
         <div className="form-nav-signup">
             Already have an account? 
-            <span onClick={() => dispatch(setType({ type: MODAL.TYPE.SignIn }))}>&nbsp;Sign in</span>
+            <span onClick={() => dispatch(setType({ type: MODAL.TYPE.SIGNIN }))}>&nbsp;Sign in</span>
         </div>
     )
 }

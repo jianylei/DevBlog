@@ -6,7 +6,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from "@fortawesome/free-regular-svg-icons"
 import useAuth from "../../../../hooks/useAuth"
 import EditButton from "../buttons/EditButton"
-import DeleteButton from "../buttons/DeleteButton"
 
 const PostHeader = ({ user, post }) => {
     const { width } = useWindowDimensions()
@@ -31,7 +30,6 @@ const PostHeader = ({ user, post }) => {
         } else {
             return (
                 <div className="post-button__container">
-                    <DeleteButton id={post.id} />
                     <EditButton post={post} />
                 </div>
             )

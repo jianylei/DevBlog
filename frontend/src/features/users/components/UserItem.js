@@ -28,7 +28,7 @@ const UserItem = ({ userId }) => {
             if (role) {
     
             } else {
-                dispatch(setType({ type: MODAL.TYPE.SignUp }))
+                dispatch(setType({ type: MODAL.TYPE.SIGNUP }))
                 dispatch(setOpen({ open: true }))
             }
         }

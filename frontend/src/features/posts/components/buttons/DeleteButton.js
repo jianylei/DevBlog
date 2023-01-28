@@ -26,11 +26,7 @@ const DeleteButton = ({ id }) => {
     }
 
     return (
-        <FontAwesomeIcon
-        className='post-edit__button'
-        icon={faTrashCan}
-        onClick={clickHandle}
-    />
+        <button className="login__button" onClick={clickHandle}>Delete</button>
     )
 }
 
