@@ -1,4 +1,5 @@
 import { IMGPATH } from "../constants/constants"
+import { delay } from "./utils"
 
 export const stringToTags = (str) => {
     const tags = str.toLowerCase().split(/\s?[, ]\s?/)
@@ -66,7 +67,7 @@ export const parseImgFromHTML = (str, postsName) => {
     })
 }
 
-export const asyncParseImgFromHTML =  async (str, postsName, cb) => {
+export const asyncParseImgFromHTML = (str, postsName, cb) => {
     if (!str || !postsName || ! cb) return ({
         str: '',
         imageList: [],
@@ -86,19 +87,19 @@ export const asyncParseImgFromHTML =  async (str, postsName, cb) => {
         const after = subStr[i].slice(subStr[i].indexOf('"') + 1)
         const name = Date.now() + '-' + Math.round(Math.random() * 1E9) + '.jpg'
 
-        imageNames.push(name)
+        imageNames[i-1] = name
             
         newStr += 'src="' + IMGPATH.Images + 'posts/' + postsName + '/' + name 
             + '"' + after
 
         if (/^http:\/\/.*.jpg$/.test(before)) {
-            await fetchImageBlob(before, async (blob) => {
-                await imgFileToBase64(blob, (image) => { 
-                    imageList.push(image)
+            fetchImageBlob(before, (blob) => {
+                imgFileToBase64(blob, (image) => { 
+                    imageList[i-1] = image
                 })
             }) 
         } else {
-            imageList.push(before)
+            imageList[i-1] = before
         }
     }
 
