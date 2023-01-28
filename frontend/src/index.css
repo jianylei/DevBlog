@@ -268,7 +268,7 @@ svg{
 }
 
 svg.post-edit__button{
-    font-size: 18px;
+    font-size: 16px;
     color: var(--COLOR-GREY);
     cursor: pointer;
 }
@@ -686,7 +686,7 @@ body .modal-open {
 }
 
 .post-content ul{
-  padding-left: 10px;
+  padding-left: 20px;
 }
 
 .post-lastEdited {
