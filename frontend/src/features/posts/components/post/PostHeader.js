@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom"
 import useWindowDimensions from "../../../../hooks/useWindowDimensions"
 import { getTimeSince } from "../../../../utils/utils"
-import { DELETED, DIMENSIONS } from "../../../../constants/constants"
+import { DELETED, DIMENSIONS, ROLES } from "../../../../constants/constants"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from "@fortawesome/free-regular-svg-icons"
 import useAuth from "../../../../hooks/useAuth"
@@ -10,7 +10,7 @@ import EditButton from "../buttons/EditButton"
 const PostHeader = ({ user, post }) => {
     const { width } = useWindowDimensions()
 
-    const { id } = useAuth()
+    const { id, role } = useAuth()
 
     const navigate = useNavigate()
 
@@ -27,13 +27,9 @@ const PostHeader = ({ user, post }) => {
     const headerButton = () => {
         if (post.user !== id) {
             return <button className="post-follow-button">Follow</button>
-        } else {
-            return (
-                <div className="post-button__container">
-                    <EditButton post={post} />
-                </div>
-            )
         }
+        
+        return undefined
     }
 
     return (

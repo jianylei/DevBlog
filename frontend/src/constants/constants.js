@@ -8,7 +8,7 @@ export const ROLES = Object.freeze({
     AUTHOR: 'Author',
     MODERATOR: 'Moderator',
     ADMIN: 'Admin',
-    AUTH: [this.Moderator, this.Admin]
+    AUTH: ['Moderator', 'Admin']
 })
 
 export const TABS = Object.freeze({

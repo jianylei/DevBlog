@@ -9,6 +9,7 @@ import PostHeader from "./post/PostHeader"
 import PostTitle from "./post/PostTitle"
 import PostContent from "./post/PostContent"
 import PostTags from "./post/PostTags"
+import EditButton from "./buttons/EditButton"
 
 const Post = () => {
     const { title } = useParams();
@@ -42,6 +43,9 @@ const Post = () => {
         content = (
             <div className='blog-content__container'>
                 <PostHeader user={user} post={post} />
+                <div>
+                    <EditButton post={post} />
+                </div>
                 <PostTitle post={post} />
                 <PostContent post={post} />
                 <PostTags post={post} />

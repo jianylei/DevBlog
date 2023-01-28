@@ -15,7 +15,11 @@ const EditButton = ({ post }) => {
     }
 
     return (
-        <FontAwesomeIcon className="post-edit__button" icon={faPenToSquare} onClick={navHandle} />
+        <button className="post-edit__button" onClick={navHandle}>
+            <FontAwesomeIcon icon={faPenToSquare} />
+            Edit Post
+        </button>
+        
     )
 }
 

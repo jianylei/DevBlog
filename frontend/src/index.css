@@ -166,6 +166,14 @@ a.active{
   transition: all 150ms linear;
 }
 
+h1,
+h2,
+h3,
+p,
+.post-content {
+  word-break: break-all;
+}
+
 button {
   cursor: pointer;
   border: none;
@@ -272,9 +280,26 @@ svg.post-edit__button{
     color: var(--COLOR-GREY);
     cursor: pointer;
 }
-
+/*
 svg.post-edit__button:hover{
   color: var(--COLOR-DARK);
+}*/
+
+.post-edit__button {
+  background-color: transparent;
+  color: var(--COLOR-GREY);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.post-edit__button:hover {
+  color: var(--COLOR-DARK);
+}
+
+.post-edit__button svg {
+  font-size: 14px;
 }
 
 /*  || MODAL */
@@ -685,7 +710,8 @@ body .modal-open {
   object-fit: contain;
 }
 
-.post-content ul{
+.post-content ul,
+.post-content ol{
   padding-left: 20px;
 }
 
@@ -702,17 +728,11 @@ body .modal-open {
   margin-bottom: 40px;
 }
 
-.post-button__container {
-  display: flex;
-  justify-content: flex-end;
-}
-
 .post-image {
   min-width: 48px;
-  min-height: 48px;
+  height: 48px;
   border-radius: var(--BORDER-RADIUS-BUBBLE);
 }
-
 
 /* || AUTHOR CARDS */
 .author-card__container {

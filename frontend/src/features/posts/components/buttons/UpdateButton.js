@@ -31,7 +31,7 @@ const UpdateButton = () => {
     useEffect(() => {
         if (updatePostSuccess && !uploadLoading && !uploadIsError) {
             getPathStrFromStr()
-            navigate('/'+title)
+            navigate('/'+getPathStrFromStr(post.title, post.id))
         }
     }, [navigate, updatePostSuccess, uploadIsError, uploadLoading])
 
