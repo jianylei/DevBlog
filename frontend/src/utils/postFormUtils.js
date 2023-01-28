@@ -1,4 +1,5 @@
 import { IMGPATH } from "../constants/constants"
+import { delay } from "./utils"
 
 export const stringToTags = (str) => {
     const tags = str.toLowerCase().split(/\s?[, ]\s?/)
