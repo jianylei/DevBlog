@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useLocation, useParams } from "react-router-dom"
 import { useGetUsersQuery } from "../../users/usersApiSlice"
 import { useGetPostsQuery } from "../postsApiSlice"
-import { TABS } from "../../../constants/constants"
+import { ROLES, TABS } from "../../../constants/constants"
 import NoMatch from "../../../components/NoMatch"
 import { getIdFromPathStr, getPathStrFromStr } from "../../../utils/utils"
 import PostHeader from "./post/PostHeader"
@@ -10,12 +10,15 @@ import PostTitle from "./post/PostTitle"
 import PostContent from "./post/PostContent"
 import PostTags from "./post/PostTags"
 import EditButton from "./buttons/EditButton"
+import useAuth from "../../../hooks/useAuth"
 
 const Post = () => {
     const { title } = useParams();
     const id = getIdFromPathStr(title)
 
     const { pathname } = useLocation()
+
+    const auth = useAuth()
 
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -43,9 +46,10 @@ const Post = () => {
         content = (
             <div className='blog-content__container'>
                 <PostHeader user={user} post={post} />
-                <div>
-                    <EditButton post={post} />
-                </div>
+                { ROLES.AUTH.includes(auth.role) || auth.id === post.user
+                    ? <EditButton post={post} />
+                    : undefined
+                }
                 <PostTitle post={post} />
                 <PostContent post={post} />
                 <PostTags post={post} />

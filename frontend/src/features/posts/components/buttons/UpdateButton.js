@@ -28,8 +28,9 @@ const UpdateButton = () => {
 
     useEffect(() => {
         if (updatePostSuccess && !uploadLoading && !uploadIsError) {
-            navigate(-1)
+            navigate('/'+getPathStrFromStr(post.title, post.id))
         }
+        // eslint-disable-next-line
     }, [navigate, updatePostSuccess, uploadIsError, uploadLoading])
 
     useEffect(() => {

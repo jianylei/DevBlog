@@ -97,7 +97,8 @@ const EditPost = () => {
                 }))
             }
         }
-    }, [isSuccess, id, post, auth, dispatch, navigate])
+        // eslint-disable-next-line
+    }, [isSuccess, id, post, dispatch, navigate])
 
     useEffect(() => {
         if (isError) {
