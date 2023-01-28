@@ -52,7 +52,7 @@ const getPendingPosts = async (req, res) => {
 // @access Private
 const createNewPost = async (req, res) => {
     const { user, title, subHeading, content, cover, tags } = req.body
-    const role = req.role
+    const { role } = req.userInfo
     // Confirm data
     if (!user || !title || !subHeading || !content) {
         return res.status(400).json({ message: 'Please enter all required fields' })
@@ -177,6 +177,14 @@ const updateView = async (req, res) => {
 // @access Private
 const deletePost = async (req, res) => {
     const { id } = req.body
+    const { id: userId, role } = req.userInfo
+
+    const auth = (postUser) => {
+        if ((postUser === userId) || (role === ROLES.Admin || role === ROLES.Moderator)) {
+            return true
+        }
+        return false
+    }
 
     if (!id) return res.status(400).json({ message: 'Post ID required' })
 
@@ -185,6 +193,8 @@ const deletePost = async (req, res) => {
     const post = await Post.findById(id).exec()
 
     if (!post) return res.status(400).json({ message: 'Post not found' })
+
+    if (!auth(post.user?.toString())) return res.status(400).json({ message: 'Unauthorized' })
 
     removePostDirByName(formatTitle(post.title))
 

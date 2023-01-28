@@ -5,7 +5,7 @@ import { useUploadMutation } from "../../../uploads/uploadApiSlice"
 import { stringToTags, dataURLtoFile, asyncParseImgFromHTML } from "../../../../utils/postFormUtils"
 import { getPathStrFromStr, delay } from "../../../../utils/utils"
 import { IMGPATH } from "../../../../constants/constants"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import { useEffect } from "react"
 
 const UpdateButton = () => {
@@ -14,6 +14,8 @@ const UpdateButton = () => {
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
+
+    const { title } = useParams()
 
     const [upload, {
         isLoading: uploadLoading,
@@ -29,7 +31,7 @@ const UpdateButton = () => {
     useEffect(() => {
         if (updatePostSuccess && !uploadLoading && !uploadIsError) {
             getPathStrFromStr()
-            navigate('/')
+            navigate('/'+getPathStrFromStr(post.title, post.id))
         }
     }, [navigate, updatePostSuccess, uploadIsError, uploadLoading])
 
@@ -39,7 +41,7 @@ const UpdateButton = () => {
 
     const canSave = [post.title, post.subHeading, post.content].every(Boolean)
 
-    const handlePublish = async (e) => {
+    const handlePublish = (e) => {
         e.preventDefault()
 
         if (canSave) {
@@ -48,7 +50,7 @@ const UpdateButton = () => {
             const tagsList = stringToTags(tags)
             let coverUrl = ''
 
-            await asyncParseImgFromHTML(content, name, async(obj) => {
+            asyncParseImgFromHTML(content, name, async(obj) => {
                 const { str, imageList, imageNames } = obj
 
                 await delay(300)
@@ -69,7 +71,7 @@ const UpdateButton = () => {
                         const coverName = Date.now() + '-' + Math.round(Math.random() * 1E9) + '.jpg'
                         const newFile = dataURLtoFile(cover, coverName)
                         data.append('posts', newFile)
-                        coverUrl = IMGPATH.Images + 'posts/' + name + '/' + coverName
+                        coverUrl = IMGPATH.IMAGES + 'posts/' + name + '/' + coverName
                     }
 
                     updatePost({

@@ -7,7 +7,7 @@ router.route('/')
     .get(postsController.getAllPosts)
     .post(verifyJWT, postsController.createNewPost)
     .patch(postsController.updatePost)
-    .delete(postsController.deletePost)
+    .delete(verifyJWT, postsController.deletePost)
 
 router.route('/pending').get(postsController.getPendingPosts)
 

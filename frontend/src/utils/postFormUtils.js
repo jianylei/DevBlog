@@ -56,7 +56,7 @@ export const parseImgFromHTML = (str, postsName) => {
         imageList.push(before)
         imageNames.push(name)
 
-        newStr += 'src="' + IMGPATH.Images + 'posts/' + postsName + '/' + name 
+        newStr += 'src="' + IMGPATH.IMAGES + 'posts/' + postsName + '/' + name 
             + '"' + after
     }
 
@@ -89,7 +89,7 @@ export const asyncParseImgFromHTML = (str, postsName, cb) => {
 
         imageNames[i-1] = name
             
-        newStr += 'src="' + IMGPATH.Images + 'posts/' + postsName + '/' + name 
+        newStr += 'src="' + IMGPATH.IMAGES + 'posts/' + postsName + '/' + name 
             + '"' + after
 
         if (/^http:\/\/.*.jpg$/.test(before)) {

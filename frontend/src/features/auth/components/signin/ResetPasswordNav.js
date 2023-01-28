@@ -9,7 +9,7 @@ const ResetPasswordNav = () => {
         <div className="form-nav-reset">
             Forgot password?&nbsp;
             {/* palceholder onClick() */}
-            <span onClick={() => dispatch(setType({ type: MODAL.TYPE.SignUp }))}>Get help.</span>
+            <span onClick={() => dispatch(setType({ type: MODAL.TYPE.SIGNUP }))}>Get help.</span>
         </div>
     )
 }

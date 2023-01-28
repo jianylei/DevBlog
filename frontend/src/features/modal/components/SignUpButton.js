@@ -6,7 +6,7 @@ const SignUpButton = () => {
     const dispatch = useDispatch()
 
     const clickHandle = () => {
-        dispatch(setType({ type: MODAL.TYPE.SignUp }))
+        dispatch(setType({ type: MODAL.TYPE.SIGNUP }))
         dispatch(setOpen({ open: true }))
     }
 

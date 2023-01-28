@@ -34,7 +34,7 @@ function App() {
             <Route path=':title' element={<EditPost />}/>
           </Route>
 
-          <Route path='*' element={<NoMatch tab={ TABS.Page }/>}/>{/* 404 */}
+          <Route path='*' element={<NoMatch tab={ TABS.PAGE }/>}/>{/* 404 */}
         </Route>
       </Route>
       

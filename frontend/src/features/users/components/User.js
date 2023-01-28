@@ -41,7 +41,7 @@ const User = () => {
                     {postsContent}
                 </div>
             )
-        } else content = <NoMatch tab={ TABS.Post }/>
+        } else content = <NoMatch tab={ TABS.POST }/>
     }
 
     return content

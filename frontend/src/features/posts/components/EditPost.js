@@ -9,7 +9,7 @@ import {
     selectCurrentPostErr,
 } from "../postSlice"
 import NoMatch from "../../../components/NoMatch"
-import { TABS } from "../../../constants/constants"
+import { ROLES, TABS } from "../../../constants/constants"
 import Title from "./form/Title"
 import Subhead from "./form/Subhead"
 import Tags from "./form/Tags"
@@ -60,7 +60,9 @@ const EditPost = () => {
 
     useEffect(() => {
         if (isSuccess && post) {
-            if (auth.id !== post.user) navigate('/', { replace: true })
+            if ((auth.id !== post.user) && !ROLES.AUTH.includes(auth.role)) {
+                navigate('/', { replace: true })
+            }
 
             const tagsStr = post.tags?.join() || ''
             setTitle(post.title)
@@ -117,7 +119,7 @@ const EditPost = () => {
     let pageContent
     if (!isLoading && (!post || ('/write/'
         + getPathStrFromStr(post.title, post.id) !== pathname))) {
-        pageContent = <NoMatch tab={ TABS.Post }/>
+        pageContent = <NoMatch tab={ TABS.POST }/>
     } 
 
     if (isSuccess && post) {
@@ -126,7 +128,8 @@ const EditPost = () => {
                 { isError && errMsg
                     ? <div className="errmsg">{errMsg}</div>
                     : undefined
-                }   
+                }
+                
                 <form className="form">
                     <Title
                         state={[title, setTitle]}
