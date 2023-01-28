@@ -1,5 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrashCan } from "@fortawesome/free-regular-svg-icons"
 import { useDeletePostMutation } from '../../postsApiSlice'
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
@@ -15,7 +13,7 @@ const DeleteButton = ({ id }) => {
 
     useEffect(() => {
         if (isSuccess) navigate('/', { replace: true })
-    }, [isSuccess])
+    }, [isSuccess, navigate])
 
     if (isError) {
         console.log(error)

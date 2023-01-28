@@ -5,7 +5,7 @@ import { useUploadMutation } from "../../../uploads/uploadApiSlice"
 import { stringToTags, dataURLtoFile, asyncParseImgFromHTML } from "../../../../utils/postFormUtils"
 import { getPathStrFromStr, delay } from "../../../../utils/utils"
 import { IMGPATH } from "../../../../constants/constants"
-import { useNavigate, useParams } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
 
 const UpdateButton = () => {
@@ -14,8 +14,6 @@ const UpdateButton = () => {
     const navigate = useNavigate()
 
     const dispatch = useDispatch()
-
-    const { title } = useParams()
 
     const [upload, {
         isLoading: uploadLoading,
@@ -30,8 +28,7 @@ const UpdateButton = () => {
 
     useEffect(() => {
         if (updatePostSuccess && !uploadLoading && !uploadIsError) {
-            getPathStrFromStr()
-            navigate('/'+getPathStrFromStr(post.title, post.id))
+            navigate(-1)
         }
     }, [navigate, updatePostSuccess, uploadIsError, uploadLoading])
 

@@ -97,7 +97,7 @@ const EditPost = () => {
                 }))
             }
         }
-    }, [isSuccess, id, post, dispatch])
+    }, [isSuccess, id, post, auth, dispatch, navigate])
 
     useEffect(() => {
         if (isError) {

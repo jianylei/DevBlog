@@ -1,16 +1,15 @@
 import { useNavigate } from "react-router-dom"
 import useWindowDimensions from "../../../../hooks/useWindowDimensions"
 import { getTimeSince } from "../../../../utils/utils"
-import { DELETED, DIMENSIONS, ROLES } from "../../../../constants/constants"
+import { DELETED, DIMENSIONS } from "../../../../constants/constants"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from "@fortawesome/free-regular-svg-icons"
 import useAuth from "../../../../hooks/useAuth"
-import EditButton from "../buttons/EditButton"
 
 const PostHeader = ({ user, post }) => {
     const { width } = useWindowDimensions()
 
-    const { id, role } = useAuth()
+    const { id } = useAuth()
 
     const navigate = useNavigate()
 
