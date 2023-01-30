@@ -171,7 +171,7 @@ h2,
 h3,
 p,
 .post-content {
-  word-break: break-all;
+  hyphens: auto;
 }
 
 button {
@@ -969,9 +969,9 @@ label.form-cover__container {
 }
 
 /* || HEIGHT */
-@media screen and (max-height: 800px) {
+@media screen and (max-height: 1200px) {
   .form__textarea {
-    min-height: 400px;
+    min-height: 600px;
   }
 }
 
