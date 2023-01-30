@@ -58,8 +58,6 @@ const UpdateButton = () => {
                     data.append('name', name)
             
                     if (imageList) {
-                        
-            console.log(imageList)
                         for (const idx in imageList) {
                             const file = dataURLtoFile(imageList[idx], imageNames[idx])
                             data.append('posts', file)

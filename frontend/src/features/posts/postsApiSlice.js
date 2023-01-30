@@ -66,10 +66,13 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         }),
         updateViewCount: builder.mutation({
             query: ({ id }) => ({
-                url: 'post/view',
+                url: 'posts/view',
                 method: 'PATCH',
                 body: { id }
-            })
+            }),
+            invalidatesTags: (result, error, arg) => [
+                { type: 'Post', id: arg.id }
+            ]
         })
     })
 })
