@@ -43,7 +43,8 @@ const Post = () => {
     }, [])
 
     useEffect(() => {
-        if (isSuccess && !rendered.current) {
+        if (isSuccess && post && ('/'+getPathStrFromStr(post.title, post.id) === pathname)
+            && !rendered.current) {
             rendered.current = true
             updateViewCount({ id})
         }

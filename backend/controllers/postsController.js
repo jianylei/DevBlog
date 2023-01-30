@@ -159,8 +159,6 @@ const updatePostStatus = async (req, res) => {
 const updateView = async (req, res) => {
     const { id } = req.body
 
-    console.log(id)
-
     if (!id) return res.status(400).json({ message: 'All fields are required' })
 
     if (!ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid id' })
