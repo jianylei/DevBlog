@@ -9,10 +9,6 @@ router.route('/')
     .patch(postsController.updatePost)
     .delete(verifyJWT, postsController.deletePost)
 
-router.route('/pending').get(postsController.getPendingPosts)
-
-router.route('/status').patch(postsController.updatePostStatus)
-
 router.route('/view').patch(postsController.updateView)
 
 router.route('/all').delete(postsController.deleteALLPost)

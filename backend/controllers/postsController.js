@@ -1,7 +1,7 @@
 const ObjectId = require('mongoose').Types.ObjectId
 const User = require('../models/User')
 const Post = require('../models/Post')
-const { STATUS, ROLES } = require('../config/constants') 
+const { ROLES } = require('../config/constants') 
 const { wordCntToTime, wordCount, formatTitle } = require('../utils/utils')
 const { removePostDirByName } = require('../utils/postControllerUtils')
 
@@ -9,28 +9,7 @@ const { removePostDirByName } = require('../utils/postControllerUtils')
 // @route GET /post
 // @access Public
 const getAllPosts = async (req, res) => {
-    const posts = await Post.find({ status: STATUS.Approved }).sort({_id:-1}).lean()
-
-    if (!posts?.length) return res.status(400).json({ message: 'No posts found' })
-
-    // Add username and estimated read time to each post before sending the response 
-    const postWithUser = await Promise.all(posts.map(async (post) => {
-        const str = post.title + ' ' + post.subHeading + ' ' + post.content
-        const wordCnt = wordCount(str)
-        const readTime = wordCntToTime(wordCnt)
-        const user = await User.findById(post.user).lean().exec()
-        const name = user ? user.username : '[deleted]'
-        return { ...post, author: name, readTime: readTime }
-    }))
-
-    res.json(postWithUser)
-}
-
-// @desc Get pending post
-// @route GET /post/pending
-// @access Public
-const getPendingPosts = async (req, res) => {
-    const posts = await Post.find({ status: STATUS.Pending }).lean()
+    const posts = await Post.find().sort({_id:-1}).lean()
 
     if (!posts?.length) return res.status(400).json({ message: 'No posts found' })
 
@@ -66,9 +45,6 @@ const createNewPost = async (req, res) => {
 
     // Create and store new post
     const postCover = cover === '' ? undefined : cover
-    const status = role === ROLES.Admin || role === ROLES.Moderator
-        ? STATUS.Approved
-        : STATUS.Pending
 
     const post = await Post.create({
         user,
@@ -76,8 +52,7 @@ const createNewPost = async (req, res) => {
         subHeading,
         content,
         "cover": postCover,
-        tags,
-        status
+        tags
     })
 
     if (post) {
@@ -128,29 +103,6 @@ const updatePost = async (req, res) => {
     const updatedPost = await post.save()
 
     res.json({ message: `Updated post: ${updatedPost.title}` })
-}
-
-// @desc Update post status
-// @route PATCH /post/status
-// @access Private - Admin/Moderator only
-const updatePostStatus = async (req, res) => {
-    const { id, status } = req.body
-
-    if (!id || !status) return res.status(400).json({ message: 'All fields are required' })
-
-    if (!ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid id' })
-    
-    if (!Object.values(STATUS).includes(status)) {
-        return res.status(400).json({ message: 'Invalid status' })
-    }
-
-    const post = await Post.findById(id).exec()
-    if (!post) return res.status(400).json({ message: 'Post not found' })
-
-    post.status = status
-    const updatedPost = await post.save()
-
-    res.json({ message: `Updated post: ${updatedPost.title} is ${updatedPost.status}` })
 }
 
 // @desc Update view
@@ -218,10 +170,8 @@ const deleteALLPost = async (req, res) => {
 
 module.exports = { 
     getAllPosts,
-    getPendingPosts,
     createNewPost,
     updatePost,
-    updatePostStatus,
     updateView,
     deletePost,
     deleteALLPost
