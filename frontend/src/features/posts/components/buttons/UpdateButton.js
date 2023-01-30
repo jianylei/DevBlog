@@ -47,7 +47,6 @@ const UpdateButton = () => {
             const name = getPathStrFromStr(title)
             const tagsList = stringToTags(tags)
             let coverUrl = ''
-
             asyncParseImgFromHTML(content, name, async(obj) => {
                 const { str, imageList, imageNames } = obj
 
@@ -64,7 +63,6 @@ const UpdateButton = () => {
                             data.append('posts', file)
                         }
                     }
-            
                     if (cover) {
                         const coverName = Date.now() + '-' + Math.round(Math.random() * 1E9) + '.jpg'
                         const newFile = dataURLtoFile(cover, coverName)
