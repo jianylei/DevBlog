@@ -46,5 +46,6 @@ export const REGEX = Object.freeze({
         AUTHOR: /^\/authors(\/)?/,
         WRITE: /^\/write(\/)?$/,
         EDIT: /^\/write\/.*$/,
+        FOLLOWING: /^\/following(\/)?$/,
     }
 })

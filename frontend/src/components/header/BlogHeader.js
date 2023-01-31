@@ -8,7 +8,7 @@ const BlogHeader = ({ show }) => {
 
     const { pathname } = useLocation()
 
-    const { isMod } = useAuth()
+    const auth = useAuth()
 
     return (
         <header className={`blog-nav__container ${show 
@@ -16,12 +16,14 @@ const BlogHeader = ({ show }) => {
             <nav className="blog-nav__links">
                 <Link className={ REGEX.ROUTES.POSTS.test(pathname) 
                     ? 'active' : '' } to='/'>Posts</Link>
-                <Link className={ REGEX.ROUTES.AUTHORS.test(pathname) 
-                    ? 'active' : '' } to='/authors'>Authors</Link>
-                { isMod
-                    ? <Link>Pending</Link>
+                { auth.id
+                    ? <Link className={ REGEX.ROUTES.FOLLOWING.test(pathname) 
+                        ? 'active' : '' } to='/following'>Following</Link>
                     : undefined
                 }
+                <Link className={ REGEX.ROUTES.AUTHORS.test(pathname) 
+                    ? 'active' : '' } to='/authors'>Authors</Link>
+
             </nav>
             { REGEX.ROUTES.POSTS.test(pathname) 
                 ? <select

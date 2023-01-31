@@ -204,12 +204,12 @@ svg{
   padding: 0;
 }
 
-.login__button:hover {
-  color: var(--COLOR-DARK);
-}
-
 .signup__button {
   background-color: var(--SUCCESS);
+}
+
+.login__button:hover {
+  color: var(--COLOR-DARK);
 }
 
 .signup__button:hover {
@@ -275,7 +275,7 @@ svg.post-edit__button{
 
 .unfollow-button {
   background-color: transparent;
-  border: 2px solid var(--SUCCESS);
+  border: 1px solid var(--SUCCESS);
   color: var(--SUCCESS);
 }
 
