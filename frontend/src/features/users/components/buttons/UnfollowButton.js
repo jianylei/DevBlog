@@ -1,9 +1,15 @@
-import { useDispatch } from "react-redux"
 import useAuth from "../../../../hooks/useAuth"
+import useWindowDimensions from "../../../../hooks/useWindowDimensions"
 import { useUnFollowUserMutation } from "../../usersApiSlice"
+import { REGEX, DIMENSIONS } from "../../../../constants/constants"
+import { useLocation } from "react-router-dom"
 
 const UnfollowButton = ({ username }) => {
     const auth = useAuth()
+
+    const { width } = useWindowDimensions()
+
+    const { pathname } = useLocation()
 
     const [unFollowUser, {
         isLoading
@@ -16,6 +22,17 @@ const UnfollowButton = ({ username }) => {
                 username
             })
         }
+    }
+
+    const buttonClass = () => {
+        if (REGEX.ROUTES.AUTHORS.test(pathname)) return ''
+        else if (REGEX.ROUTES.AUTHOR.test(pathname)) {
+            if (width <= DIMENSIONS.WIDTH.S) {
+                return 'author-follow'
+            }
+            return 'author-follow mt-7'
+        }
+        else return 'post-follow'
     }
 
     return (

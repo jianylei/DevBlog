@@ -2,11 +2,14 @@ import { useDispatch } from "react-redux"
 import useAuth from "../../../../hooks/useAuth"
 import { useFollowUserMutation } from "../../usersApiSlice"
 import { setType, setOpen } from "../../../modal/modalSlice"
-import { MODAL, REGEX } from "../../../../constants/constants"
+import { DIMENSIONS, MODAL, REGEX } from "../../../../constants/constants"
 import { useLocation } from "react-router-dom"
+import useWindowDimensions from "../../../../hooks/useWindowDimensions"
 
 const FollowButton = ({ username }) => {
     const auth = useAuth()
+
+    const { width } = useWindowDimensions()
 
     const dispatch = useDispatch()
 
@@ -30,14 +33,19 @@ const FollowButton = ({ username }) => {
     }
 
     const buttonClass = () => {
-        if (REGEX.ROUTES.AUTHORS.test(pathname)) console.log('authors')
-        if (REGEX.ROUTES.AUTHOR.test(pathname)) console.log('author')
-        if (REGEX.ROUTES.POSTS.test(pathname)) console.log('posts')
+        if (REGEX.ROUTES.AUTHORS.test(pathname)) return ''
+        else if (REGEX.ROUTES.AUTHOR.test(pathname)) {
+            if (width <= DIMENSIONS.WIDTH.S) {
+                return 'author-follow'
+            }
+            return 'author-follow mt-7'
+        }
+        else return 'post-follow'
     }
 
     return (
         <button
-            className="follow-button"
+            className={`follow-button ${buttonClass()}`}
             onClick={clickHandle}
             disabled={isLoading ? true : false}
         >

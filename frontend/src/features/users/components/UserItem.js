@@ -36,7 +36,7 @@ const UserItem = ({ userId }) => {
 
         return (
             <div className='author-card__container'>
-                <div className='test'>
+                <div className='author-card-content__container'>
                     <UserItemImage user={user} navHandler={navHandler} />
                     <UserItemMain user={user} navHandler={navHandler} />
                 </div>
