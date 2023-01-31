@@ -46,8 +46,9 @@ const Post = () => {
         if (isSuccess && post && ('/'+getPathStrFromStr(post.title, post.id) === pathname)
             && !rendered.current) {
             rendered.current = true
-            updateViewCount({ id})
+            updateViewCount({ id })
         }
+        // eslint-disable-next-line
     }, [isSuccess])
 
     let content

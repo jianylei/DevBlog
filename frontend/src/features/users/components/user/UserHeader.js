@@ -1,14 +1,27 @@
 import useWindowDimensions from "../../../../hooks/useWindowDimensions"
 import { DIMENSIONS } from "../../../../constants/constants"
+import useAuth from "../../../../hooks/useAuth"
+import FollowButton from "../buttons/FollowButton"
+import UnfollowButton from "../buttons/UnfollowButton"
 
 const UserHeader = ({ user }) => {
     const { width } = useWindowDimensions()
+
+    const auth = useAuth()
 
     const profileImg = user.image 
         ? `url(${user.image})`
         : 'var(--NO-IMAGE)'
 
     const followerCnt = user?.followers?.length || 0
+
+    const followButton = () => {
+        if (user.id === auth.id) return undefined
+        if (user.followers?.includes(auth.id)) {
+            return <UnfollowButton username={user.username} />
+        }
+        return <FollowButton username={user.username} />
+    }
 
     return (
         <div className="author-header__container">
@@ -31,7 +44,7 @@ const UserHeader = ({ user }) => {
                 </div>
             </div>
             { width <= DIMENSIONS.WIDTH.M
-                    ? <button className="follow-button author-page-button">Follow</button>
+                    ? followButton()
                     : undefined
             }
         </div>
@@ -39,3 +52,5 @@ const UserHeader = ({ user }) => {
 }
 
 export default UserHeader
+
+// <button className="follow-button author-page-button">Follow</button>

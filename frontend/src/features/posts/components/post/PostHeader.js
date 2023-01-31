@@ -5,6 +5,8 @@ import { DELETED, DIMENSIONS } from "../../../../constants/constants"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from "@fortawesome/free-regular-svg-icons"
 import useAuth from "../../../../hooks/useAuth"
+import FollowButton from "../../../users/components/buttons/FollowButton"
+import UnfollowButton from "../../../users/components/buttons/UnfollowButton"
 
 const PostHeader = ({ user, post }) => {
     const { width } = useWindowDimensions()
@@ -23,12 +25,12 @@ const PostHeader = ({ user, post }) => {
         ? `url(${user?.image})`
         : 'var(--NO-IMAGE)'
 
-    const headerButton = () => {
-        if (post.user !== id) {
-            return <button className="post-follow-button">Follow</button>
+    const followButton = () => {
+        if (user.id === id) return undefined
+        if (user.followers?.includes(id)) {
+            return <UnfollowButton username={user.username} />
         }
-        
-        return undefined
+        return <FollowButton username={user.username} />
     }
 
     return (
@@ -54,7 +56,7 @@ const PostHeader = ({ user, post }) => {
                         {post.author}
                     </div>
                     { width <= DIMENSIONS.WIDTH.M
-                        ? headerButton()
+                        ? followButton()
                         : undefined
                     }
                 </div>
@@ -68,3 +70,5 @@ const PostHeader = ({ user, post }) => {
 }
 
 export default PostHeader
+
+//return <button className="post-follow-button">Follow</button>
