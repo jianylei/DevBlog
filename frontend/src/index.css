@@ -183,34 +183,15 @@ button {
   border: none;
   border-radius: var(--BORDER-RADIUS-BUBBLE);
   color: var(--COLOR-LIGHT);
-  transition: background-color 300ms ease;
+  transition: all 300ms ease;
 }
 
 svg{
   font-size: 12px;
 }
 
-/*  || SCROLLBAR 
-::-webkit-scrollbar {
-  width: 15px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--BGCOLOR);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--SURFACE)
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--SURFACE-HOVER)
-}
-*/
-
 /* || BUTTONS */
 .login__button,
-.follow-button,
 .signup__button,
 .tag-button {
   height: 32px;
@@ -227,26 +208,12 @@ svg{
   color: var(--COLOR-DARK);
 }
 
-.follow-button,
-.post-follow-button,
 .signup__button {
   background-color: var(--SUCCESS);
 }
 
-.follow-button:hover,
-.post-follow-button:hover,
 .signup__button:hover {
   background-color: var(--SUCCESS-HOVER);
-}
-
-.follow-button {
-  font-size: 14px;
-}
-
-.post-follow-button {
-  padding: 0px 8px 1px;
-  font-size: 13px;
-  height: 23px;
 }
 
 .tag-button {

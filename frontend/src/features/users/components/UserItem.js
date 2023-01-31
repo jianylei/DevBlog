@@ -1,10 +1,7 @@
 import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
 import { useGetUsersQuery } from '../usersApiSlice'
-import { setOpen, setType } from '../../modal/modalSlice'
 import useAuth from '../../../hooks/useAuth'
-import { MODAL } from '../../../constants/constants'
 import UserItemImage from './userItem/UserItemImage'
 import UserItemMain from './userItem/UserItemMain'
 import FollowButton from './buttons/FollowButton'
@@ -20,8 +17,6 @@ const UserItem = ({ userId }) => {
     const auth = useAuth()
 
     const navigate = useNavigate()
-
-    const dispatch = useDispatch()
 
     if (user) {
         const navHandler = () => navigate(`/authors/${user.username}`)
