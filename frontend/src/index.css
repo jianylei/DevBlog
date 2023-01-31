@@ -205,17 +205,37 @@ svg{
 */
 
 /* || BUTTONS */
+
+.follow-button {
+  height: 32px;
+  padding: 4px 12px 6px;
+  background-color: var(--SUCCESS);
+  font-size: 14px;
+}
+
+.follow-button:hover {
+  background-color: var(--SUCCESS-HOVER);
+}
+
+.post-follow {
+  font-size: 13px;
+  padding: 0px 8px 1px;
+  height: 23px;
+}
+
+.author-follow {
+  padding: 7px 16px 9px;
+  height: 37px;
+}
+
+
+
 .login__button,
 .follow-button,
 .signup__button,
 .tag-button {
   height: 32px;
   padding: 4px 12px 6px;
-}
-
-.login__button,
-.follow-button {
-  background-color: var(--SUCCESS);
 }
 
 .login__button {
@@ -739,6 +759,12 @@ body .modal-open {
   display: flex;
   justify-content: space-between;
   height: 65px;
+}
+
+.test {
+  width: 100%;
+  display: flex;
+  gap: 25px;
 }
 
 .author-card-image {

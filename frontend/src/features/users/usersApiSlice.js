@@ -65,8 +65,8 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             ]
         }),
         followUser: builder.mutation({
-            query: ({ id }) => ({
-                url: '/users/follow/:username',
+            query: ({ id, username }) => ({
+                url: `/users/follow/${username}`,
                 method: 'PATCH',
                 body: { id }
             }),
@@ -75,8 +75,8 @@ export const usersApiSlice = apiSlice.injectEndpoints({
             ]
         }),
         unFollowUser: builder.mutation({
-            query: ({ id }) => ({
-                url: '/users/unfollow/:username',
+            query: ({ id, username }) => ({
+                url: `/users/unfollow/${username}`,
                 method: 'PATCH',
                 body: { id }
             }),
@@ -91,7 +91,9 @@ export const {
     useGetUsersQuery,
     useAddNewUserMutation,
     useUpdateUserMutation,
-    useDeleteUserMutation
+    useDeleteUserMutation,
+    useFollowUserMutation,
+    useUnFollowUserMutation
 } = usersApiSlice
 
 // returns the query result object
