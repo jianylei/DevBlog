@@ -12,7 +12,9 @@ const FollowButton = ({ username }) => {
 
     const { pathname } = useLocation()
 
-    const [followUser] = useFollowUserMutation()
+    const [followUser, {
+        isLoading
+    }] = useFollowUserMutation()
 
     const clickHandle = () => {
         buttonClass()
@@ -34,7 +36,11 @@ const FollowButton = ({ username }) => {
     }
 
     return (
-        <button className="follow-button" onClick={clickHandle}>
+        <button
+            className="follow-button"
+            onClick={clickHandle}
+            disabled={isLoading ? true : false}
+        >
             Follow
         </button>
     )

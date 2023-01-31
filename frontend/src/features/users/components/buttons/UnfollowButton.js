@@ -5,7 +5,9 @@ import { useUnFollowUserMutation } from "../../usersApiSlice"
 const UnfollowButton = ({ username }) => {
     const auth = useAuth()
 
-    const [unFollowUser] = useUnFollowUserMutation()
+    const [unFollowUser, {
+        isLoading
+    }] = useUnFollowUserMutation()
 
     const clickHandle = () => {
         if (auth.id) {
@@ -17,7 +19,11 @@ const UnfollowButton = ({ username }) => {
     }
 
     return (
-        <button className="follow-button" onClick={clickHandle}>
+        <button
+            className="follow-button"
+            onClick={clickHandle}
+            disabled={isLoading ? true : false}
+        >
             Unfollow
         </button>
     )
