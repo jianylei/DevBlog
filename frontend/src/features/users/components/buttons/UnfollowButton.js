@@ -37,11 +37,11 @@ const UnfollowButton = ({ username }) => {
 
     return (
         <button
-            className="follow-button"
+            className={`follow-button unfollow-button ${buttonClass()}`}
             onClick={clickHandle}
             disabled={isLoading ? true : false}
         >
-            Unfollow
+            Following
         </button>
     )
 }

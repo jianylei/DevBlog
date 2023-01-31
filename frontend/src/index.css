@@ -306,8 +306,19 @@ svg.post-edit__button{
   font-size: 14px;
 }
 
+.unfollow-button {
+  background-color: transparent;
+  border: 2px solid var(--SUCCESS);
+  color: var(--SUCCESS);
+}
+
 .follow-button:hover {
   background-color: var(--SUCCESS-HOVER);
+}
+
+.unfollow-button:hover {
+  border-color: var(--SUCCESS-HOVER);
+  color: var(--COLOR-LIGHT);
 }
 
 .post-follow {
