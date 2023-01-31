@@ -115,7 +115,7 @@ const updateView = async (req, res) => {
 
     if (!ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid id' })
 
-    const post = await Post.findOneAndUpdate({ _id: id }, { $inc: {'views': 1} }).exec()
+    const post = await Post.findOneAndUpdate({ _id: id }, { $inc: {'views': 1} }, { timestamps: false }).exec()
 
     if (!post) return res.status(400).json({ message: 'Post not found' })
 
