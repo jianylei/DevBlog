@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Following = () => {
+const FollowingPostList = () => {
     return (
         <div>Following</div>
     )
 }
 
-export default Following
+export default FollowingPostList

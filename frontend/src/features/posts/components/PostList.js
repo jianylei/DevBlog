@@ -1,11 +1,9 @@
-import { PulseLoader } from 'react-spinners'
 import PostItem from './postItem/PostItem'
 import { useGetPostsQuery } from '../postsApiSlice'
 
 const PostList = () => {
     const {
         data: posts,
-        isLoading,
         isSuccess,
         isError,
         error
@@ -15,8 +13,6 @@ const PostList = () => {
     })
 
     let content
-
-    if (isLoading) content = <PulseLoader color={'#FFF'} />
 
     if (isError) {
         content = <p className='errmsg'>{error?.data?.message}</p>

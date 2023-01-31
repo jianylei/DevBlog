@@ -10,7 +10,7 @@ import { TABS } from './constants/constants'
 import NewPost from './features/posts/components/NewPost'
 import PersistLogin from './features/auth/components/PersistLogin'
 import EditPost from './features/posts/components/EditPost'
-import Following from './features/posts/components/Following'
+import FollowingPostList from './features/posts/components/FollowingPostList'
 
 function App() {
   return (
@@ -24,6 +24,8 @@ function App() {
               <Route path=":title" element={<Post />} />
             </Route>
 
+            <Route path='/following' element={<FollowingPostList />} />
+
             <Route path='/authors' >
               <Route index element={<UserList />} />
               <Route path=":username" element={<User />} />
@@ -34,8 +36,6 @@ function App() {
             <Route index element={<NewPost />} />
             <Route path=':title' element={<EditPost />}/>
           </Route>
-
-          <Route path='/following' element={<Following />} />
 
           <Route path='*' element={<NoMatch tab={ TABS.PAGE }/>}/>{/* 404 */}
         </Route>
