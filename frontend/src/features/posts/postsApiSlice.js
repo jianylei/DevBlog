@@ -31,8 +31,8 @@ export const postsApiSlice = apiSlice.injectEndpoints({
             }
         }),
         getFollowingPosts: builder.query({
-            query: () => ({
-                url: '/posts/following',
+            query: (id) => ({
+                url: `/posts/following/${id}`,
                 validateStatus: (response, result) => {
                     return response.status === 200 && !result.isError
                 }

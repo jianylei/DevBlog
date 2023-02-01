@@ -1,13 +1,16 @@
 import PostItem from './postItem/PostItem'
 import { useGetFollowingPostsQuery } from '../postsApiSlice'
+import useAuth from '../../../hooks/useAuth'
 
 const FollowingPostList = () => {
+    const auth = useAuth()
+
     const {
         data: posts,
         isSuccess,
         isError,
         error
-    } = useGetFollowingPostsQuery('postsList', {
+    } = useGetFollowingPostsQuery(auth.id, {
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
     })
