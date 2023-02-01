@@ -26,6 +26,39 @@ const getAllPosts = async (req, res) => {
     res.json(postWithUser)
 }
 
+// @desc Get following users post
+// @route GET /post/following
+// @access Private
+const getFollowingPosts = async (req, res) => {
+    const { id } = req.body
+
+    const user = await User.findById(id)
+
+    if (!user) return res.status(400).json({ message: 'User not found' })
+
+    const posts = await Post.find(({ user: { $in: user.following } }))
+        .sort({ _id:-1 }).lean()
+
+
+
+
+    //const posts = await Post.find().sort({_id:-1}).lean()
+
+    if (!posts?.length) return res.status(400).json({ message: 'No posts found' })
+
+    // Add username and estimated read time to each post before sending the response 
+    const postWithUser = await Promise.all(posts.map(async (post) => {
+        const str = post.title + ' ' + post.subHeading + ' ' + post.content
+        const wordCnt = wordCount(str)
+        const readTime = wordCntToTime(wordCnt)
+        const user = await User.findById(post.user).lean().exec()
+        const name = user ? user.username : '[deleted]'
+        return { ...post, author: name, readTime: readTime }
+    }))
+
+    res.json(postWithUser)
+}
+
 // @desc Create new post
 // @route POST /post
 // @access Private
@@ -170,6 +203,7 @@ const deleteALLPost = async (req, res) => {
 
 module.exports = { 
     getAllPosts,
+    getFollowingPosts,
     createNewPost,
     updatePost,
     updateView,

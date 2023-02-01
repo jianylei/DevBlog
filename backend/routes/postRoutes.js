@@ -9,6 +9,8 @@ router.route('/')
     .patch(postsController.updatePost)
     .delete(verifyJWT, postsController.deletePost)
 
+router.route('/following').get(postsController.getFollowingPosts)
+
 router.route('/view').patch(postsController.updateView)
 
 router.route('/all').delete(postsController.deleteALLPost)

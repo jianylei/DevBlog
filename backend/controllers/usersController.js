@@ -163,7 +163,7 @@ const followUser = async (req, res) => {
 
     if (!ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid id' })
 
-    const user = await User.findById(id).exec()
+    const user = await User.findById(id)
     if (!user) return res.status(400).json({ message: 'User not found' })
 
     const otherUser = await User.findOne({ username: username })
@@ -204,7 +204,7 @@ const unFollowUser = async (req, res) => {
 
     if (!ObjectId.isValid(id)) return res.status(400).json({ message: 'Invalid id' })
 
-    const user = await User.findById(id).exec()
+    const user = await User.findById(id)
     if (!user) return res.status(400).json({ message: 'User not found' })
 
     const otherUser = await User.findOne({ username: username }).exec()
