@@ -9,7 +9,7 @@ router.route('/')
     .patch(postsController.updatePost)
     .delete(verifyJWT, postsController.deletePost)
 
-router.route('/following').get(postsController.getFollowingPosts)
+router.route('/following').get(verifyJWT, postsController.getFollowingPosts)
 
 router.route('/view').patch(postsController.updateView)
 

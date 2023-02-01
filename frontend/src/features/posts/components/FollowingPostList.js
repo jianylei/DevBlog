@@ -1,16 +1,13 @@
 import PostItem from './postItem/PostItem'
-import { useGetPostsQuery } from '../postsApiSlice'
-import useAuth from '../../../hooks/useAuth'
+import { useGetFollowingPostsQuery } from '../postsApiSlice'
 
 const FollowingPostList = () => {
-    const auth = useAuth()
-
     const {
         data: posts,
         isSuccess,
         isError,
         error
-    } = useGetPostsQuery('postsList', {
+    } = useGetFollowingPostsQuery('postsList', {
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
     })
@@ -22,12 +19,10 @@ const FollowingPostList = () => {
     }
 
     if (isSuccess) {
-        const { ids, entities } = posts
-
-        const filteredIds = ids.filter(postId => entities[postId].follower?.includes(auth.id))
+        const { ids } = posts
 
         const postsContent = ids?.length
-            && filteredIds.map(postId => <PostItem key={postId} postId={postId} />)
+            && ids.map(postId => <PostItem key={postId} postId={postId} />)
 
         content = (
             <div className='blog-content__container'>

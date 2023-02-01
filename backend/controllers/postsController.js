@@ -30,7 +30,7 @@ const getAllPosts = async (req, res) => {
 // @route GET /post/following
 // @access Private
 const getFollowingPosts = async (req, res) => {
-    const { id } = req.body
+    const { id } = req.userInfo
 
     const user = await User.findById(id)
 
