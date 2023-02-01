@@ -30,7 +30,7 @@ const getAllPosts = async (req, res) => {
 // @route GET /post/following
 // @access Private
 const getFollowingPosts = async (req, res) => {
-    const { id } = req.userInfo
+    const id = req.params.id
 
     const user = await User.findById(id)
 
@@ -38,11 +38,6 @@ const getFollowingPosts = async (req, res) => {
 
     const posts = await Post.find(({ user: { $in: user.following } }))
         .sort({ _id:-1 }).lean()
-
-
-
-
-    //const posts = await Post.find().sort({_id:-1}).lean()
 
     if (!posts?.length) return res.status(400).json({ message: 'No posts found' })
 
