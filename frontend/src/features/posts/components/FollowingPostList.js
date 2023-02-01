@@ -1,13 +1,13 @@
 import PostItem from './postItem/PostItem'
-import { useGetPostsQuery } from '../postsApiSlice'
+import { useGetFollowingPostsQuery } from '../postsApiSlice'
 
-const PostList = () => {
+const FollowingPostList = () => {
     const {
         data: posts,
         isSuccess,
         isError,
         error
-    } = useGetPostsQuery('postsList', {
+    } = useGetFollowingPostsQuery('postsList', {
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
     })
@@ -20,8 +20,6 @@ const PostList = () => {
 
     if (isSuccess) {
         const { ids } = posts
-
-        //const filteredIds = ids.filter(postId => entities[postId].status === STATUS.Approved)
 
         const postsContent = ids?.length
             && ids.map(postId => <PostItem key={postId} postId={postId} />)
@@ -36,4 +34,4 @@ const PostList = () => {
     return content
 }
 
-export default PostList
+export default FollowingPostList

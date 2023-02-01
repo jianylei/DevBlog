@@ -30,6 +30,29 @@ export const postsApiSlice = apiSlice.injectEndpoints({
                 } else return [{ type: 'Post', id: 'LIST' }]
             }
         }),
+        getFollowingPosts: builder.query({
+            query: () => ({
+                url: '/posts/following',
+                validateStatus: (response, result) => {
+                    return response.status === 200 && !result.isError
+                }
+            }),
+            transformResponse: responseData => {
+                const loadedPosts = responseData.map(post => {
+                    post.id = post._id
+                    return post
+                })
+                return postsAdapter.setAll(initialState, loadedPosts)
+            },
+            providesTags: (result, error, arg) => {
+                if (result?.ids) {
+                    return [
+                        { type: 'Post', id: 'LIST' },
+                        ...result.ids.map(id => ({ type: 'Post', id }))
+                    ]
+                } else return [{ type: 'Post', id: 'LIST' }]
+            }
+        }),
         addNewPost: builder.mutation({
             query: initialPost => ({
                 url: '/posts',
@@ -79,6 +102,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
 
 export const {
     useGetPostsQuery,
+    useGetFollowingPostsQuery,
     useAddNewPostMutation,
     useUpdatePostMutation,
     useDeletePostMutation,

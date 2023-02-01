@@ -10,6 +10,7 @@ import { TABS } from './constants/constants'
 import NewPost from './features/posts/components/NewPost'
 import PersistLogin from './features/auth/components/PersistLogin'
 import EditPost from './features/posts/components/EditPost'
+import FollowingPostList from './features/posts/components/FollowingPostList'
 
 function App() {
   return (
@@ -22,6 +23,8 @@ function App() {
               <Route index element={<PostList />} />
               <Route path=":title" element={<Post />} />
             </Route>
+
+            <Route path='/following' element={<FollowingPostList />} />
 
             <Route path='/authors' >
               <Route index element={<UserList />} />
