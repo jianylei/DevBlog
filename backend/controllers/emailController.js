@@ -10,7 +10,6 @@ const transporter = nodemailer.createTransport({
 })
 
 const sendConfirmationEmail = (id, username, email) => {
-    console.log(email)
     jwt.sign(
         { 'id': id },
         process.env.CONFIRM_TOKEN_SECRET,
