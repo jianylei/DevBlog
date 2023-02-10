@@ -22,7 +22,8 @@ export const TABS = Object.freeze({
 export const MODAL = Object.freeze({
     TYPE: {
         SIGNIN: 'SignIn',
-        SIGNUP: 'SignUp'
+        SIGNUP: 'SignUp',
+        CONFIRM: 'Confirm'
     }
 })
 
@@ -35,7 +36,7 @@ export const DELETED = '[deleted]'
 export const DIMENSIONS = Object.freeze({
     WIDTH: {
         S: 728,
-        M: 904
+        M: 919
     }
 })
 

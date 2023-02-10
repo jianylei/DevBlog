@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
-import { selectCurrentOpen, setOpen } from "../../../modal/modalSlice"
+import { selectCurrentOpen, setType } from "../../../modal/modalSlice"
+import { MODAL } from "../../../../constants/constants"
 
 const SignUpForm = ({ setErr, addNewUserMutation }) => {
     const [username, setUsername] = useState('')
@@ -41,7 +42,7 @@ const SignUpForm = ({ setErr, addNewUserMutation }) => {
             setPassword('')
             setConfirmPwd('')
             setErr('')
-            dispatch(setOpen({ open: false }))
+            dispatch(setType({ type: MODAL.TYPE.CONFIRM }))
         }
     }, [isSuccess, navigate, dispatch, setErr])
 

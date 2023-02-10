@@ -1,10 +1,11 @@
 import { useEffect, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { setOpen, selectCurrentType, selectCurrentOpen } from '../modalSlice';
-import { MODAL } from '../../../constants/constants';
+import { setOpen, selectCurrentType, selectCurrentOpen } from '../modalSlice'
+import { MODAL } from '../../../constants/constants'
 import useOutsideAlerter from '../../../hooks/useOutsideAlerter'
 import SignIn from '../../auth/components/signin/SignIn'
-import SignUp from '../../users/components/signup/SignUp';
+import SignUp from '../../users/components/signup/SignUp'
+import ConfirmSignUp from '../../users/components/signup/ConfirmSignUp'
 
 const Modal = () => {
     const wrapperRef = useRef(null);
@@ -32,6 +33,9 @@ const Modal = () => {
     }
     else if (currType === MODAL.TYPE.SIGNUP) {
         content = <SignUp />
+    }
+    else if (currType === MODAL.TYPE.CONFIRM) {
+        content = <ConfirmSignUp />
     }
 
     return (
