@@ -1,10 +1,23 @@
-import { useState } from "react"
-import { useDispatch } from "react-redux"
-import { setType } from "../../../modal/modalSlice"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { selectCurrentOpen, setType } from "../../../modal/modalSlice"
 import { MODAL } from "../../../../constants/constants"
 
-const ConfirmSignUp = () => {
+const ConfirmSignUp = ({ emailState }) => {
+    const [email, setEmail] = emailState
+
+    const openModal = useSelector(selectCurrentOpen)
+
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        if (!openModal) {
+            setEmail('')
+        }
+    }, [openModal])
+
+    useEffect(() => () => setEmail(''), [])
+
     return (
         <div className="modal-content__container">
             <h2 className="modal-title">Verify your email address.</h2>

@@ -4,9 +4,9 @@ import { useSelector, useDispatch } from "react-redux"
 import { selectCurrentOpen, setType } from "../../../modal/modalSlice"
 import { MODAL } from "../../../../constants/constants"
 
-const SignUpForm = ({ setErr, addNewUserMutation }) => {
+const SignUpForm = ({ setErr, addNewUserMutation, emailState }) => {
     const [username, setUsername] = useState('')
-    const [email, setEmail] = useState('')
+    const [email, setEmail] = emailState
     const [password, setPassword] = useState('')
     const [confirmPwd, setConfirmPwd] = useState('')
 
@@ -37,7 +37,6 @@ const SignUpForm = ({ setErr, addNewUserMutation }) => {
 
     useEffect(() => {
         if (isSuccess) {
-            setEmail('')
             setUsername('')
             setPassword('')
             setConfirmPwd('')

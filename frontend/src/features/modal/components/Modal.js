@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setOpen, selectCurrentType, selectCurrentOpen } from '../modalSlice'
 import { MODAL } from '../../../constants/constants'
@@ -8,6 +8,7 @@ import SignUp from '../../users/components/signup/SignUp'
 import ConfirmSignUp from '../../users/components/signup/ConfirmSignUp'
 
 const Modal = () => {
+    const [email, setEmail] = useState('')
     const wrapperRef = useRef(null);
 
     const dispatch = useDispatch()
@@ -32,10 +33,10 @@ const Modal = () => {
         content = <SignIn />
     }
     else if (currType === MODAL.TYPE.SIGNUP) {
-        content = <SignUp />
+        content = <SignUp emailState={[email, setEmail]} />
     }
     else if (currType === MODAL.TYPE.CONFIRM) {
-        content = <ConfirmSignUp />
+        content = <ConfirmSignUp emailState={[email, setEmail]} />
     }
 
     return (
