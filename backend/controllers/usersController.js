@@ -1,16 +1,8 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
-const nodemailer = require('nodemailer')
 const jwt = require('jsonwebtoken')
 const ObjectId = require('mongoose').Types.ObjectId
-
-const transporter = nodemailer.createTransport({
-    service: 'Gmail',
-    auth: {
-        user: process.env.EMAIL_USR,
-        pass: process.env.EMAIL_PWD
-    }
-})
+const emailController = require('./emailController')
 
 // @desc Get all users
 // @route GET /users
@@ -54,21 +46,7 @@ const createNewUser = async (req, res) => {
         username, 'password': hashedPwd, email
     })
     
-    jwt.sign(
-        { 'id': user.id },
-        process.env.CONFIRM_TOKEN_SECRET,
-        { expiresIn: '2h' },
-        (err, token) => {
-            const url = `http://localhost:3080/auth/verification/${token}`
-
-            transporter.sendMail({
-                to: email,
-                subject: 'Confirm Email',
-                html: `Hello @${username}, please click this url to confirm account
-                    <a href="${url}">${url}</a>`
-            })
-        }
-    )
+    emailController.sendConfirmationEmail(user.id, username, email)
 
     if (user) {
         res.status(201).json({ message: `New user ${username} created` })
