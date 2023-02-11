@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux"
-import { selectCurrentEmail, setType } from "../../../modal/modalSlice"
+import { selectCurrentUsername, setType } from "../../../modal/modalSlice"
 import { useResendConfirmationEmailMutation } from "../../../auth/authApiSlice"
 import { MODAL } from "../../../../constants/constants"
 
 const ConfirmSignUp = () => {
-    const email = useSelector(selectCurrentEmail)
+    const username = useSelector(selectCurrentUsername)
 
     const [resendConfirmationEmail, {
         isError,
@@ -14,7 +14,7 @@ const ConfirmSignUp = () => {
     const dispatch = useDispatch()
 
     const resendHandler = async () => {
-        await resendConfirmationEmail(email)
+        await resendConfirmationEmail(username)
     }
 
     const errClass = isError ? 'errmsg' : 'offscreen' 

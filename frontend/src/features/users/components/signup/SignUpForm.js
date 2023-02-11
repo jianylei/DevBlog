@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { 
     selectCurrentOpen,
     setType,
-    setEmail as setModalEmail
+    setUsername as setModalUsername
 } from "../../../modal/modalSlice"
 import { MODAL } from "../../../../constants/constants"
 
@@ -52,7 +52,7 @@ const SignUpForm = ({ setErr, addNewUserMutation }) => {
 
         if (password !== confirmPwd) setErr('Passwords do not match')
         else if(canSave) {
-            dispatch(setModalEmail({ email }))
+            dispatch(setModalUsername({ username }))
             await addNewUser({ email, username, password })
         }
     }

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const modalSlice = createSlice({
     name: 'modal',
-    initialState: { open: false, type: null, email: '' },
+    initialState: { open: false, type: null, username: '' },
     reducers: {
         setOpen: (state, action) => {
             const { open } = action.payload
@@ -12,22 +12,17 @@ const modalSlice = createSlice({
             const { type } = action.payload
             state.type = type
         },
-        setEmail: (state, action) => {
-            const { email } = action.payload
-            state.email = email
+        setUsername: (state, action) => {
+            const { username } = action.payload
+            state.username = username
         },
-        reset: (state, action) => {
-            state.open = false
-            state.type = null
-            state.email = ''
-        }
     }
 })
 
-export const { setOpen, setType, setEmail, reset } = modalSlice.actions
+export const { setOpen, setType, setUsername } = modalSlice.actions
 
 export default modalSlice.reducer
 
 export const selectCurrentOpen = (state) => state.modal.open
 export const selectCurrentType = (state) => state.modal.type
-export const selectCurrentEmail = (state) => state.modal.email
+export const selectCurrentUsername = (state) => state.modal.username
