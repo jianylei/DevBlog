@@ -60,14 +60,6 @@
   border-radius: 2px;
 }
 
-.modal-error {
-  position: absolute;
-  top: 15px;
-  left: 0;
-  width: 100%;
-  text-align: center;
-}
-
 .nowrap {
   white-space: nowrap;
 }

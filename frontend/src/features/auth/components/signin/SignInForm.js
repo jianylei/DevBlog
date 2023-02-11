@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { setCredentials } from "../../authSlice"
-import { selectCurrentOpen, setOpen } from "../../../modal/modalSlice"
+import {
+    selectCurrentOpen,
+    setOpen,
+    setType,
+    setUsername as setModalUsername
+} from "../../../modal/modalSlice"
+import { MODAL } from "../../../../constants/constants"
 
 const SignInForm = ({ setErrMsg, login }) => {
     const [username, setUsername] = useState('')
@@ -38,7 +44,8 @@ const SignInForm = ({ setErrMsg, login }) => {
             else if (err.status === 400) setErrMsg('Missing username or password')
             else if (err.status === 401) {
                 if (err.data?.username) {
-console.log('asdasda')
+                    dispatch(setModalUsername({ username }))
+                    dispatch(setType({ type: MODAL.TYPE.CONFIRM }))
                 } else {
                     setErrMsg(err.data?.message || 'Unauthorized')
                 }

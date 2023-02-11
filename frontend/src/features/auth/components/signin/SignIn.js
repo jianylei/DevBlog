@@ -15,7 +15,7 @@ const SignIn = () => {
 
     return (
         <div className="modal-content__container">
-            <p className={`modal-error ${errClass}`} aria-live="assertive">{errMsg}</p>
+            <p className={errClass} aria-live="assertive">{errMsg}</p>
             <h2 className="modal-title">Welcome back.</h2>
             <SignInForm setErrMsg={setErrMsg} login={login} />
             <SignUpNav />

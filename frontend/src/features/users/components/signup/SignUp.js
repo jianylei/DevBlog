@@ -19,7 +19,7 @@ const SignUp = () => {
 
     return (
         <div className="modal-content__container">
-            <p className={`modal-error ${errClass}`} aria-live="assertive">{error?.data?.message || errMsg}</p>
+            <p className={errClass} aria-live="assertive">{error?.data?.message || errMsg}</p>
             <h2 className="modal-title">Join KeebBlog.</h2>
             <SignUpForm
                 setErr={setErrMsg}
