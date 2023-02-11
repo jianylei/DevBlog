@@ -2,6 +2,7 @@ const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const asyncHandler = require('express-async-handler')
+const emailController = require('./emailController')
 
 // @desc Login
 // @route POST /auth
@@ -57,20 +58,38 @@ const login = async (req, res) => {
 }
 
 // @desc Verify account
-// @route POST /auth/verification/:token
+// @route GET /auth/verification/:token
 // @ access Public
 const verifyAccount = (req, res) => {
     jwt.verify(
         req.params.token, 
         process.env.CONFIRM_TOKEN_SECRET,
         asyncHandler(async (err, decoded) => {
-            if (err) return res.status(401).json({ message: 'Error' })
+            if (err) return res.status(401).json({ message: 'Link is invalid or has expired' })
 
             await User.findOneAndUpdate({ _id: decoded.id }, { confirmed: true }).exec()
             
             return res.status(200).json({ message: 'Account Verified' })
         })
     )
+}
+
+// @desc Resend confirmation email
+// @route GET /auth/verification/resend/:email
+// @access Private
+const resendVerify = async (req, res) => {
+    const email = req.params.email
+
+    if (!email)  return res.status(400).json({ message: 'All fields are required' })
+
+    const user = await User.findOne({ email: email }).select('-password').lean()
+    if (!user) return res.status(400).json({ message: 'User not found' })
+
+    if (user.confirmed) return res.status(403).json({ message: 'User already confirmed' })
+
+    emailController.sendConfirmationEmail(user._id?.toString(), user.username, email)
+
+    res.status(200).json({ message: 'Confirmation email has been re-sent' })
 }
 
 // @desc Refresh
@@ -129,6 +148,7 @@ const logout = (req, res) => {
 module.exports = {
     login,
     verifyAccount,
+    resendVerify,
     refresh,
     logout
 }

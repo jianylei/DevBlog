@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux"
-import { selectCurrentOpen, setType } from "../../../modal/modalSlice"
+import { 
+    selectCurrentOpen,
+    setType,
+    setEmail as setModalEmail
+} from "../../../modal/modalSlice"
 import { MODAL } from "../../../../constants/constants"
 
 const SignUpForm = ({ setErr, addNewUserMutation }) => {
@@ -37,11 +41,6 @@ const SignUpForm = ({ setErr, addNewUserMutation }) => {
 
     useEffect(() => {
         if (isSuccess) {
-            setEmail('')
-            setUsername('')
-            setPassword('')
-            setConfirmPwd('')
-            setErr('')
             dispatch(setType({ type: MODAL.TYPE.CONFIRM }))
         }
     }, [isSuccess, navigate, dispatch, setErr])
@@ -53,6 +52,7 @@ const SignUpForm = ({ setErr, addNewUserMutation }) => {
 
         if (password !== confirmPwd) setErr('Passwords do not match')
         else if(canSave) {
+            dispatch(setModalEmail({ email }))
             await addNewUser({ email, username, password })
         }
     }

@@ -38,6 +38,12 @@ export const authApiSlice = apiSlice.injectEndpoints({
                     console.log(err.error?.data?.message)
                 }
             }
+        }),
+        resendConfirmationEmail: builder.mutation({
+            query: email => ({
+                url: `/auth/verification/resend/${email}`,
+                method: 'GET'
+            })
         })
     })
 })
@@ -45,5 +51,6 @@ export const authApiSlice = apiSlice.injectEndpoints({
 export const {
     useLoginMutation,
     useSendLogoutMutation,
-    useRefreshMutation
+    useRefreshMutation,
+    useResendConfirmationEmailMutation,
 } = authApiSlice
