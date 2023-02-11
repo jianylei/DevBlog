@@ -20,13 +20,18 @@ const login = async (req, res) => {
         return res.status(401).json({ message: 'The username or password you entered is incorrect' })
     }
 
-    if (!foundUser.confirmed) {
-        return res.status(401).json({ message: 'Please confirm your email' })
-    }
-
     const match = await bcrypt.compare(password, foundUser.password)
 
     if (!match) return res.status(401).json({ message: 'The username or password you entered is incorrect' })
+
+    if (!foundUser.confirmed) {
+        emailController.sendConfirmationEmail(
+            foundUser._id?.toString(),
+            foundUser.username,
+            foundUser.email
+        )
+        return res.status(401).json({ message: 'Confirm your email to activate your account. A new confirmation has been sent' })
+    }
 
     const accessToken = jwt.sign(
         {
