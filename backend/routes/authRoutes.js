@@ -8,7 +8,7 @@ router.route('/').post(loginLimiter, authController.login)
 
 router.route('/verification/:token').get(authController.verifyAccount)
 
-router.route('/verification/resend/:email').get(emailLimiter, authController.resendVerify)
+router.route('/verification/resend/:username').get(emailLimiter, authController.resendVerify)
     
 router.route('/refresh').get(authController.refresh)
 

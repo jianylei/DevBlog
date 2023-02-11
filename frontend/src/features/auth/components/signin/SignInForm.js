@@ -36,7 +36,14 @@ const SignInForm = ({ setErrMsg, login }) => {
         } catch (err) {
             if (!err.status) setErrMsg('No server response')
             else if (err.status === 400) setErrMsg('Missing username or password')
-            else if (err.status === 401) setErrMsg(err.data?.message || 'Unauthorized')
+            else if (err.status === 401) {
+                if (err.data?.username) {
+console.log('asdasda')
+                } else {
+                    setErrMsg(err.data?.message || 'Unauthorized')
+                }
+                
+            }
             else setErrMsg(err.data?.message)
         }
     }

@@ -30,9 +30,9 @@ const login = async (req, res) => {
             foundUser.username,
             foundUser.email
         )
-        return res.status(401).json({ message: 'Confirm your email to activate your account. A new confirmation has been sent' })
+        return res.status(401).json({ username: foundUser.username })
     }
-
+//message: 'Confirm your email to activate your account. A new confirmation has been sent'
     const accessToken = jwt.sign(
         {
             'UserInfo': {
@@ -80,19 +80,19 @@ const verifyAccount = (req, res) => {
 }
 
 // @desc Resend confirmation email
-// @route GET /auth/verification/resend/:email
+// @route GET /auth/verification/resend/:username
 // @access Private
 const resendVerify = async (req, res) => {
-    const email = req.params.email
+    const username = req.params.username
 
-    if (!email)  return res.status(400).json({ message: 'All fields are required' })
+    if (!username)  return res.status(400).json({ message: 'All fields are required' })
 
-    const user = await User.findOne({ email: email }).select('-password').lean()
+    const user = await User.findOne({ username }).select('-password').lean()
     if (!user) return res.status(400).json({ message: 'User not found' })
 
     if (user.confirmed) return res.status(403).json({ message: 'User already confirmed' })
 
-    emailController.sendConfirmationEmail(user._id?.toString(), user.username, email)
+    emailController.sendConfirmationEmail(user._id?.toString(), username, user.email)
 
     res.status(200).json({ message: 'Confirmation email has been re-sent' })
 }
