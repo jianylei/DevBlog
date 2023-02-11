@@ -8,7 +8,6 @@ import SignUp from '../../users/components/signup/SignUp'
 import ConfirmSignUp from '../../users/components/signup/ConfirmSignUp'
 
 const Modal = () => {
-    const [email, setEmail] = useState('')
     const wrapperRef = useRef(null);
 
     const dispatch = useDispatch()
@@ -33,10 +32,10 @@ const Modal = () => {
         content = <SignIn />
     }
     else if (currType === MODAL.TYPE.SIGNUP) {
-        content = <SignUp emailState={[email, setEmail]} />
+        content = <SignUp />
     }
     else if (currType === MODAL.TYPE.CONFIRM) {
-        content = <ConfirmSignUp emailState={[email, setEmail]} />
+        content = <ConfirmSignUp />
     }
 
     return (

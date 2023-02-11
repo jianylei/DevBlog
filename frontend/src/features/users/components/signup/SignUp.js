@@ -3,7 +3,7 @@ import { useAddNewUserMutation } from "../../usersApiSlice"
 import SignUpForm from "./SignUpForm"
 import SignInNav from "./SignInNav"
 
-const SignUp = ({ emailState }) => {
+const SignUp = () => {
     const [errMsg, setErrMsg] = useState('')
 
     const [addNewUser, {
@@ -27,7 +27,6 @@ const SignUp = ({ emailState }) => {
                     isLoading,
                     isSuccess
                 }]}
-                emailState={emailState}
             />
             <SignInNav />
         </div>
