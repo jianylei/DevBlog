@@ -18,7 +18,8 @@ const FollowingPostList = () => {
     let content
 
     if (isError) {
-        content = <p className='errmsg'>{error?.data?.message}</p>
+        content = <p className='errmsg'>{error?.data?.message
+            || '503 - Service Unavailable'}</p>
     }
 
     if (isSuccess) {
