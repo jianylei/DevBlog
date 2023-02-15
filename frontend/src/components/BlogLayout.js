@@ -1,6 +1,6 @@
 import { Outlet, useOutletContext } from "react-router-dom"
 import useWindowDimensions from "../hooks/useWindowDimensions"
-import SideContent from "./SideContent"
+import SideContent from "./sideContent/SideContent"
 import { DIMENSIONS } from "../constants/constants"
 import BlogHeader from './header/BlogHeader'
 

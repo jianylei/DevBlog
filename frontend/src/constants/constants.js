@@ -43,6 +43,7 @@ export const DIMENSIONS = Object.freeze({
 export const REGEX = Object.freeze({
     ROUTES: {
         POSTS: /^\/$/,
+        POST: /^\//,
         AUTHORS: /^\/authors(\/)?$/,
         AUTHOR: /^\/authors(\/)?/,
         WRITE: /^\/write(\/)?$/,
