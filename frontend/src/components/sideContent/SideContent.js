@@ -1,3 +1,4 @@
+import './sideContent.css'
 import { useLocation } from "react-router-dom"
 import { useState } from "react"
 import { REGEX } from "../../constants/constants"

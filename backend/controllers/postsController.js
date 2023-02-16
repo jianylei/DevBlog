@@ -10,7 +10,7 @@ const { removePostDirByName } = require('../utils/postControllerUtils')
 // @access Public
 const getAllPosts = async (req, res) => {
     const { limit, sort } = req.query
-
+    
     const sortBy = () => {
         const sortNew = { _id: -1 }
         const sortTrending = { views: -1 }

@@ -35,7 +35,7 @@ const FooterSide = () => {
 
     const linksComponents = links.map((link, idx) => <button 
         href='#'
-        className='blog__footer-link'
+        className='side__footer-link'
         key={idx}
     >{link}</button>
     )
@@ -43,13 +43,13 @@ const FooterSide = () => {
     return (
         <div className='blog-side__footer'>
             <div
-                className={`blog__footer-note ${show && 'show'}`}
+                className={`side__footer-note ${show && 'show'}`}
                 ref={wrapperRef}
             >
                 This section is under development
             </div>
             <div
-                className='blog_footer-links'
+                className='side__footer-links'
                 onClick={() => setShow(true)}
             >
                 {linksComponents}

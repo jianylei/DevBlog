@@ -1,8 +1,11 @@
 import React from 'react'
+import NewPostsSide from './post/NewPostsSide'
 
 const FollowingPostsSide = () => {
     return (
-        <div>FollowingPostsSide</div>
+        <div>
+            <NewPostsSide />
+        </div>
     )
 }
 

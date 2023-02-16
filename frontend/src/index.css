@@ -528,59 +528,6 @@ body .modal-open {
   cursor: pointer;
 }
 
-/*  || SIDE CONTENT */
-.blog-side__container {
-  position: sticky;
-  top: 0;
-  transition: all 0.55s ease;
-  height: calc(100vh - 57px);
-}
-
-.blog-side-scroll {
-  top: 57px;
-  height: calc(100vh - 57px);
-}
-
-.side-flex__container {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%;
-  padding: 24px 10px 24px 24px;
-}
-
-/*  || SIDE FOOTER */
-.blog-side__footer {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-.blog_footer-links {
-  display: flex;
-  flex-wrap: wrap;
-  column-gap: 5px;
-  padding: 24px 0 0;
-}
-
-.blog__footer-note {
-  position: absolute;
-  top: -15px;
-  padding: 5px;
-  font-size: 16px;
-  color: var(--ERROR);
-  border: 1px solid var(--ERROR);
-  opacity: 0;
-  transition: all 150ms ease-in-out;
-}
-
-.blog__footer-link {
-  background-color: transparent;
-  color: var(--COLOR-GREY);
-  font-size: 11px;
-  line-height: 16px;
-}
-
 /*  || POST CARDS */
 .post-card__container {
   display: flex;

@@ -1,0 +1,123 @@
+  /*  || SIDE CONTENT */
+  .blog-side__container {
+    position: sticky;
+    top: 0;
+    transition: all 0.55s ease;
+  }
+  
+  .blog-side-scroll {
+    top: 57px;
+
+  }
+  
+  .side-flex__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 24px 10px 24px 24px;
+    gap: 48px;
+  }
+
+  .side-section__container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .side-title {
+    font-weight: 500;
+    letter-spacing: 0;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--COLOR-DARK);
+  }
+  
+  .side-full-list-button {
+    background-color: transparent;
+    color: var(--SUCCESS);
+    width: fit-content;
+    font-size: 13px;
+  }
+
+  /*  || SIDE FOOTER */
+  .blog-side__footer {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  
+  .side__footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 5px;
+  }
+  
+  .side__footer-note {
+    position: absolute;
+    top: -35px;
+    padding: 5px;
+    font-size: 16px;
+    color: var(--ERROR);
+    border: 1px solid var(--ERROR);
+    opacity: 0;
+    transition: all 150ms ease-in-out;
+  }
+  
+  .side__footer-link {
+    background-color: transparent;
+    color: var(--COLOR-GREY);
+    font-size: 11px;
+    line-height: 16px;
+  }
+
+  /*  || SIDE POST */
+  .side-post-items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .side-post-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .side-post-item-top {
+    display: flex;
+    align-items: center;
+  }
+
+  .side-image {
+    min-width: 20px;
+    height: 20px;
+    border-radius: var(--BORDER-RADIUS-BUBBLE);
+  }
+
+  .side-post-item-author {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    -webkit-line-clamp: 1;
+    max-height: 16px;
+    line-height: 16px;
+    font-size: 13px;
+    font-weight: 500;
+    margin-left: 7px;
+  }
+
+  .side-post-item-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    font-weight: 700;
+    letter-spacing: 0;
+    font-size: 16px;
+    hyphens: auto;
+  }
+  
