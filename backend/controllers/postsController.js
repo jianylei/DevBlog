@@ -9,7 +9,19 @@ const { removePostDirByName } = require('../utils/postControllerUtils')
 // @route GET /post
 // @access Public
 const getAllPosts = async (req, res) => {
-    const posts = await Post.find().sort({_id:-1}).lean()
+    const { limit, sort } = req.query
+
+    const sortBy = () => {
+        const sortNew = { _id: -1 }
+        const sortTrending = { views: -1 }
+
+        if (sort === 'new') return sortNew
+        else if (sort === 'trending') return sortTrending
+
+        return sortNew
+    }
+
+    const posts = await Post.find().sort(sortBy()).limit(limit).lean()
 
     if (!posts?.length) return res.status(400).json({ message: 'No posts found' })
 

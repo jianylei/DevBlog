@@ -28,6 +28,7 @@ const SideContent = () => {
         && !ROUTES.AUTHORS.test(pathname)) {
         return <PostSide />
       }
+      return <div></div>
     }
     
     return (
