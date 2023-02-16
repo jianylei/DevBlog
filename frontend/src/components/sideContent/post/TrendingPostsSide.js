@@ -1,7 +1,8 @@
+import React from 'react'
 import { useGetPostsQuery } from '../../../features/posts/postsApiSlice'
 import PostItem from './PostItem'
 
-const NewPostsSide = () => {
+const TrendingPostsSide = () => {
     const {
         data: posts,
         isSuccess,
@@ -16,17 +17,17 @@ const NewPostsSide = () => {
     if(isSuccess) {
         const { ids, entities } = posts
 
-        //const t = [...ids]
-        //const filteredIds = t.sort((a, b) => entities[b].views - entities[a].views)
+        const t = [...ids]
+        const filteredIds = t.sort((a, b) => entities[b].views - entities[a].views)
 
         const postsContent = ids?.length
-        && ids.map(postId => <PostItem key={postId} post={entities[postId]} />)
+        && filteredIds.map(postId => <PostItem key={postId} post={entities[postId]} />)
 
         const slicedContent = postsContent.slice(0, 3)
         
         content = (
             <div className='side-section'>
-                <h3 className='side-title'>Lastest Posts</h3>
+                <h3 className='side-title'>What's trending</h3>
                 <div className='side-post-items'>
                     {slicedContent}
                 </div>
@@ -39,4 +40,4 @@ const NewPostsSide = () => {
     return content
 }
 
-export default NewPostsSide
+export default TrendingPostsSide
