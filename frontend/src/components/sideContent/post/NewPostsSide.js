@@ -6,7 +6,6 @@ const NewPostsSide = () => {
         data: posts,
         isSuccess,
         isError,
-        error
     } = useGetPostsQuery('postsList')
 
     let content
@@ -16,11 +15,8 @@ const NewPostsSide = () => {
     if(isSuccess) {
         const { ids, entities } = posts
 
-        //const t = [...ids]
-        //const filteredIds = t.sort((a, b) => entities[b].views - entities[a].views)
-
         const postsContent = ids?.length
-        && ids.map(postId => <PostItem key={postId} post={entities[postId]} />)
+            && ids.map(postId => <PostItem key={postId} post={entities[postId]} />)
 
         const slicedContent = postsContent.slice(0, 3)
         

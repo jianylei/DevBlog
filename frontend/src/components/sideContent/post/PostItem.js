@@ -18,6 +18,8 @@ const PostItem = ({ post }) => {
         
         const active = !(post.author === DELETED)
 
+        const navAuthorHandler = () => navigate(`/authors/${post.author}`)
+
         const profileImg = user?.image && active
             ? `url(${user?.image})`
             : 'var(--NO-IMAGE)'
@@ -29,11 +31,11 @@ const PostItem = ({ post }) => {
                         className={`image side-image ${user?.image ? 'img-overlay' : ''} 
                             ${!active ? 'deleted' : ''}`}
                         style={{backgroundImage: profileImg}}
-                        onClick={active ? undefined: undefined}
+                        onClick={active ? navAuthorHandler: undefined}
                     />
                     <p
                         className='side-post-item-author'
-                        onClick={() => navigate(`/authors/${post.author}`)}
+                        onClick={navAuthorHandler}
                     >
                         {post.author}
                     </p>
