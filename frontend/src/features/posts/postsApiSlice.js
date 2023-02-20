@@ -56,6 +56,22 @@ export const postsApiSlice = apiSlice.injectEndpoints({
                 } else return [{ type: 'Post', id: 'LIST' }]
             }
         }),
+        getTopTags: builder.query({
+            query: () => ({
+                url: '/posts/tags',
+                validateStatus: (response, result) => {
+                    return response.status === 200 && !result.isError
+                }
+            }),
+            providesTags: (result, error, arg) => {
+                if (result?.ids) {
+                    return [
+                        { type: 'Post', id: 'LIST' },
+                        ...result.ids.map(id => ({ type: 'Post', id }))
+                    ]
+                } else return [{ type: 'Post', id: 'LIST' }]
+            }
+        }),
         addNewPost: builder.mutation({
             query: initialPost => ({
                 url: '/posts',
@@ -106,6 +122,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
 export const {
     useGetPostsQuery,
     useGetFollowingPostsQuery,
+    useGetTopTagsQuery,
     useAddNewPostMutation,
     useUpdatePostMutation,
     useDeletePostMutation,

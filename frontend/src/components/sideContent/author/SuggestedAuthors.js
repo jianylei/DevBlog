@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useState } from "react"
 import { useGetPostsQuery } from "../../../features/posts/postsApiSlice"
 import { useGetUsersQuery } from "../../../features/users/usersApiSlice"
 import { shuffleArray } from "../../../utils/utils"
@@ -22,7 +22,7 @@ const SuggestedAuthors = () => {
 
     let content
 
-    if (isError) content = <div></div>
+    if (isError || isUsersError) content = undefined
 
     if (isSuccess && isUsersSuccess) {
         const { ids, entities } = posts
