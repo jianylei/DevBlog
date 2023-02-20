@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { useGetUsersQuery } from "../usersApiSlice"
 import NoMatch from "../../../components/NoMatch"
@@ -18,6 +19,10 @@ const User = () => {
         data: users,
         isSuccess: usersIsSuceeded,
     } = useGetUsersQuery('usersList')
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
     
     let content
 

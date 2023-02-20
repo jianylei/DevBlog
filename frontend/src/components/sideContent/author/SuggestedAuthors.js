@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { useGetPostsQuery } from "../../../features/posts/postsApiSlice"
 import { useGetUsersQuery } from "../../../features/users/usersApiSlice"
 import { shuffleArray } from "../../../utils/utils"
@@ -19,6 +20,8 @@ const SuggestedAuthors = () => {
         isSuccess: isUsersSuccess,
         isError: isUsersError,
     } = useGetUsersQuery('usersList')
+
+    const navigate = useNavigate()
 
     let content
 
@@ -42,16 +45,25 @@ const SuggestedAuthors = () => {
         
         const authorsList = firstThree.map(id => <AuthorItem key={id} author={usersEntities[id]} />)
 
-        return (
+        content = (
             <div className='side-section'>
                 <h3 className='side-title'>Who to follow</h3>
                 <div className='side-post-items'>
                     {authorsList}
                 </div>
-                <div><button className='side-full-list-button'>See more suggestions</button></div>
+                <div>
+                    <button
+                        className='side-full-list-button'
+                        onClick={() => navigate('/authors')}
+                    >
+                        See more suggestions
+                    </button>
+                </div>
             </div>
         )
-    } return undefined
+    } 
+
+    return content
 }
 
 export default SuggestedAuthors

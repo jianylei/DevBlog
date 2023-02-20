@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { PulseLoader } from 'react-spinners'
 import UserItem from './UserItem'
 import { useGetUsersQuery } from "../usersApiSlice"
@@ -13,6 +14,10 @@ const UserList = () => {
         refetchOnFocus: true,
         refetchOnMountOrArgChange: 1
     })
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
     let content 
 

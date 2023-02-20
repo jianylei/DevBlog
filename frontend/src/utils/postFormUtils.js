@@ -7,7 +7,6 @@ export const stringToTags = (str) => {
 
 export const dataURLtoFile = (dataurl, filename) => {
     if (!dataurl) return
-    console.log('asd' + dataurl)
     var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
     bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n)
     while(n--){
@@ -94,7 +93,6 @@ export const asyncParseImgFromHTML = (str, postsName, cb) => {
             + '"' + after
 
         if (/^http(s)?:\/\//.test(before)) {
-            console.log('asdasd')
             fetchImageBlob(before, (blob) => {
                 imgFileToBase64(blob, (image) => { 
                     imageList[i-1] = image

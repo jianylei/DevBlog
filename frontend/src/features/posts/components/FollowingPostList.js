@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import PostItem from './postItem/PostItem'
 import { useGetFollowingPostsQuery } from '../postsApiSlice'
 import useAuth from '../../../hooks/useAuth'
@@ -14,6 +15,11 @@ const FollowingPostList = () => {
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
     })
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
 
     let content
 

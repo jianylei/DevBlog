@@ -1,8 +1,11 @@
 import { useEffect } from 'react'
 import PostItem from './postItem/PostItem'
 import { useGetPostsQuery } from '../postsApiSlice'
+import useAuth from '../../../hooks/useAuth'
 
-const PostList = () => {
+const TrendingPostList = () => {
+    const auth = useAuth()
+
     const {
         data: posts,
         isSuccess,
@@ -17,6 +20,7 @@ const PostList = () => {
         window.scrollTo(0, 0)
     }, [])
 
+
     let content
 
     if (isError) {
@@ -25,12 +29,12 @@ const PostList = () => {
     }
 
     if (isSuccess) {
-        const { ids } = posts
-
-        //const filteredIds = ids.filter(postId => entities[postId].status === STATUS.Approved)
+        const { ids, entities } = posts
+        const t = [...ids]
+        const sorted = t?.sort((a, b) => entities[b].views - entities[a].views)
 
         const postsContent = ids?.length
-            && ids.map(postId => <PostItem key={postId} postId={postId} />)
+            && sorted.map(postId => <PostItem key={postId} postId={postId} />)
 
         content = (
             <div className='blog-content__container'>
@@ -42,4 +46,4 @@ const PostList = () => {
     return content
 }
 
-export default PostList
+export default TrendingPostList
