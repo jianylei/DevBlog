@@ -31,12 +31,15 @@ export const postsApiSlice = apiSlice.injectEndpoints({
             }
         }),
         getFollowingPosts: builder.query({
-            query: (id) => ({
-                url: `/posts/following/${id}`,
-                validateStatus: (response, result) => {
-                    return response.status === 200 && !result.isError
+            query: id => {
+                if (!id) throw new Error('Missing id')
+                return {
+                    url: `/posts/following/${id}`,
+                    validateStatus: (response, result) => {
+                        return response.status === 200 && !result.isError
+                    }
                 }
-            }),
+            },
             transformResponse: responseData => {
                 const loadedPosts = responseData.map(post => {
                     post.id = post._id

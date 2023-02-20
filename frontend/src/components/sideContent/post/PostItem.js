@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGetUsersQuery } from '../../../features/users/usersApiSlice'
 import { getPathStrFromStr } from '../../../utils/utils'
@@ -52,4 +53,6 @@ const PostItem = ({ post }) => {
     } else return undefined
 }
 
-export default PostItem
+const memoizedPostItem = memo(PostItem)
+
+export default memoizedPostItem

@@ -66,6 +66,30 @@ const getFollowingPosts = async (req, res) => {
     res.json(postWithUser)
 }
 
+// @desc Get top tags
+// @route GET /post/tags
+// @access Public
+const getTopTags = async (req, res) => {
+    const posts = await Post.find().lean()
+
+    if (!posts?.length) return res.status(400).json({ message: 'No posts found' })
+
+    const tagMap = {}
+
+    posts.forEach(post => {
+        post.tags?.forEach(tag => {
+            if (!tagMap[tag]) tagMap[tag] = 1
+            else tagMap[tag]++
+        })
+    })
+
+    const sortable = Object.entries(tagMap)
+        .sort(([,a],[,b]) => b - a)
+        .reduce((r, [k, v]) => ({ ...r, [k]: v }), {})
+
+    res.json(sortable)
+}
+
 // @desc Create new post
 // @route POST /post
 // @access Private
@@ -211,6 +235,7 @@ const deleteALLPost = async (req, res) => {
 module.exports = { 
     getAllPosts,
     getFollowingPosts,
+    getTopTags,
     createNewPost,
     updatePost,
     updateView,

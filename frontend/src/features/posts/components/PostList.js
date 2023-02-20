@@ -14,7 +14,7 @@ const PostList = () => {
 
     let content
 
-    if (isError) {console.log(error)
+    if (isError) {
         content = <p className='errmsg'>{error?.data?.message
             || '503 - Service Unavailable'}</p>
     }
