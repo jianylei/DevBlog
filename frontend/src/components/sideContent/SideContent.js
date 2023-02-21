@@ -8,6 +8,7 @@ import PostSide from "./PostSide"
 import PostsSide from "./PostsSide"
 import useControlShow from "../../hooks/useControlShow"
 import FooterSide from "./FooterSide"
+import TrendingSide from "./TrendingSide"
 
 const SideContent = () => {
     const [show, setShow] = useState(false)
@@ -25,6 +26,8 @@ const SideContent = () => {
       } else if (ROUTES.AUTHOR.test(pathname)
         && !ROUTES.AUTHORS.test(pathname)) {
         return <AuthorSide />
+      } else if (ROUTES.TRENDING.test(pathname)) {
+        return <TrendingSide />
       } else if (ROUTES.POST.test(pathname)
         && !ROUTES.AUTHORS.test(pathname)) {
         return <PostSide />

@@ -1,4 +1,4 @@
-import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useGetPostsQuery } from '../../../features/posts/postsApiSlice'
 import PostItem from './PostItem'
 
@@ -9,6 +9,8 @@ const TrendingPostsSide = () => {
         isError,
         error
     } = useGetPostsQuery('postsList')
+
+    const navigate = useNavigate()
 
     let content
 
@@ -31,8 +33,14 @@ const TrendingPostsSide = () => {
                 <div className='side-post-items'>
                     {slicedContent}
                 </div>
-                <div><button className='side-full-list-button'>See the full list</button></div>
-                
+                <div>
+                    <button
+                        className='side-full-list-button'
+                        onClick={() => navigate('/trending')}
+                    >
+                        See the full list
+                    </button>
+                </div>
             </div>
         )
     }

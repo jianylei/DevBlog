@@ -142,7 +142,7 @@
 .side-author-item {
   display: flex;
   flex-direction: row;
-  gap: 8px;
+  gap: 15px;
 }
 
 .side-author-item-right {
@@ -178,7 +178,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 7px;
+  gap: 10px;
 }
 
 .side-tag-item {

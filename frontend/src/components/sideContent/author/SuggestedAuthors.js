@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { DELETED } from "../../../constants/constants"
 import { useGetPostsQuery } from "../../../features/posts/postsApiSlice"
 import { useGetUsersQuery } from "../../../features/users/usersApiSlice"
 import { shuffleArray } from "../../../utils/utils"
@@ -36,7 +37,7 @@ const SuggestedAuthors = () => {
         if (firstRender) {
             ids?.length && ids.forEach(id => {
                 const userId = entities[id].user
-                if (!idArr.includes(userId)) idArr.push(userId)
+                if (!idArr.includes(userId) && entities[id].author !== DELETED) idArr.push(userId)
             })
             
             setFirstThree(shuffleArray(idArr).slice(0, 3))

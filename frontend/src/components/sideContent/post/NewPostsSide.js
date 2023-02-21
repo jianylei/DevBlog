@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { useGetPostsQuery } from '../../../features/posts/postsApiSlice'
 import PostItem from './PostItem'
 
@@ -7,6 +8,8 @@ const NewPostsSide = () => {
         isSuccess,
         isError,
     } = useGetPostsQuery('postsList')
+
+    const navigate = useNavigate()
 
     let content
 
@@ -26,8 +29,14 @@ const NewPostsSide = () => {
                 <div className='side-post-items'>
                     {slicedContent}
                 </div>
-                <div><button className='side-full-list-button'>See the full list</button></div>
-                
+                <div>
+                    <button
+                        className='side-full-list-button'
+                        onClick={() => navigate('/')}
+                    >
+                        See the full list
+                    </button>
+                </div>
             </div>
         )
     }

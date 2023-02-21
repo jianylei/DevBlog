@@ -49,5 +49,6 @@ export const REGEX = Object.freeze({
         WRITE: /^\/write(\/)?$/,
         EDIT: /^\/write\/.*$/,
         FOLLOWING: /^\/following(\/)?$/,
+        TRENDING: /^\/trending(\/)?$/,
     }
 })
