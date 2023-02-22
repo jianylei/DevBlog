@@ -1,4 +1,3 @@
-import React from 'react'
 import SuggestedAuthors from './author/SuggestedAuthors'
 import NewPostsSide from './post/NewPostsSide'
 import TrendingPostsSide from './post/TrendingPostsSide'

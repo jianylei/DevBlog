@@ -952,7 +952,11 @@ label.form-cover__container {
   .author-name__container {
     width: calc(100% - 55px);
   }
-
+  .modal {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+  }
 }
 
 @media screen and (max-width: 600px) {
