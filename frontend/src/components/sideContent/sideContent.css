@@ -55,9 +55,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
   hyphens: auto;
+  word-break: break-word;
   cursor: pointer;
 }
-
 
 .side-post-item-author,
 .side-author-item-username {
@@ -67,6 +67,12 @@
 .side-post-item-title,
 .side-author-item-about {
   -webkit-line-clamp: 2;
+}
+
+.side-image.img-overlay::after,
+.side-image-author.img-overlay::after,
+.side-image-profile.img-overlay::after{
+  border-radius: var(--BORDER-RADIUS-BUBBLE);
 }
 
 /*  || SIDE FOOTER */
@@ -84,13 +90,22 @@
 
 .side__footer-note {
   position: absolute;
-  top: -35px;
+  top: 0px;
   padding: 5px;
+  height: 100%;
+  width: 100%;
   font-size: 16px;
   color: var(--ERROR);
+  text-align: center;
+  background-color: var(--COLOR-LIGHT);
   border: 1px solid var(--ERROR);
   opacity: 0;
   transition: all 150ms ease-in-out;
+  z-index: -1;
+}
+
+.side__footer-note.show {
+  z-index: 1;
 }
 
 .side__footer-link {
@@ -191,4 +206,47 @@
 
 .side-tag-item:hover {
   background-color: var(--HOVER-TAG);
+}
+
+
+/*  || SIDE PROFILE */
+.side-profile {
+  display: flex;
+  flex-direction: column;
+}
+
+.side-image-profile {
+  width: 88px;
+  height: 88px;
+  border-radius: var(--BORDER-RADIUS-BUBBLE);
+  margin-bottom: 15px;
+}
+
+.side-profile-name {
+  hyphens: auto;
+  word-break: break-word;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 20px;
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.side-profile-followers {
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 24px;
+  color: var(--COLOR-GREY);
+  margin-bottom: 15px;
+}
+
+.side-profile-about {
+  font-size: 14px;
+  color: var(--COLOR-GREY);
+  word-break: break-word;
+  line-height: 20px;
+  font-weight: 400;
+  margin-bottom: 20px;
 }

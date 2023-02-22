@@ -23,8 +23,7 @@ const SideContent = () => {
         return <PostsSide />
       } else if (ROUTES.FOLLOWING.test(pathname)) {
         return <FollowingPostsSide />
-      } else if (ROUTES.AUTHOR.test(pathname)
-        && !ROUTES.AUTHORS.test(pathname)) {
+      } else if (ROUTES.AUTHOR.test(pathname) && !ROUTES.AUTHORS.test(pathname)) {
         return <AuthorSide />
       } else if (ROUTES.TRENDING.test(pathname)) {
         return <TrendingSide />
@@ -32,7 +31,7 @@ const SideContent = () => {
         && !ROUTES.AUTHORS.test(pathname)) {
         return <PostSide />
       }
-      return <div></div>
+      return undefined
     }
     
     return (

@@ -1,11 +1,8 @@
-import { useEffect, useRef, useState } from 'react'
-import useOutsideAlerter from '../../hooks/useOutsideAlerter'
+import { useEffect, useState } from 'react'
 import { delay } from '../../utils/utils'
 
 const FooterSide = () => {
     const [show, setShow] = useState(false)
-
-    const wrapperRef = useRef(null)
 
     const links = [
         'Help',
@@ -19,14 +16,12 @@ const FooterSide = () => {
         'Text to Speech'
     ]
 
-    const outsidedAlerterHanlder = () => setShow(false)
 
-    useOutsideAlerter(wrapperRef, outsidedAlerterHanlder)
 
     useEffect(() => {
         if (show) {
             const timeOut = async () => {
-                await delay(3500)
+                await delay(4000)
                 setShow(false)
             }
             timeOut()
@@ -44,13 +39,12 @@ const FooterSide = () => {
         <div className='blog-side__footer'>
             <div
                 className={`side__footer-note ${show && 'show'}`}
-                ref={wrapperRef}
             >
                 This section is under development
             </div>
             <div
                 className='side__footer-links'
-                onClick={() => setShow(true)}
+                onClick={!show ? () => setShow(true) : undefined}
             >
                 {linksComponents}
             </div>

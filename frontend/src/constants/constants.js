@@ -36,7 +36,7 @@ export const DELETED = '[deleted]'
 export const DIMENSIONS = Object.freeze({
     WIDTH: {
         S: 728,
-        M: 919
+        M: 904
     }
 })
 

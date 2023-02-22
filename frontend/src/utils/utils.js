@@ -44,6 +44,13 @@ export const getTimeSince = (date) => {
   return Math.floor(seconds) + " seconds ago";
 }
 
+export const getFollowersString = (followers) => {
+  if (followers === 0) return 'No Followers'
+  if (followers === 1) return '1 Follower'
+  if (followers > 1000 && followers < 1000000) return `${(followers / 1000).toFixed(1)}K Followers`
+  return `${followers} Followers`
+}
+
 export const delay = ms => new Promise(res => setTimeout(res, ms))
 
 export const shuffleArray = (arr) => {

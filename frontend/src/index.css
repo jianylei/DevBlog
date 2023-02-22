@@ -747,6 +747,7 @@ body .modal-open {
   border-radius: var(--BORDER-RADIUS-BUBBLE);
 }
 
+.post-image.img-overlay::after,
 .author-card-image.img-overlay::after{
   border-radius: var(--BORDER-RADIUS-BUBBLE);
 }
