@@ -15,14 +15,14 @@ const BlogHeader = ({ show }) => {
             && 'blog-header-scroll'}`}>
             <nav className="blog-nav__links">
                 <Link className={ REGEX.ROUTES.POSTS.test(pathname) 
-                    ? 'active' : '' } to='/'>Posts</Link>
+                    ? 'active' : '' } to='/'>Latest</Link>
+                <Link className={ REGEX.ROUTES.TRENDING.test(pathname) 
+                    ? 'active' : '' } to='/trending'>Trending</Link>
                 { auth.id
                     ? <Link className={ REGEX.ROUTES.FOLLOWING.test(pathname) 
                         ? 'active' : '' } to='/following'>Following</Link>
                     : undefined
                 }
-                <Link className={ REGEX.ROUTES.AUTHORS.test(pathname) 
-                    ? 'active' : '' } to='/authors'>Authors</Link>
 
             </nav>
             { REGEX.ROUTES.POSTS.test(pathname) 

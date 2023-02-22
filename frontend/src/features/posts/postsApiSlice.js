@@ -31,12 +31,15 @@ export const postsApiSlice = apiSlice.injectEndpoints({
             }
         }),
         getFollowingPosts: builder.query({
-            query: (id) => ({
-                url: `/posts/following/${id}`,
-                validateStatus: (response, result) => {
-                    return response.status === 200 && !result.isError
+            query: id => {
+                if (!id) throw new Error('Missing id')
+                return {
+                    url: `/posts/following/${id}`,
+                    validateStatus: (response, result) => {
+                        return response.status === 200 && !result.isError
+                    }
                 }
-            }),
+            },
             transformResponse: responseData => {
                 const loadedPosts = responseData.map(post => {
                     post.id = post._id
@@ -44,6 +47,22 @@ export const postsApiSlice = apiSlice.injectEndpoints({
                 })
                 return postsAdapter.setAll(initialState, loadedPosts)
             },
+            providesTags: (result, error, arg) => {
+                if (result?.ids) {
+                    return [
+                        { type: 'Post', id: 'LIST' },
+                        ...result.ids.map(id => ({ type: 'Post', id }))
+                    ]
+                } else return [{ type: 'Post', id: 'LIST' }]
+            }
+        }),
+        getTopTags: builder.query({
+            query: () => ({
+                url: '/posts/tags',
+                validateStatus: (response, result) => {
+                    return response.status === 200 && !result.isError
+                }
+            }),
             providesTags: (result, error, arg) => {
                 if (result?.ids) {
                     return [
@@ -103,6 +122,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
 export const {
     useGetPostsQuery,
     useGetFollowingPostsQuery,
+    useGetTopTagsQuery,
     useAddNewPostMutation,
     useUpdatePostMutation,
     useDeletePostMutation,

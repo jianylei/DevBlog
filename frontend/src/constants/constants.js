@@ -36,17 +36,19 @@ export const DELETED = '[deleted]'
 export const DIMENSIONS = Object.freeze({
     WIDTH: {
         S: 728,
-        M: 919
+        M: 904
     }
 })
 
 export const REGEX = Object.freeze({
     ROUTES: {
         POSTS: /^\/$/,
+        POST: /^\//,
         AUTHORS: /^\/authors(\/)?$/,
         AUTHOR: /^\/authors(\/)?/,
         WRITE: /^\/write(\/)?$/,
         EDIT: /^\/write\/.*$/,
         FOLLOWING: /^\/following(\/)?$/,
+        TRENDING: /^\/trending(\/)?$/,
     }
 })

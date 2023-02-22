@@ -6,7 +6,7 @@ import { DIMENSIONS, MODAL, REGEX } from "../../../../constants/constants"
 import { useLocation } from "react-router-dom"
 import useWindowDimensions from "../../../../hooks/useWindowDimensions"
 
-const FollowButton = ({ username }) => {
+const FollowButton = ({ username, side }) => {
     const auth = useAuth()
 
     const { width } = useWindowDimensions()
@@ -33,6 +33,7 @@ const FollowButton = ({ username }) => {
     }
 
     const buttonClass = () => {
+        if (side) return 'author-follow'
         if (REGEX.ROUTES.AUTHORS.test(pathname)) return ''
         else if (REGEX.ROUTES.AUTHOR.test(pathname)) {
             if (width <= DIMENSIONS.WIDTH.S) {

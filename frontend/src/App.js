@@ -11,6 +11,7 @@ import NewPost from './features/posts/components/NewPost'
 import PersistLogin from './features/auth/components/PersistLogin'
 import EditPost from './features/posts/components/EditPost'
 import FollowingPostList from './features/posts/components/FollowingPostList'
+import TrendingPostList from './features/posts/components/TrendingPostList'
 
 function App() {
   return (
@@ -23,6 +24,8 @@ function App() {
               <Route index element={<PostList />} />
               <Route path=":title" element={<Post />} />
             </Route>
+
+            <Route path='/trending' element={<TrendingPostList />} />
 
             <Route path='/following' element={<FollowingPostList />} />
 

@@ -4,7 +4,7 @@ import { useUnFollowUserMutation } from "../../usersApiSlice"
 import { REGEX, DIMENSIONS } from "../../../../constants/constants"
 import { useLocation } from "react-router-dom"
 
-const UnfollowButton = ({ username }) => {
+const UnfollowButton = ({ username, side }) => {
     const auth = useAuth()
 
     const { width } = useWindowDimensions()
@@ -25,6 +25,7 @@ const UnfollowButton = ({ username }) => {
     }
 
     const buttonClass = () => {
+        if (side) return 'author-follow'
         if (REGEX.ROUTES.AUTHORS.test(pathname)) return ''
         else if (REGEX.ROUTES.AUTHOR.test(pathname)) {
             if (width <= DIMENSIONS.WIDTH.S) {

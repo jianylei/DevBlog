@@ -69,6 +69,8 @@
   cursor: default !important;
 }
 
+.show { opacity: 1 !important; }
+
 .image {
   background-size: cover;
   background-repeat: no-repeat;
@@ -526,12 +528,6 @@ body .modal-open {
   cursor: pointer;
 }
 
-/*  || SIDE CONTENT */
-.blog-side__container {
-  position: sticky;
-  top: 57px;
-}
-
 /*  || POST CARDS */
 .post-card__container {
   display: flex;
@@ -692,6 +688,15 @@ body .modal-open {
   margin-bottom: 45px;
 }
 
+.post-content,
+.post-content span,
+.post-content p,
+.post-content code {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+}
+
 .post-content img{
   display: block;
   max-width: 100%;
@@ -742,6 +747,7 @@ body .modal-open {
   border-radius: var(--BORDER-RADIUS-BUBBLE);
 }
 
+.post-image.img-overlay::after,
 .author-card-image.img-overlay::after{
   border-radius: var(--BORDER-RADIUS-BUBBLE);
 }
@@ -835,8 +841,6 @@ body .modal-open {
     sans-serif;
   position: relative;
 }
-
-
 
 label.form-cover__container {
   margin: 12px;

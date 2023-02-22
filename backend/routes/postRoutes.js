@@ -11,6 +11,8 @@ router.route('/')
 
 router.route('/following/:id').get(verifyJWT, postsController.getFollowingPosts)
 
+router.route('/tags').get(postsController.getTopTags)
+
 router.route('/view').patch(postsController.updateView)
 
 router.route('/all').delete(postsController.deleteALLPost)

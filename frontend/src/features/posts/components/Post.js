@@ -25,8 +25,7 @@ const Post = () => {
         selectFromResult: ({ data, isLoading, isSuccess, isError }) => ({
             post: data?.entities[id],
             isLoading,
-            isSuccess, 
-            isError
+            isSuccess
         })
     })
 

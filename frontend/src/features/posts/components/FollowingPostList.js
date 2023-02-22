@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import PostItem from './postItem/PostItem'
 import { useGetFollowingPostsQuery } from '../postsApiSlice'
 import useAuth from '../../../hooks/useAuth'
@@ -15,10 +16,16 @@ const FollowingPostList = () => {
         refetchOnMountOrArgChange: true
     })
 
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
+
+
     let content
 
     if (isError) {
-        content = <p className='errmsg'>{error?.data?.message}</p>
+        content = <p className='errmsg'>{error?.data?.message
+            || '503 - Service Unavailable'}</p>
     }
 
     if (isSuccess) {

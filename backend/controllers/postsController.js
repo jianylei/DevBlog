@@ -9,7 +9,19 @@ const { removePostDirByName } = require('../utils/postControllerUtils')
 // @route GET /post
 // @access Public
 const getAllPosts = async (req, res) => {
-    const posts = await Post.find().sort({_id:-1}).lean()
+    const { limit, sort } = req.query
+    
+    const sortBy = () => {
+        const sortNew = { _id: -1 }
+        const sortTrending = { views: -1 }
+
+        if (sort === 'new') return sortNew
+        else if (sort === 'trending') return sortTrending
+
+        return sortNew
+    }
+
+    const posts = await Post.find().sort(sortBy()).limit(limit).lean()
 
     if (!posts?.length) return res.status(400).json({ message: 'No posts found' })
 
@@ -52,6 +64,30 @@ const getFollowingPosts = async (req, res) => {
     }))
 
     res.json(postWithUser)
+}
+
+// @desc Get top tags
+// @route GET /post/tags
+// @access Public
+const getTopTags = async (req, res) => {
+    const posts = await Post.find().lean()
+
+    if (!posts?.length) return res.status(400).json({ message: 'No posts found' })
+
+    const tagMap = {}
+
+    posts.forEach(post => {
+        post.tags?.forEach(tag => {
+            if (!tagMap[tag]) tagMap[tag] = 1
+            else tagMap[tag]++
+        })
+    })
+
+    const sortable = Object.entries(tagMap)
+        .sort(([,a],[,b]) => b - a)
+        .reduce((r, [k, v]) => ({ ...r, [k]: v }), {})
+
+    res.json(sortable)
 }
 
 // @desc Create new post
@@ -199,6 +235,7 @@ const deleteALLPost = async (req, res) => {
 module.exports = { 
     getAllPosts,
     getFollowingPosts,
+    getTopTags,
     createNewPost,
     updatePost,
     updateView,
