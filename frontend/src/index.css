@@ -184,6 +184,14 @@ svg{
   font-size: 12px;
 }
 
+/* || LOADING */
+.loading__container {
+  height: min(600px, calc(100vh - 114px));
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 /* || BUTTONS */
 .login__button,
 .signup__button,
@@ -876,6 +884,7 @@ label.form-cover__container {
 .form-input-unselect.show {
   display: block;
 }
+
 
 /*  || MEDIA QUERIES */
 @media screen and (min-width: 870px) {

@@ -1,11 +1,13 @@
 import { useEffect } from 'react'
 import PostItem from './postItem/PostItem'
 import { useGetPostsQuery } from '../postsApiSlice'
+import Loading from '../../../components/Loading'
 
 const PostList = () => {
     const {
         data: posts,
         isSuccess,
+        isLoading,
         isError,
         error
     } = useGetPostsQuery('postsList', {
@@ -18,6 +20,10 @@ const PostList = () => {
     }, [])
 
     let content
+
+    if (isLoading) {
+        content = <Loading />
+    }
 
     if (isError) {
         content = <p className='errmsg'>{error?.data?.message

@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import PostItem from './postItem/PostItem'
 import { useGetFollowingPostsQuery } from '../postsApiSlice'
 import useAuth from '../../../hooks/useAuth'
+import Loading from '../../../components/Loading'
 
 const FollowingPostList = () => {
     const auth = useAuth()
@@ -9,6 +10,7 @@ const FollowingPostList = () => {
     const {
         data: posts,
         isSuccess,
+        isLoading,
         isError,
         error
     } = useGetFollowingPostsQuery(auth.id, {
@@ -22,6 +24,10 @@ const FollowingPostList = () => {
 
 
     let content
+
+    if (isLoading) {
+        content = <Loading />
+    }
 
     if (isError) {
         content = <p className='errmsg'>{error?.data?.message

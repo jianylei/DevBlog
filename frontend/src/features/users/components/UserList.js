@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
-import { PulseLoader } from 'react-spinners'
 import UserItem from './UserItem'
 import { useGetUsersQuery } from "../usersApiSlice"
+import Loading from '../../../components/Loading'
 
 const UserList = () => {
     const {
@@ -12,7 +12,7 @@ const UserList = () => {
         error
     } = useGetUsersQuery('usersList', {
         refetchOnFocus: true,
-        refetchOnMountOrArgChange: 1
+        refetchOnMountOrArgChange: true
     })
 
     useEffect(() => {
@@ -21,7 +21,7 @@ const UserList = () => {
 
     let content 
 
-    if (isLoading) content = <PulseLoader color={'#FFF'} />
+    if (isLoading) content = <Loading />
 
     if (isError) {
         content = <p className="errmsg">{error?.data?.message

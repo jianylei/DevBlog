@@ -11,6 +11,7 @@ import PostContent from "./post/PostContent"
 import PostTags from "./post/PostTags"
 import EditButton from "./buttons/EditButton"
 import useAuth from "../../../hooks/useAuth"
+import Loading from "../../../components/Loading"
 
 const Post = () => {
     const { title } = useParams();
@@ -52,6 +53,7 @@ const Post = () => {
 
     let content
 
+    if (isLoading) content = <Loading />
     
     if (isSuccess && post && ('/'+getPathStrFromStr(post.title, post.id) === pathname)) {
         content = (

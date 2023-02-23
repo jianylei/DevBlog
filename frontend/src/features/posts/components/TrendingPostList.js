@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import PostItem from './postItem/PostItem'
 import { useGetPostsQuery } from '../postsApiSlice'
 import useAuth from '../../../hooks/useAuth'
+import Loading from '../../../components/Loading'
 
 const TrendingPostList = () => {
     const auth = useAuth()
@@ -9,6 +10,7 @@ const TrendingPostList = () => {
     const {
         data: posts,
         isSuccess,
+        isLoading,
         isError,
         error
     } = useGetPostsQuery('postsList', {
@@ -22,6 +24,10 @@ const TrendingPostList = () => {
 
 
     let content
+
+    if (isLoading) {
+        content = <Loading />
+    }
 
     if (isError) {
         content = <p className='errmsg'>{error?.data?.message

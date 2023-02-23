@@ -6,6 +6,7 @@ import { useGetPostsQuery } from "../../posts/postsApiSlice"
 import { TABS } from "../../../constants/constants"
 import PostItem from '../../posts/components/postItem/PostItem'
 import UserHeader from "./user/UserHeader"
+import Loading from "../../../components/Loading"
 
 const User = () => {
     const { username } = useParams()
@@ -13,11 +14,13 @@ const User = () => {
     const {
         data: posts,
         isSuccess,
+        isLoading,
     } = useGetPostsQuery('postsList')
 
     const {
         data: users,
         isSuccess: usersIsSuceeded,
+        isLoading: usersIsLoading,
     } = useGetUsersQuery('usersList')
 
     useEffect(() => {
@@ -25,6 +28,8 @@ const User = () => {
     }, [])
     
     let content
+
+    if (isLoading || usersIsLoading) content = <Loading />
 
     if (isSuccess && usersIsSuceeded) {
         const { ids, entities } = posts

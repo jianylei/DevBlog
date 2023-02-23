@@ -25,19 +25,6 @@ const BlogHeader = ({ show }) => {
                 }
 
             </nav>
-            { REGEX.ROUTES.POSTS.test(pathname) 
-                ? <select
-                    id='post-sort'
-                    name='sort'
-                    className='blog-nav__select'
-                    value={sortOpt}
-                    onChange={(e) => setSortOpt(e.target.value)}
-                >
-                    <option value='new'>New</option>
-                    <option value='trending'>Trending</option>
-                </select> 
-                : undefined 
-            }
         </header>
     )
 }
