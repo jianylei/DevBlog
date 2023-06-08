@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { setType } from "../../../modal/modalSlice"
+import { setType } from "../../modalSlice"
 import { MODAL } from "../../../../constants/constants"
 
 const ResetPasswordNav = () => {

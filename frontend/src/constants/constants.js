@@ -23,7 +23,8 @@ export const MODAL = Object.freeze({
     TYPE: {
         SIGNIN: 'SignIn',
         SIGNUP: 'SignUp',
-        CONFIRM: 'Confirm'
+        CONFIRM: 'Confirm',
+        UPDATE_PROFILE: 'UpdateProfile',
     }
 })
 

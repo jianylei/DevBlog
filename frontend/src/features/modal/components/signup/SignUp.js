@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useAddNewUserMutation } from "../../usersApiSlice"
+import { useAddNewUserMutation } from "../../../users/usersApiSlice"
 import SignUpForm from "./SignUpForm"
 import SignInNav from "./SignInNav"
 
