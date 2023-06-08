@@ -55,14 +55,14 @@ const PublishButton = () => {
         if (canSave) {
             const { ids, entities } = users
             const userId = ids.find(id => entities[id]?.username === username)
-    
+
             if (userId) {
                 const { title, subHeading, content, tags, cover } = post
                 const name = getPathStrFromStr(title)
                 const { str, imageList, imageNames } = parseImgFromHTML(content, name)
                 const tagsList = stringToTags(tags)
                 let coverUrl = ''
-                console.log(cover) // TO BE DELETED
+
                 if (imageList?.length || cover) {
                     const data = new FormData()
         
@@ -88,7 +88,7 @@ const PublishButton = () => {
                         subHeading,
                         content: str,
                         tags: tagsList,
-                        cover: coverUrl
+                        cover: coverUrl,
                     }).then((res) => {
                         if (!res.error) upload(data)
                     }).catch((error) => {

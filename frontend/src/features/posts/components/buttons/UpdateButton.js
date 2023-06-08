@@ -90,11 +90,7 @@ const UpdateButton = () => {
                     cover: coverUrl
                 }).then((res) => {
                     if (!res.error) {
-                        try {
-                            upload(data)
-                        } catch (err) {
-                            console.log(err)
-                        }
+                        upload(data)
                     }
                 }).catch((error) => {
                     console.log(error)
