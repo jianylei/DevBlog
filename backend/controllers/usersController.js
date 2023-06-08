@@ -1,6 +1,5 @@
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
 const ObjectId = require('mongoose').Types.ObjectId
 const emailController = require('./emailController')
 

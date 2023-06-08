@@ -28,7 +28,7 @@ export const MODAL = Object.freeze({
 })
 
 export const IMGPATH = Object.freeze({
-    IMAGES: 'http://localhost:3080/images/'
+    IMAGES: 'https://www.jylei.xyz/'
 })
 
 export const DELETED = '[deleted]'

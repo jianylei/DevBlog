@@ -55,16 +55,14 @@ const PublishButton = () => {
         if (canSave) {
             const { ids, entities } = users
             const userId = ids.find(id => entities[id]?.username === username)
-    
+
             if (userId) {
                 const { title, subHeading, content, tags, cover } = post
                 const name = getPathStrFromStr(title)
                 const { str, imageList, imageNames } = parseImgFromHTML(content, name)
-    
                 const tagsList = stringToTags(tags)
-    
                 let coverUrl = ''
-    
+
                 if (imageList?.length || cover) {
                     const data = new FormData()
         
@@ -81,7 +79,7 @@ const PublishButton = () => {
                         const coverName = Date.now() + '-' + Math.round(Math.random() * 1E9) + '.jpg'
                         const newFile = dataURLtoFile(cover, coverName)
                         data.append('posts', newFile)
-                        coverUrl = IMGPATH.IMAGES + 'posts/' + name + '/' + coverName
+                        coverUrl = IMGPATH.IMAGES + coverName
                     }
 
                     addNewPost({
@@ -90,7 +88,7 @@ const PublishButton = () => {
                         subHeading,
                         content: str,
                         tags: tagsList,
-                        cover: coverUrl
+                        cover: coverUrl,
                     }).then((res) => {
                         if (!res.error) upload(data)
                     }).catch((error) => {

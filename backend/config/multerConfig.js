@@ -1,6 +1,9 @@
+const express = require('express')
+const app = express()
 const multer = require('multer')
-const fs = require("fs")
-const { PATH } = require('../config/constants')
+const aws = require('aws-sdk')
+const multerS3 = require('multer-s3')
+const bodyParser = require('body-parser')
 
 const whitelist = [
   'image/png',
@@ -9,34 +12,30 @@ const whitelist = [
   'image/webp'
 ]
 
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        const { name } = req.body
+aws.config.update({
+    secretAccessKey: process.env.AWS_SECRET_KEY,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    region: 'us-east-2'
+})
 
-        if (name) {
-            const cover = req.body.cover
+const s3 = new aws.S3()
 
-            const path = PATH.AdminImages
+app.use(bodyParser.json());
 
-            try {
-                if (!fs.existsSync(path)) {
-                    fs.mkdirSync(path, { recursive: true })
-                }
-
-                cb(null, path)
-            } catch (err) {
-                console.log("An error occurred uploading image")
-            }
-        }
-    },
-    filename: function (req, file, cb) {
+const storage = multerS3({
+    s3: s3,
+    bucket: process.env.S3_BUCKET,
+    acl: 'public-read',
+    key: function (req, file, cb) {
+        console.log(file.originalname)
         cb(null, file.originalname)
     }
 })
 
-const upload = multer({ storage: storage,
+const upload = multer({
+    storage: storage,
     limits: {
-        fileSize: 1 * 1024 * 1024 // 1MB
+        fileSize: 1048576 * 5 // 5 Mb
     },
     fileFilter: (req, file, cb) => {
         if (!whitelist.includes(file.mimetype)) {

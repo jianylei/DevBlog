@@ -2,8 +2,8 @@ import { useDispatch, useSelector } from "react-redux"
 import { useUpdatePostMutation } from "../../postsApiSlice"
 import { selectCurrentPost, setError } from "../../postSlice"
 import { useUploadMutation } from "../../../uploads/uploadApiSlice"
-import { stringToTags, dataURLtoFile, asyncParseImgFromHTML } from "../../../../utils/postFormUtils"
-import { getPathStrFromStr, delay } from "../../../../utils/utils"
+import { stringToTags, parseImgFromHTML, dataURLtoFile } from "../../../../utils/postFormUtils"
+import { getPathStrFromStr } from "../../../../utils/utils"
 import { IMGPATH } from "../../../../constants/constants"
 import { useNavigate } from "react-router-dom"
 import { useEffect } from "react"
@@ -18,6 +18,7 @@ const UpdateButton = () => {
     const [upload, {
         isLoading: uploadLoading,
         isError: uploadIsError,
+        error : uploadError
     }] = useUploadMutation()
 
     const [updatePost, {
@@ -39,60 +40,71 @@ const UpdateButton = () => {
 
     const canSave = [post.title, post.subHeading, post.content].every(Boolean)
 
+    if (uploadIsError) {
+        console.log(uploadError)
+    }
+
     const handlePublish = (e) => {
         e.preventDefault()
 
         if (canSave) {
             const { id, title, subHeading, content, tags, cover } = post
             const name = getPathStrFromStr(title)
+            const { str, imageList, imageNames } = parseImgFromHTML(content, name)
             const tagsList = stringToTags(tags)
+            const cover_reg = /^(?!https)/
             let coverUrl = ''
-            asyncParseImgFromHTML(content, name, async(obj) => {
-                const { str, imageList, imageNames } = obj
 
-                await delay(300)
+            console.log(cover)
 
-                if (imageList?.length || cover) {
-                    const data = new FormData()
+            if (cover && cover_reg.test(cover)) console.log('true')
+            else console.log('false')
+
+            if (imageList?.length || cover) {
+                const data = new FormData()
+    
+                data.append('name', name)
         
-                    data.append('name', name)
-            
-                    if (imageList) {
-                        for (const idx in imageList) {
-                            const file = dataURLtoFile(imageList[idx], imageNames[idx])
-                            data.append('posts', file)
-                        }
+                if (imageList) {
+                    for (const idx in imageList) {
+                        const file = dataURLtoFile(imageList[idx], imageNames[idx])
+                        data.append('posts', file)
                     }
-                    if (cover) {
-                        const coverName = Date.now() + '-' + Math.round(Math.random() * 1E9) + '.jpg'
-                        const newFile = dataURLtoFile(cover, coverName)
-                        data.append('posts', newFile)
-                        coverUrl = IMGPATH.IMAGES + 'posts/' + name + '/' + coverName
-                    }
-
-                    updatePost({
-                        id,
-                        title,
-                        subHeading,
-                        content: str,
-                        tags: tagsList,
-                        cover: coverUrl
-                    }).then((res) => {
-                        if (!res.error) upload(data)
-                    }).catch((error) => {
-                        console.log(error)
-                    })
-                } else {
-                    updatePost({
-                        id,
-                        title,
-                        subHeading,
-                        content: str,
-                        tags: tagsList,
-                        cover: coverUrl
-                    })
                 }
-            })
+
+                if (cover && cover_reg.test(cover)) {
+                    const coverName = Date.now() + '-' + Math.round(Math.random() * 1E9) + '.jpg'
+                    const newFile = dataURLtoFile(cover, coverName)
+                    data.append('posts', newFile)
+                    coverUrl = IMGPATH.IMAGES + coverName
+                } else if (cover) {
+                    coverUrl = cover
+                }
+
+                updatePost({
+                    id,
+                    title,
+                    subHeading,
+                    content: str,
+                    tags: tagsList,
+                    cover: coverUrl
+                }).then((res) => {
+                    if (!res.error) {
+                        upload(data)
+                    }
+                }).catch((error) => {
+                    console.log(error)
+                })
+            } else {
+                updatePost({
+                    id,
+                    title,
+                    subHeading,
+                    content: str,
+                    tags: tagsList,
+                    cover: coverUrl
+                })
+            }
         } else {
             dispatch(setError({ errMsg: '' }))
         }

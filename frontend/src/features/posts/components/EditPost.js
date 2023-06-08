@@ -15,7 +15,6 @@ import Subhead from "./form/Subhead"
 import Tags from "./form/Tags"
 import Cover from "./form/Cover"
 import Textarea from "./form/Textarea"
-import { imgFileToBase64, fetchImageBlob } from "../../../utils/postFormUtils"
 import { getIdFromPathStr, getPathStrFromStr } from "../../../utils/utils"
 import useAuth from "../../../hooks/useAuth";
 
@@ -72,30 +71,14 @@ const EditPost = () => {
             initContentVal.current = post.content
             setCover(post.cover)
 
-            if (post.cover) {
-                fetchImageBlob(post.cover, (blob) => {
-                    imgFileToBase64(blob, (_cover) => {
-                        dispatch(setPost({
-                            id,
-                            title: post.title,
-                            subHeading: post.subHeading,
-                            tags: tagsStr,
-                            cover: _cover,
-                            content: post.content
-                        }))
-                    })
-                })
-            }
-            else {
-                dispatch(setPost({
-                    id,
-                    title: post.title,
-                    subHeading: post.subHeading,
-                    tags: tagsStr,
-                    cover: post.cover,
-                    content: post.content
-                }))
-            }
+            dispatch(setPost({
+                id,
+                title: post.title,
+                subHeading: post.subHeading,
+                tags: tagsStr,
+                cover: post.cover,
+                content: post.content
+            }))
         }
         // eslint-disable-next-line
     }, [isSuccess, id, post, dispatch, navigate])
