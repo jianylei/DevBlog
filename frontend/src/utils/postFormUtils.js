@@ -29,8 +29,13 @@ export const imgFileToBase64 = (file, cb) => {
 export const fetchImageBlob = async (dataUrl, cb) => {
     if (!dataUrl || !cb) return
 
-    const blob = await (await fetch(dataUrl)).blob()
-    cb(blob)
+    try {
+        const blob = await (await fetch(dataUrl)).blob()
+        cb(blob)
+        
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 export const parseImgFromHTML = (str, postsName) => {
@@ -44,7 +49,7 @@ export const parseImgFromHTML = (str, postsName) => {
     const imageNames = []
     let newStr = ''
 
-    const subStr = str.split('src="')
+    const subStr = str.split('src="blob:')
 
     newStr += subStr[0]
 
@@ -56,7 +61,7 @@ export const parseImgFromHTML = (str, postsName) => {
         imageList.push(before)
         imageNames.push(name)
 
-        newStr += 'src="' + IMGPATH.IMAGES + 'posts/' + postsName + '/' + name 
+        newStr += 'src="blob:' + IMGPATH.IMAGES  +  name 
             + '"' + after
     }
 
@@ -66,7 +71,7 @@ export const parseImgFromHTML = (str, postsName) => {
         imageNames
     })
 }
-
+/*
 export const asyncParseImgFromHTML = (str, postsName, cb) => {
     if (!str || !postsName || ! cb) return ({
         str: '',
@@ -89,7 +94,7 @@ export const asyncParseImgFromHTML = (str, postsName, cb) => {
 
         imageNames[i-1] = name
             
-        newStr += 'src="' + IMGPATH.IMAGES + 'posts/' + postsName + '/' + name 
+        newStr += 'src="' + IMGPATH.IMAGES + name 
             + '"' + after
 
         if (/^http(s)?:\/\//.test(before)) {
@@ -108,4 +113,4 @@ export const asyncParseImgFromHTML = (str, postsName, cb) => {
         imageList,
         imageNames
     })
-}
+}*/

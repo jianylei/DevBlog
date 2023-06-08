@@ -60,11 +60,9 @@ const PublishButton = () => {
                 const { title, subHeading, content, tags, cover } = post
                 const name = getPathStrFromStr(title)
                 const { str, imageList, imageNames } = parseImgFromHTML(content, name)
-    
                 const tagsList = stringToTags(tags)
-    
                 let coverUrl = ''
-    
+                console.log(cover) // TO BE DELETED
                 if (imageList?.length || cover) {
                     const data = new FormData()
         
@@ -81,7 +79,7 @@ const PublishButton = () => {
                         const coverName = Date.now() + '-' + Math.round(Math.random() * 1E9) + '.jpg'
                         const newFile = dataURLtoFile(cover, coverName)
                         data.append('posts', newFile)
-                        coverUrl = IMGPATH.IMAGES + 'posts/' + name + '/' + coverName
+                        coverUrl = IMGPATH.IMAGES + coverName
                     }
 
                     addNewPost({
