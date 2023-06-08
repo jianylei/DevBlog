@@ -19,8 +19,8 @@ const Textarea = ({ state, err, resetInputErr, initVal }) => {
                 onChange={handleChange}
                 initialValue={initVal || ''}
                 init={{
-                plugins: 'link image lists',
-                toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | numlist bullist | h1 h2 h3',
+                plugins: 'link image lists codesample',
+                toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | numlist bullist | h1 h2 h3 | codesample',
                 statusbar: false,
                 height:"100%",
                 content_style: "@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Toto" + 

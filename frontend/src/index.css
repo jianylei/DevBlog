@@ -138,6 +138,27 @@ input:focus {
   outline: none;
 }
 
+code {
+  font-size: 1rem;
+}
+
+p > code,
+li > code,
+dd > code,
+td > code,
+pre {
+  background: #e9e9e9;
+  word-wrap: break-word;
+  box-decoration-break: clone;
+  padding: .1rem .3rem .2rem;
+  border-radius: .2rem;
+}
+
+pre {
+  padding: .1rem .7rem .2rem;
+  overflow: auto;
+}
+
 #root {
   /* React root div */
   min-height: 100vh;
@@ -484,7 +505,8 @@ body .modal-open {
 .blog-main__container {
   padding: 0 20px 0 10px;
   border-right: 1px solid var(--SEPARATOR);
-  min-height: calc(100vh - 57px)
+  min-height: calc(100vh - 57px);
+  max-width: 70vw;
 }
 
 .blog-content__container {
@@ -690,7 +712,7 @@ body .modal-open {
 }
 
 .post-content {
-  font-size: 20px;
+  font-size: 18px;
   line-height: 32px;
   letter-spacing: -0.08px;
   margin-bottom: 45px;
@@ -930,6 +952,7 @@ label.form-cover__container {
     width: 700px;
     margin: auto;
     border: none;
+    max-width: 100vw;
   }
 }
 
