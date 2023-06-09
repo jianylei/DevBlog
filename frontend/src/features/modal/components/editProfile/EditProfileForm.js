@@ -6,7 +6,6 @@ import {
     setOpen,
 } from "../../modalSlice"
 import { IMGPATH } from "../../../../constants/constants"
-import useAuth from "../../../../hooks/useAuth"
 import Cover from "../../../posts/components/form/Cover"
 import { dataURLtoFile } from "../../../../utils/postFormUtils"
 import { useUploadMutation } from "../../../uploads/uploadApiSlice"
@@ -23,7 +22,6 @@ const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
 
     const [updateUser, {
         isLoading,
-        isSuccess
     }] = updateUserMutation
 
     const openModal = useSelector(selectCurrentOpen)
@@ -49,7 +47,8 @@ const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
             setAbout(user.about)
             setCover(user.image)
         }
-    }, [openModal, setErr])
+    }, [openModal, setErr, user])
+
 
     const canSave = [username].every(Boolean) && !isLoading
 
@@ -64,7 +63,6 @@ const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
 
             if (cover && image_reg.test(cover)) {
                 const imageName = Date.now() + '-' + Math.round(Math.random() * 1E9) + '.jpg'
-                console.log(imageName)
                 const file = dataURLtoFile(cover, imageName)
                 data.append('users', file)
                 imageUrl = IMGPATH.IMAGES + imageName
