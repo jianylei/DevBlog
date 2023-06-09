@@ -4,19 +4,22 @@ import { useSelector, useDispatch } from "react-redux"
 import { 
     selectCurrentOpen,
     setOpen,
-    setUsername as setModalUsername
 } from "../../modalSlice"
-import { MODAL } from "../../../../constants/constants"
+import { IMGPATH } from "../../../../constants/constants"
 import useAuth from "../../../../hooks/useAuth"
-import { useGetUsersQuery } from "../../../users/usersApiSlice"
+import Cover from "../../../posts/components/form/Cover"
+import { dataURLtoFile } from "../../../../utils/postFormUtils"
+import { useUploadMutation } from "../../../uploads/uploadApiSlice"
 
 const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
     const [username, setUsername] = useState(user.username)
     const [email, setEmail] = useState(user.email)
     const [about, setAbout] = useState(user.about)
-    const [image, setImage] = useState(user.image)
+    const [cover, setCover] = useState(user.image)
     const [password, setPassword] = useState('')
     const [confirmPwd, setConfirmPwd] = useState('')
+
+    const [ upload ] = useUploadMutation()
 
     const [updateUser, {
         isLoading,
@@ -44,7 +47,7 @@ const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
             setUsername(user.username)
             setEmail(user.email)
             setAbout(user.about)
-            setImage(user.image)
+            setCover(user.image)
         }
     }, [openModal, setErr])
 
@@ -55,7 +58,20 @@ const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
 
         if (password && password !== confirmPwd) setErr('Passwords do not match')
         else if(canSave) {
-            dispatch(setModalUsername({ username }))
+            const image_reg = /^(?!https)/
+            const data = new FormData()
+            let imageUrl = ''
+
+            if (cover && image_reg.test(cover)) {
+                const imageName = Date.now() + '-' + Math.round(Math.random() * 1E9) + '.jpg'
+                console.log(imageName)
+                const file = dataURLtoFile(cover, imageName)
+                data.append('users', file)
+                imageUrl = IMGPATH.IMAGES + imageName
+            } else {
+                imageUrl = cover
+            }
+
             await updateUser({ 
                 id: user._id, 
                 username, 
@@ -63,7 +79,11 @@ const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
                 active: user.active, 
                 role: user.role,
                 about,
-                image 
+                image: imageUrl
+            }).then(res => {
+                if (!res.error) {
+                    upload(data)
+                }
             })
             dispatch(setOpen({ open: false }))
             navigate('/', { replace: true })
@@ -73,6 +93,7 @@ const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
 
     return (
         <form className="modal-form" onSubmit={handleSubmit}>
+            <Cover state={[cover, setCover]}/>
             <div className="modal-form-item__container">
                 <label className="modal-form__label" htmlFor="signup-email">
                     Email</label>

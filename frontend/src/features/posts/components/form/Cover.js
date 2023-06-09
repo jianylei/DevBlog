@@ -11,6 +11,7 @@ const Cover = ({ state }) => {
         if (e.target.files && e.target.files[0]) {
           setCover(URL.createObjectURL(e.target.files[0]))
           imgFileToBase64(e.target.files[0], (cover) => {
+            setCover(cover)
             dispatch(setPostCover({ cover }))
           })
         }

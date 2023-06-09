@@ -55,11 +55,6 @@ const UpdateButton = () => {
             const cover_reg = /^(?!https)/
             let coverUrl = ''
 
-            console.log(cover)
-
-            if (cover && cover_reg.test(cover)) console.log('true')
-            else console.log('false')
-
             if (imageList?.length || cover) {
                 const data = new FormData()
     
@@ -74,6 +69,8 @@ const UpdateButton = () => {
 
                 if (cover && cover_reg.test(cover)) {
                     const coverName = Date.now() + '-' + Math.round(Math.random() * 1E9) + '.jpg'
+                    console.log(coverName)
+                    console.log(cover) // - To be removed
                     const newFile = dataURLtoFile(cover, coverName)
                     data.append('posts', newFile)
                     coverUrl = IMGPATH.IMAGES + coverName
