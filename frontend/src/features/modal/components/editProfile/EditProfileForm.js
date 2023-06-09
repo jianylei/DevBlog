@@ -49,6 +49,7 @@ const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
         }
     }, [openModal, setErr, user])
 
+
     const canSave = [username].every(Boolean) && !isLoading
 
     const handleSubmit = async (e) => {
