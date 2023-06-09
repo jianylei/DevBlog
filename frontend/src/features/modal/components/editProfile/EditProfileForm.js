@@ -11,10 +11,10 @@ import { dataURLtoFile } from "../../../../utils/postFormUtils"
 import { useUploadMutation } from "../../../uploads/uploadApiSlice"
 
 const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
-    const [username, setUsername] = useState(user.username || '')
-    const [email, setEmail] = useState(user.email || '')
-    const [about, setAbout] = useState(user.about || '')
-    const [cover, setCover] = useState(user.image || '')
+    const [username, setUsername] = useState(user?.username || '')
+    const [email, setEmail] = useState(user?.email || '')
+    const [about, setAbout] = useState(user?.about || '')
+    const [cover, setCover] = useState(user?.image || '')
     const [password, setPassword] = useState('')
     const [confirmPwd, setConfirmPwd] = useState('')
 
@@ -43,9 +43,9 @@ const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
             setErr('')
         } else {
             setUsername(user.username || '')
-            setEmail(user.email || '')
-            setAbout(user.about || '')
-            setCover(user.image || '')
+            setEmail(user?.email || '')
+            setAbout(user?.about || '')
+            setCover(user?.image || '')
         }
     }, [openModal, setErr, user])
 
