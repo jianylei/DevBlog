@@ -98,7 +98,6 @@ const updateUser = async (req, res) => {
     user.role = role
     user.active = active
     user.image = image ? image : undefined
-    user.email = 'switchguy@mail.com'
 
     if (password) user.password = await bcrypt.hash(password, 10)
 
