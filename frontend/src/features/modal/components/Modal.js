@@ -6,6 +6,7 @@ import useOutsideAlerter from '../../../hooks/useOutsideAlerter'
 import SignIn from './signin/SignIn'
 import SignUp from './signup/SignUp'
 import ConfirmSignUp from './signup/ConfirmSignUp'
+import EditProfile from './editProfile/EditProfile'
 
 const Modal = () => {
     const wrapperRef = useRef(null);
@@ -36,6 +37,9 @@ const Modal = () => {
     }
     else if (currType === MODAL.TYPE.CONFIRM) {
         content = <ConfirmSignUp />
+    }
+    else if (currType === MODAL.TYPE.UPDATE_PROFILE) {
+        content = <EditProfile />
     }
 
     return (

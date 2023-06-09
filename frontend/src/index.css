@@ -264,6 +264,14 @@ svg{
   margin: auto;
 }
 
+.modal-form__textarea {
+  width: 270px;
+  height: 100px;
+  padding: .5rem;
+  resize: vertical;
+  outline: none;
+}
+
 /*  || EDIT BUTTON */
 svg.post-edit__button{
     font-size: 16px;
