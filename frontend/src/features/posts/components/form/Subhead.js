@@ -1,16 +1,16 @@
-import { useDispatch } from 'react-redux'
-import { setSubhead as setPostSub } from '../../postSlice'
+import { useDispatch } from 'react-redux';
+import { setSubhead as setPostSub } from '../../postSlice';
 
 const Subhead = ({ state, err, resetInputErr }) => {
-    const [subhead, setSubhead] = state
+    const [subhead, setSubhead] = state;
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const handleChange = (e) => {
-        setSubhead(e.target.value)
-        dispatch(setPostSub({ subHeading: e.target.value }))
-        resetInputErr()
-    }
+        setSubhead(e.target.value);
+        dispatch(setPostSub({ subHeading: e.target.value }));
+        resetInputErr();
+    };
 
     return (
         <div className={`form-input__container ${err ? 'errborder' : ''}`}>
@@ -26,7 +26,7 @@ const Subhead = ({ state, err, resetInputErr }) => {
             />
             <span className="sub-span"></span>
         </div>
-    )
-}
+    );
+};
 
-export default Subhead
+export default Subhead;

@@ -1,100 +1,96 @@
-import { createSelector, createEntityAdapter } from "@reduxjs/toolkit"
-import { apiSlice } from "../../app/api/apiSlice"
+import { createSelector, createEntityAdapter } from '@reduxjs/toolkit';
+import { apiSlice } from '../../app/api/apiSlice';
 
-const postsAdapter = createEntityAdapter()
+const postsAdapter = createEntityAdapter();
 
-const initialState = postsAdapter.getInitialState()
+const initialState = postsAdapter.getInitialState();
 
 export const postsApiSlice = apiSlice.injectEndpoints({
-    endpoints: builder => ({
+    endpoints: (builder) => ({
         getPosts: builder.query({
             query: () => ({
                 url: '/posts',
                 validateStatus: (response, result) => {
-                    return response.status === 200 && !result.isError
+                    return response.status === 200 && !result.isError;
                 }
             }),
-            transformResponse: responseData => {
-                const loadedPosts = responseData.map(post => {
-                    post.id = post._id
-                    return post
-                })
-                return postsAdapter.setAll(initialState, loadedPosts)
+            transformResponse: (responseData) => {
+                const loadedPosts = responseData.map((post) => {
+                    post.id = post._id;
+                    return post;
+                });
+                return postsAdapter.setAll(initialState, loadedPosts);
             },
             providesTags: (result, error, arg) => {
                 if (result?.ids) {
                     return [
                         { type: 'Post', id: 'LIST' },
-                        ...result.ids.map(id => ({ type: 'Post', id }))
-                    ]
-                } else return [{ type: 'Post', id: 'LIST' }]
+                        ...result.ids.map((id) => ({ type: 'Post', id }))
+                    ];
+                } else return [{ type: 'Post', id: 'LIST' }];
             }
         }),
         getFollowingPosts: builder.query({
-            query: id => {
-                if (!id) throw new Error('Missing id')
+            query: (id) => {
+                if (!id) throw new Error('Missing id');
                 return {
                     url: `/posts/following/${id}`,
                     validateStatus: (response, result) => {
-                        return response.status === 200 && !result.isError
+                        return response.status === 200 && !result.isError;
                     }
-                }
+                };
             },
-            transformResponse: responseData => {
-                const loadedPosts = responseData.map(post => {
-                    post.id = post._id
-                    return post
-                })
-                return postsAdapter.setAll(initialState, loadedPosts)
+            transformResponse: (responseData) => {
+                const loadedPosts = responseData.map((post) => {
+                    post.id = post._id;
+                    return post;
+                });
+                return postsAdapter.setAll(initialState, loadedPosts);
             },
             providesTags: (result, error, arg) => {
                 if (result?.ids) {
                     return [
                         { type: 'Post', id: 'LIST' },
-                        ...result.ids.map(id => ({ type: 'Post', id }))
-                    ]
-                } else return [{ type: 'Post', id: 'LIST' }]
+                        ...result.ids.map((id) => ({ type: 'Post', id }))
+                    ];
+                } else return [{ type: 'Post', id: 'LIST' }];
             }
         }),
         getTopTags: builder.query({
             query: () => ({
                 url: '/posts/tags',
                 validateStatus: (response, result) => {
-                    return response.status === 200 && !result.isError
+                    return response.status === 200 && !result.isError;
                 }
             }),
             providesTags: (result, error, arg) => {
                 if (result?.ids) {
                     return [
                         { type: 'Post', id: 'LIST' },
-                        ...result.ids.map(id => ({ type: 'Post', id }))
-                    ]
-                } else return [{ type: 'Post', id: 'LIST' }]
+                        ...result.ids.map((id) => ({ type: 'Post', id }))
+                    ];
+                } else return [{ type: 'Post', id: 'LIST' }];
             }
         }),
         addNewPost: builder.mutation({
-            query: initialPost => ({
+            query: (initialPost) => ({
                 url: '/posts',
                 method: 'POST',
                 body: {
                     ...initialPost
                 }
             }),
-            invalidatesTags: [
-                { type: 'Post', id: 'LIST' }
-            ]
+            invalidatesTags: [{ type: 'Post', id: 'LIST' }]
         }),
         updatePost: builder.mutation({
-            query: initialPost => ({
+            query: (initialPost) => ({
                 url: '/posts',
                 method: 'PATCH',
                 body: {
                     ...initialPost
                 }
             }),
-            invalidatesTags: (result, error, arg) => [
-                { type: 'Post', id: arg.id }
-            ]
+            invalidatesTags: (result, error, arg) => [{ type: 'Post', id: arg.id }]
         }),
         deletePost: builder.mutation({
             query: ({ id }) => ({
@@ -102,9 +98,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
                 method: 'DELETE',
                 body: { id }
             }),
-            invalidatesTags: (result, error, arg) => [
-                { type: 'Post', id: arg.id }
-            ]
+            invalidatesTags: (result, error, arg) => [{ type: 'Post', id: arg.id }]
         }),
         updateViewCount: builder.mutation({
             query: ({ id }) => ({
@@ -112,12 +106,10 @@ export const postsApiSlice = apiSlice.injectEndpoints({
                 method: 'PATCH',
                 body: { id }
             }),
-            invalidatesTags: (result, error, arg) => [
-                { type: 'Post', id: arg.id }
-            ]
+            invalidatesTags: (result, error, arg) => [{ type: 'Post', id: arg.id }]
         })
     })
-})
+});
 
 export const {
     useGetPostsQuery,
@@ -127,19 +119,19 @@ export const {
     useUpdatePostMutation,
     useDeletePostMutation,
     useUpdateViewCountMutation
-} = postsApiSlice
+} = postsApiSlice;
 
 // returns the query result object
-export const selectPostsResult = postsApiSlice.endpoints.getPosts.select()
+export const selectPostsResult = postsApiSlice.endpoints.getPosts.select();
 
 // creates memoized selector
 const selectPostsData = createSelector(
     selectPostsResult,
-    postsResults => postsResults.data // normalized state object with ids & entities
-)
+    (postsResults) => postsResults.data // normalized state object with ids & entities
+);
 
 export const {
     selectAll: selectAllPosts,
     selectById: selectPostById,
     selectIds: selectPostIds
-} = postsAdapter.getSelectors(state => selectPostsData(state) ?? initialState)
+} = postsAdapter.getSelectors((state) => selectPostsData(state) ?? initialState);

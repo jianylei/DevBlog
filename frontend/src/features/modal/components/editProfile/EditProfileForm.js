@@ -1,106 +1,101 @@
-import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import { useSelector, useDispatch } from "react-redux"
-import { 
-    selectCurrentOpen,
-    setOpen,
-} from "../../modalSlice"
-import { IMGPATH } from "../../../../constants/constants"
-import Cover from "../../../posts/components/form/Cover"
-import { dataURLtoFile } from "../../../../utils/postFormUtils"
-import { useUploadMutation } from "../../../uploads/uploadApiSlice"
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCurrentOpen, setOpen } from '../../modalSlice';
+import { IMGPATH } from '../../../../constants/constants';
+import Cover from '../../../posts/components/form/Cover';
+import { dataURLtoFile } from '../../../../utils/postFormUtils';
+import { useUploadMutation } from '../../../uploads/uploadApiSlice';
 
 const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
-    const [username, setUsername] = useState(user?.username || '')
-    const [email, setEmail] = useState(user?.email || '')
-    const [about, setAbout] = useState(user?.about || '')
-    const [cover, setCover] = useState(user?.image || '')
-    const [password, setPassword] = useState('')
-    const [confirmPwd, setConfirmPwd] = useState('')
+    const [username, setUsername] = useState(user?.username || '');
+    const [email, setEmail] = useState(user?.email || '');
+    const [about, setAbout] = useState(user?.about || '');
+    const [cover, setCover] = useState(user?.image || '');
+    const [password, setPassword] = useState('');
+    const [confirmPwd, setConfirmPwd] = useState('');
 
-    const [ upload ] = useUploadMutation()
+    const [upload] = useUploadMutation();
 
-    const [updateUser, {
-        isLoading,
-    }] = updateUserMutation
+    const [updateUser, { isLoading }] = updateUserMutation;
 
-    const openModal = useSelector(selectCurrentOpen)
+    const openModal = useSelector(selectCurrentOpen);
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        setErr('')
-    }, [email, username, password, confirmPwd, setErr])
+        setErr('');
+    }, [email, username, password, confirmPwd, setErr]);
 
     useEffect(() => {
         if (!openModal) {
-            setEmail('')
-            setUsername('')
-            setPassword('')
-            setConfirmPwd('')
-            setErr('')
+            setEmail('');
+            setUsername('');
+            setPassword('');
+            setConfirmPwd('');
+            setErr('');
         } else {
-            setUsername(user.username || '')
-            setEmail(user?.email || '')
-            setAbout(user?.about || '')
-            setCover(user?.image || '')
+            setUsername(user.username || '');
+            setEmail(user?.email || '');
+            setAbout(user?.about || '');
+            setCover(user?.image || '');
         }
-    }, [openModal, setErr, user])
+    }, [openModal, setErr, user]);
 
-
-    const canSave = [username].every(Boolean) && !isLoading
+    const canSave = [username].every(Boolean) && !isLoading;
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
-        if (password && password !== confirmPwd) setErr('Passwords do not match')
-        else if(canSave) {
-            const image_reg = /^(?!https)/
-            const data = new FormData()
-            let imageUrl = ''
+        if (password && password !== confirmPwd) setErr('Passwords do not match');
+        else if (canSave) {
+            const image_reg = /^(?!https)/;
+            const data = new FormData();
+            let imageUrl = '';
 
             if (cover && image_reg.test(cover)) {
-                const imageName = Date.now() + '-' + Math.round(Math.random() * 1E9) + '.jpg'
-                const file = dataURLtoFile(cover, imageName)
-                data.append('users', file)
-                imageUrl = IMGPATH.IMAGES + imageName
+                const imageName = Date.now() + '-' + Math.round(Math.random() * 1e9) + '.jpg';
+                const file = dataURLtoFile(cover, imageName);
+                data.append('users', file);
+                imageUrl = IMGPATH.IMAGES + imageName;
             } else {
-                imageUrl = cover
+                imageUrl = cover;
             }
 
             if (cover) {
-                await upload(data)
+                await upload(data);
             }
 
-            const r = await updateUser({ 
-                id: user._id, 
-                username, 
-                password, 
-                active: user.active, 
+            const r = await updateUser({
+                id: user._id,
+                username,
+                password,
+                active: user.active,
                 role: user.role,
                 about,
                 image: imageUrl
-            })
+            });
 
             if (!r.error && username !== user.username) {
-                dispatch(setOpen({ open: false }))
-                navigate('/', { replace: true })
-                window.location.reload()
+                dispatch(setOpen({ open: false }));
+                navigate('/', { replace: true });
+                window.location.reload();
             }
         }
-    }
+    };
 
     return (
         <form className="modal-form" onSubmit={handleSubmit}>
             <div className="cover__container">
                 <Cover state={[cover, setCover]} profile={true} />
             </div>
-            
+
             <div className="modal-form-item__container">
                 <label className="modal-form__label" htmlFor="signup-email">
-                    Email</label>
+                    Email
+                </label>
                 <input
                     className="modal-form__input"
                     id="signup-email"
@@ -114,7 +109,8 @@ const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
             </div>
             <div className="modal-form-item__container">
                 <label className="modal-form__label" htmlFor="signup-username">
-                    Username</label>
+                    Username
+                </label>
                 <input
                     className="modal-form__input"
                     id="signup-username"
@@ -128,7 +124,8 @@ const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
             </div>
             <div className="modal-form-item__container">
                 <label className="modal-form__label" htmlFor="signup-about">
-                    About</label>
+                    About
+                </label>
                 <textarea
                     className="modal-form__textarea"
                     id="signup-about"
@@ -142,7 +139,8 @@ const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
             </div>
             <div className="modal-form-item__container">
                 <label className="modal-form__label" htmlFor="signup-password">
-                    Password</label>
+                    Password
+                </label>
                 <input
                     className="modal-form__input"
                     id="signup-password"
@@ -153,25 +151,26 @@ const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
                     onChange={(e) => setPassword(e.target.value)}
                 />
             </div>
-            
-            {   password &&
+
+            {password && (
                 <div className="modal-form-item__container">
-                <label className="modal-form__label" htmlFor="signup-password">
-                    Confirm password</label>
-                <input
-                    className="modal-form__input"
-                    id="signup-confirm"
-                    name="confirm"
-                    type="password"
-                    autoComplete="off"
-                    value={confirmPwd}
-                    onChange={(e) => setConfirmPwd(e.target.value)}
-                />
-            </div>
-            }
+                    <label className="modal-form__label" htmlFor="signup-password">
+                        Confirm password
+                    </label>
+                    <input
+                        className="modal-form__input"
+                        id="signup-confirm"
+                        name="confirm"
+                        type="password"
+                        autoComplete="off"
+                        value={confirmPwd}
+                        onChange={(e) => setConfirmPwd(e.target.value)}
+                    />
+                </div>
+            )}
             <button className="modal-button">Update</button>
         </form>
-    )
-}
+    );
+};
 
-export default EditProfileForm
+export default EditProfileForm;

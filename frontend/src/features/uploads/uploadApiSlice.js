@@ -1,20 +1,15 @@
-import { createSelector, createEntityAdapter } from "@reduxjs/toolkit"
-import { apiSlice } from "../../app/api/apiSlice"
-
-const uploadsAdapter = createEntityAdapter()
+import { apiSlice } from '../../app/api/apiSlice';
 
 export const uploadsApiSlice = apiSlice.injectEndpoints({
-    endpoints: builder => ({
+    endpoints: (builder) => ({
         upload: builder.mutation({
-            query: body => ({
+            query: (body) => ({
                 url: '/upload',
                 method: 'POST',
                 body: body
             })
         })
     })
-})
+});
 
-export const {
-    useUploadMutation
-} = uploadsApiSlice
+export const { useUploadMutation } = uploadsApiSlice;

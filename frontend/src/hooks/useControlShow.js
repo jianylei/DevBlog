@@ -1,30 +1,32 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react';
 
 const useControlShow = (setShow) => {
-    const [lastScrollY, setLastScrollY] = useState(0)
+    const [lastScrollY, setLastScrollY] = useState(0);
 
     useEffect(() => {
         const controlNavbar = () => {
-            if (typeof window !== 'undefined') { 
-              if (window.scrollY > lastScrollY) { // if scroll down hide the navbar
-                setShow(false)
-              } else { // if scroll up show the navbar
-                if (window.scrollY > 104) {
-                  setShow(true)
+            if (typeof window !== 'undefined') {
+                if (window.scrollY > lastScrollY) {
+                    // if scroll down hide the navbar
+                    setShow(false);
+                } else {
+                    // if scroll up show the navbar
+                    if (window.scrollY > 104) {
+                        setShow(true);
+                    }
                 }
-              }
-              setLastScrollY(window.scrollY)
+                setLastScrollY(window.scrollY);
             }
-          }
-  
+        };
+
         if (typeof window !== 'undefined') {
-            window.addEventListener('scroll', controlNavbar)
+            window.addEventListener('scroll', controlNavbar);
 
             return () => {
-                window.removeEventListener('scroll', controlNavbar)
-            }
+                window.removeEventListener('scroll', controlNavbar);
+            };
         }
-    }, [lastScrollY, setShow])
-}
+    }, [lastScrollY, setShow]);
+};
 
-export default useControlShow
+export default useControlShow;

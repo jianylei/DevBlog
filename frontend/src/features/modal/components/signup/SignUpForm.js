@@ -1,67 +1,65 @@
-import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import { useSelector, useDispatch } from "react-redux"
-import { 
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import {
     selectCurrentOpen,
     setType,
     setUsername as setModalUsername
-} from "../../../modal/modalSlice"
-import { MODAL } from "../../../../constants/constants"
+} from '../../../modal/modalSlice';
+import { MODAL } from '../../../../constants/constants';
 
 const SignUpForm = ({ setErr, addNewUserMutation }) => {
-    const [username, setUsername] = useState('')
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [confirmPwd, setConfirmPwd] = useState('')
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPwd, setConfirmPwd] = useState('');
 
-    const [addNewUser, {
-        isLoading,
-        isSuccess
-    }] = addNewUserMutation
+    const [addNewUser, { isLoading, isSuccess }] = addNewUserMutation;
 
-    const openModal = useSelector(selectCurrentOpen)
+    const openModal = useSelector(selectCurrentOpen);
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        setErr('')
-    }, [email, username, password, confirmPwd, setErr])
+        setErr('');
+    }, [email, username, password, confirmPwd, setErr]);
 
     useEffect(() => {
         if (!openModal) {
-            setEmail('')
-            setUsername('')
-            setPassword('')
-            setConfirmPwd('')
-            setErr('')
+            setEmail('');
+            setUsername('');
+            setPassword('');
+            setConfirmPwd('');
+            setErr('');
         }
-    }, [openModal, setErr])
+    }, [openModal, setErr]);
 
     useEffect(() => {
         if (isSuccess) {
-            dispatch(setType({ type: MODAL.TYPE.CONFIRM }))
+            dispatch(setType({ type: MODAL.TYPE.CONFIRM }));
         }
-    }, [isSuccess, navigate, dispatch, setErr])
+    }, [isSuccess, navigate, dispatch, setErr]);
 
-    const canSave = [email, username, password].every(Boolean) && !isLoading
+    const canSave = [email, username, password].every(Boolean) && !isLoading;
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
-        if (password !== confirmPwd) setErr('Passwords do not match')
-        else if(canSave) {
-            dispatch(setModalUsername({ username }))
-            await addNewUser({ email, username, password })
+        if (password !== confirmPwd) setErr('Passwords do not match');
+        else if (canSave) {
+            dispatch(setModalUsername({ username }));
+            await addNewUser({ email, username, password });
         }
-    }
+    };
 
     return (
         <form className="modal-form" onSubmit={handleSubmit}>
             <div className="modal-form-item__container">
                 <label className="modal-form__label" htmlFor="signup-email">
-                    Email</label>
+                    Email
+                </label>
                 <input
                     className="modal-form__input"
                     id="signup-email"
@@ -75,7 +73,8 @@ const SignUpForm = ({ setErr, addNewUserMutation }) => {
             </div>
             <div className="modal-form-item__container">
                 <label className="modal-form__label" htmlFor="signup-username">
-                    Username</label>
+                    Username
+                </label>
                 <input
                     className="modal-form__input"
                     id="signup-username"
@@ -89,7 +88,8 @@ const SignUpForm = ({ setErr, addNewUserMutation }) => {
             </div>
             <div className="modal-form-item__container">
                 <label className="modal-form__label" htmlFor="signup-password">
-                    Password</label>
+                    Password
+                </label>
                 <input
                     className="modal-form__input"
                     id="signup-password"
@@ -103,7 +103,8 @@ const SignUpForm = ({ setErr, addNewUserMutation }) => {
             </div>
             <div className="modal-form-item__container">
                 <label className="modal-form__label" htmlFor="signup-password">
-                    Confirm password</label>
+                    Confirm password
+                </label>
                 <input
                     className="modal-form__input"
                     id="signup-confirm"
@@ -117,7 +118,7 @@ const SignUpForm = ({ setErr, addNewUserMutation }) => {
             </div>
             <button className="modal-button">Sign Up</button>
         </form>
-    )
-}
+    );
+};
 
-export default SignUpForm
+export default SignUpForm;

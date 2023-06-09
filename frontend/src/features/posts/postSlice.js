@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const postSlice = createSlice({
     name: 'post',
@@ -11,72 +11,65 @@ const postSlice = createSlice({
         cover: '',
         isError: false,
         errMsg: ''
-     },
+    },
     reducers: {
         setPost: (state, action) => {
-            const {
-                id,
-                title,
-                subHeading,
-                tags,
-                cover,
-                content
-            } = action.payload
+            const { id, title, subHeading, tags, cover, content } = action.payload;
 
-            state.id = id
-            state.title = title
-            state.subHeading = subHeading
-            state.tags = tags
-            state.cover = cover
-            state.content = content
+            state.id = id;
+            state.title = title;
+            state.subHeading = subHeading;
+            state.tags = tags;
+            state.cover = cover;
+            state.content = content;
         },
         setTitle: (state, action) => {
-            const { title } = action.payload
+            const { title } = action.payload;
 
-            state.title = title
+            state.title = title;
         },
         setSubhead: (state, action) => {
-            const { subHeading } = action.payload
+            const { subHeading } = action.payload;
 
-            state.subHeading = subHeading
+            state.subHeading = subHeading;
         },
         setContent: (state, action) => {
-            const { content } = action.payload
+            const { content } = action.payload;
 
-            state.content = content
+            state.content = content;
         },
         setTags: (state, action) => {
-            const { tags } = action.payload
+            const { tags } = action.payload;
 
-            state.tags = tags
+            state.tags = tags;
         },
         setCover: (state, action) => {
-            const { cover } = action.payload
+            const { cover } = action.payload;
 
-            state.cover = cover
+            state.cover = cover;
         },
         setError: (state, action) => {
-            const { errMsg } = action.payload
+            const { errMsg } = action.payload;
 
-            state.isError = true
-            state.errMsg = errMsg
+            state.isError = true;
+            state.errMsg = errMsg;
         },
         resetError: (state, action) => {
-            state.isError = false
-            state.errMsg = ''
+            state.isError = false;
+            state.errMsg = '';
         },
         reset: (state, action) => {
-            state.id = ''
-            state.title = ''
-            state.subHeading = ''
-            state.content = ''
-            state.tags = ''
-            state.cover = ''
-            state.isError = false
-            state.errMsg = ''
+            state.id = '';
+            state.title = '';
+            state.subHeading = '';
+            state.content = '';
+            state.tags = '';
+            state.cover = '';
+            state.isError = false;
+            state.errMsg = '';
         }
     }
-})
+});
 
 export const {
     setPost,
@@ -88,10 +81,10 @@ export const {
     setError,
     resetError,
     reset
-} = postSlice.actions
+} = postSlice.actions;
 
-export default postSlice.reducer
+export default postSlice.reducer;
 
-export const selectCurrentPost = (state) => state.post
+export const selectCurrentPost = (state) => state.post;
 
-export const selectCurrentPostErr = (state) => [state.post.isError, state.post.errMsg]
+export const selectCurrentPostErr = (state) => [state.post.isError, state.post.errMsg];

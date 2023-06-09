@@ -1,16 +1,13 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 const WriteButton = () => {
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     return (
-        <button
-            className="login__button"
-            onClick={() => navigate('/write')}
-        >
+        <button className="login__button" onClick={() => navigate('/write')}>
             Write
         </button>
-    )
-}
+    );
+};
 
-export default WriteButton
+export default WriteButton;

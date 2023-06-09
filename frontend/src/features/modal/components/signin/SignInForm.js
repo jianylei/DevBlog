@@ -1,65 +1,63 @@
-import { useState, useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { setCredentials } from "../../../auth/authSlice"
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCredentials } from '../../../auth/authSlice';
 import {
     selectCurrentOpen,
     setOpen,
     setType,
     setUsername as setModalUsername
-} from "../../modalSlice"
-import { MODAL } from "../../../../constants/constants"
+} from '../../modalSlice';
+import { MODAL } from '../../../../constants/constants';
 
 const SignInForm = ({ setErrMsg, login }) => {
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
 
-    const openModal = useSelector(selectCurrentOpen)
+    const openModal = useSelector(selectCurrentOpen);
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        setErrMsg('')
-    }, [username, password, setErrMsg])
+        setErrMsg('');
+    }, [username, password, setErrMsg]);
 
     useEffect(() => {
         if (!openModal) {
-            setUsername('')
-            setPassword('')
-            setErrMsg('')
+            setUsername('');
+            setPassword('');
+            setErrMsg('');
         }
-    }, [openModal, setErrMsg])
+    }, [openModal, setErrMsg]);
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         try {
-            const { accessToken } = await login({username, password}).unwrap()
-            dispatch(setCredentials({ accessToken }))
-            setUsername('')
-            setPassword('')
-            dispatch(setOpen({ open: false }))
-
+            const { accessToken } = await login({ username, password }).unwrap();
+            dispatch(setCredentials({ accessToken }));
+            setUsername('');
+            setPassword('');
+            dispatch(setOpen({ open: false }));
         } catch (err) {
-            if (!err.status) setErrMsg('No server response')
-            else if (err.status === 400) setErrMsg('Missing username or password')
+            if (!err.status) setErrMsg('No server response');
+            else if (err.status === 400) setErrMsg('Missing username or password');
             else if (err.status === 401) {
                 if (err.data?.username) {
-                    dispatch(setModalUsername({ username }))
-                    dispatch(setType({ type: MODAL.TYPE.CONFIRM }))
+                    dispatch(setModalUsername({ username }));
+                    dispatch(setType({ type: MODAL.TYPE.CONFIRM }));
                 } else {
-                    setErrMsg(err.data?.message || 'Unauthorized')
+                    setErrMsg(err.data?.message || 'Unauthorized');
                 }
-                
-            }
-            else setErrMsg(err.data?.message)
+            } else setErrMsg(err.data?.message);
         }
-    }
+    };
 
     return (
         <form className="modal-form" onSubmit={handleSubmit}>
             <div className="modal-form-item__container">
                 <label className="modal-form__label" htmlFor="signin-username">
-                    Username</label>
+                    Username
+                </label>
                 <input
                     className="modal-form__input"
                     id="signin-username"
@@ -72,7 +70,8 @@ const SignInForm = ({ setErrMsg, login }) => {
             </div>
             <div className="modal-form-item__container">
                 <label className="modal-form__label" htmlFor="signin-password">
-                    Password</label>
+                    Password
+                </label>
                 <input
                     className="modal-form__input"
                     id="signin-password"
@@ -85,7 +84,7 @@ const SignInForm = ({ setErrMsg, login }) => {
             </div>
             <button className="modal-button">Sign In</button>
         </form>
-    )
-}
+    );
+};
 
-export default SignInForm
+export default SignInForm;

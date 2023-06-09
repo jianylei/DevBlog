@@ -1,16 +1,16 @@
-import { useDispatch } from 'react-redux'
-import { setTitle as setPostTitle } from '../../postSlice'
+import { useDispatch } from 'react-redux';
+import { setTitle as setPostTitle } from '../../postSlice';
 
 const Title = ({ state, err, resetInputErr }) => {
-    const [title, setTitle] = state
+    const [title, setTitle] = state;
 
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     const handleChange = (e) => {
-        setTitle(e.target.value)
-        dispatch(setPostTitle({ title: e.target.value }))
-        resetInputErr()
-    }
+        setTitle(e.target.value);
+        dispatch(setPostTitle({ title: e.target.value }));
+        resetInputErr();
+    };
 
     return (
         <div className={`form-input__container ${err ? 'errborder' : ''}`}>
@@ -26,7 +26,7 @@ const Title = ({ state, err, resetInputErr }) => {
             />
             <span className="title-span"></span>
         </div>
-    )
-}
+    );
+};
 
-export default Title
+export default Title;

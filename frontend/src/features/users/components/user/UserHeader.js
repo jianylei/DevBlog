@@ -1,56 +1,47 @@
-import useWindowDimensions from "../../../../hooks/useWindowDimensions"
-import { DIMENSIONS } from "../../../../constants/constants"
-import useAuth from "../../../../hooks/useAuth"
-import FollowButton from "../buttons/FollowButton"
-import UnfollowButton from "../buttons/UnfollowButton"
+import useWindowDimensions from '../../../../hooks/useWindowDimensions';
+import { DIMENSIONS } from '../../../../constants/constants';
+import useAuth from '../../../../hooks/useAuth';
+import FollowButton from '../buttons/FollowButton';
+import UnfollowButton from '../buttons/UnfollowButton';
 
 const UserHeader = ({ user }) => {
-    const { width } = useWindowDimensions()
+    const { width } = useWindowDimensions();
 
-    const auth = useAuth()
+    const auth = useAuth();
 
-    const profileImg = user.image 
-        ? `url(${user.image})`
-        : 'var(--NO-IMAGE)'
+    const profileImg = user.image ? `url(${user.image})` : 'var(--NO-IMAGE)';
 
-    const followerCnt = user?.followers?.length || 0
+    const followerCnt = user?.followers?.length || 0;
 
     const followButton = () => {
-        if (user.id === auth.id) return undefined
+        if (user.id === auth.id) return undefined;
         if (user.followers?.includes(auth.id)) {
-            return <UnfollowButton username={user.username} />
+            return <UnfollowButton username={user.username} />;
         }
-        return <FollowButton username={user.username} />
-    }
+        return <FollowButton username={user.username} />;
+    };
 
     return (
         <div className="author-header__container">
             <div className="author-header-userdata">
-                { width <= DIMENSIONS.WIDTH.S
-                    ? <div
+                {width <= DIMENSIONS.WIDTH.S ? (
+                    <div
                         className={`image author-card-image ${user.image ? 'img-overlay' : ''}`}
-                        style={{backgroundImage: profileImg}}
+                        style={{ backgroundImage: profileImg }}
                     />
-                    : undefined
-                }
+                ) : undefined}
                 <div className="author-name__container">
-                    <h1 className="author-name">
-                        { user.username }
-                    </h1>
-                    { width <= DIMENSIONS.WIDTH.S
-                        ? <p className="author-followers">{followerCnt} Followers</p>
-                        : undefined
-                    }
+                    <h1 className="author-name">{user.username}</h1>
+                    {width <= DIMENSIONS.WIDTH.S ? (
+                        <p className="author-followers">{followerCnt} Followers</p>
+                    ) : undefined}
                 </div>
             </div>
-            { width <= DIMENSIONS.WIDTH.M
-                    ? followButton()
-                    : undefined
-            }
+            {width <= DIMENSIONS.WIDTH.M ? followButton() : undefined}
         </div>
-    )
-}
+    );
+};
 
-export default UserHeader
+export default UserHeader;
 
 // <button className="follow-button author-page-button">Follow</button>

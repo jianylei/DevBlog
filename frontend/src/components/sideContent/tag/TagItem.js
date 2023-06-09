@@ -1,11 +1,9 @@
-import { memo } from 'react'
+import { memo } from 'react';
 
 const TagItem = ({ tag }) => {
-  return (
-    <button className='side-tag-item'>{tag}</button>
-  )
-}
+    return <button className="side-tag-item">{tag}</button>;
+};
 
-const memoizedTagItem = memo(TagItem)
+const memoizedTagItem = memo(TagItem);
 
-export default memoizedTagItem
+export default memoizedTagItem;

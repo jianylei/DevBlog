@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
-import UserItem from './UserItem'
-import { useGetUsersQuery } from "../usersApiSlice"
-import Loading from '../../../components/Loading'
+import { useEffect } from 'react';
+import UserItem from './UserItem';
+import { useGetUsersQuery } from '../usersApiSlice';
+import Loading from '../../../components/Loading';
 
 const UserList = () => {
     const {
@@ -13,34 +13,29 @@ const UserList = () => {
     } = useGetUsersQuery('usersList', {
         refetchOnFocus: true,
         refetchOnMountOrArgChange: true
-    })
+    });
 
     useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [])
+        window.scrollTo(0, 0);
+    }, []);
 
-    let content 
+    let content;
 
-    if (isLoading) content = <Loading />
+    if (isLoading) content = <Loading />;
 
     if (isError) {
-        content = <p className="errmsg">{error?.data?.message
-            || '503 - Service Unavailable'}</p>
+        content = <p className="errmsg">{error?.data?.message || '503 - Service Unavailable'}</p>;
     }
 
     if (isSuccess) {
-        const { ids } = users
+        const { ids } = users;
 
-        const usersContent = ids?.length
-            && ids.map(userId => <UserItem key={userId} userId={userId} />)
+        const usersContent =
+            ids?.length && ids.map((userId) => <UserItem key={userId} userId={userId} />);
 
-        content = (
-            <div className='blog-content__container'>
-                {usersContent}
-            </div>
-        )
+        content = <div className="blog-content__container">{usersContent}</div>;
     }
-    return content
-}
+    return content;
+};
 
-export default UserList
+export default UserList;
