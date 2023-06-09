@@ -42,10 +42,10 @@ const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
             setConfirmPwd('')
             setErr('')
         } else {
-            setUsername(user.username)
-            setEmail(user.email)
-            setAbout(user.about)
-            setCover(user.image)
+            setUsername(user.username || '')
+            setEmail(user.email || '')
+            setAbout(user.about || '')
+            setCover(user.image || '')
         }
     }, [openModal, setErr, user])
 
