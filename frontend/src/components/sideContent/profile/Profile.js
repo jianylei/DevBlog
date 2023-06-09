@@ -17,9 +17,9 @@ const Profile = ({ user }) => {
             </div>
         )
         if (user.followers?.includes(auth.id)) {
-            return <UnfollowButton username={user.username} side={true} />
+            return <UnfollowButton username={user?.username} side={true} />
         }
-        return <FollowButton username={user.username} side={true} />
+        return <FollowButton username={user?.username} side={true} />
     }
 
     const navHandler = () => navigate(`/authors/${user?.username}`)
