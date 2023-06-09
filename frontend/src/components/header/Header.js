@@ -1,6 +1,4 @@
 import { Link } from 'react-router-dom'
-import EditProfile from '../../features/modal/components/editProfile/EditProfile'
-import EditProfileButton from '../../features/modal/components/EditProfileButton'
 import useControlShow from "../../hooks/useControlShow"
 import HeaderButtonCluster from './HeaderButtonCluster'
 

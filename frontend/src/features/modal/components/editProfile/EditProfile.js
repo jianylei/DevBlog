@@ -1,7 +1,5 @@
 import { useState } from "react"
 import { useUpdateUserMutation } from "../../../users/usersApiSlice"
-import SignUpForm from "../signup/SignUpForm"
-import SignInNav from "../signup/SignInNav"
 import EditProfileForm from "./EditProfileForm"
 import useAuth from "../../../../hooks/useAuth"
 import { useGetUsersQuery } from "../../../users/usersApiSlice" 
