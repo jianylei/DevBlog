@@ -9,6 +9,7 @@ import PublishButton from "../../features/posts/components/buttons/PublishButton
 import UpdateButton from '../../features/posts/components/buttons/UpdateButton'
 import DeleteButton from '../../features/posts/components/buttons/DeleteButton'
 import { getIdFromPathStr } from '../../utils/utils'
+import EditProfileButton from '../../features/modal/components/EditProfileButton'
 
 const HeaderButtonCluster = () => {
     const { role } = useAuth()
@@ -41,6 +42,7 @@ const HeaderButtonCluster = () => {
     return (
         <nav className="main-header__nav">
             {routeButton()}
+            <EditProfileButton header={true} />
             <SignOffButton />
         </nav>
     )

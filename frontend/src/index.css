@@ -266,10 +266,18 @@ svg{
 
 .modal-form__textarea {
   width: 270px;
-  height: 100px;
+  min-height: 32px;
   padding: .5rem;
   resize: vertical;
   outline: none;
+  border: none;
+  border-bottom: 1px solid var(--COLOR-GREY);
+  line-height: 1.4rem;
+}
+
+.modal-card-cover {
+  width: 112px;
+  height: 112px;
 }
 
 /*  || EDIT BUTTON */
@@ -361,7 +369,7 @@ body .modal-open {
   margin: auto;
   padding: 44px 56px;
   width: 678px;
-  height: 695px;
+  min-height: 695px;
   max-width: 40rem;
   background-color: var(--COLOR-LIGHT);
   box-shadow: 0 3px 7px rgba(0, 0, 0, 0.2);
@@ -641,6 +649,11 @@ body .modal-open {
 .post-card-cover {
   width: 112px;
   height: 112px;
+}
+
+.cover__container {
+  display: flex;
+  justify-content: center;
 }
 
 .post-card__footer {

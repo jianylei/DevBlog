@@ -13,9 +13,8 @@ const Header = ({ showState }) => {
         <header className={`main-header__container ${show 
             && 'main-header-scroll'}`}>
             <Link to='/'>
-                <h1 className="main-header__title">DevSpot</h1>
+                <h1 className="main-header__title">DevBlog</h1>
             </Link>
-            <EditProfileButton />
             <HeaderButtonCluster />
         </header>
     )

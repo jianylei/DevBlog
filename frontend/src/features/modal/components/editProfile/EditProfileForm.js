@@ -93,7 +93,10 @@ const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
 
     return (
         <form className="modal-form" onSubmit={handleSubmit}>
-            <Cover state={[cover, setCover]}/>
+            <div className="cover__container">
+                <Cover state={[cover, setCover]} profile={true} />
+            </div>
+            
             <div className="modal-form-item__container">
                 <label className="modal-form__label" htmlFor="signup-email">
                     Email</label>

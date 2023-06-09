@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux"
 import { setOpen, setType } from "../modalSlice"
 import { MODAL } from '../../../constants/constants'
 
-const EditProfileButton = () => {
+const EditProfileButton = ({ header }) => {
     const dispatch = useDispatch()
 
     const clickHandle = () => {
@@ -11,8 +11,8 @@ const EditProfileButton = () => {
     }
 
     return (
-        <button className="login__button" onClick={() => clickHandle()}>
-            Edit Profile
+        <button className={header ? "login__button" : "side-full-list-button"} onClick={() => clickHandle()}>
+            Edit profile
         </button>
     )
 }
