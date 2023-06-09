@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux"
 import { setCover as setPostCover } from "../../postSlice"
 import { imgFileToBase64 } from "../../../../utils/postFormUtils"
 
-const Cover = ({ state }) => {
+const Cover = ({ state, profile }) => {
     const [cover , setCover] = state
 
     const dispatch = useDispatch()
@@ -11,6 +11,7 @@ const Cover = ({ state }) => {
         if (e.target.files && e.target.files[0]) {
           setCover(URL.createObjectURL(e.target.files[0]))
           imgFileToBase64(e.target.files[0], (cover) => {
+            setCover(cover)
             dispatch(setPostCover({ cover }))
           })
         }
@@ -35,7 +36,7 @@ const Cover = ({ state }) => {
             hidden
             />
             <div
-                className={`image post-card-cover ${cover ? 'img-overlay' : ''}`}
+                className={`image ${profile ? 'modal-card-cover' : 'post-card-cover'} ${cover ? 'img-overlay' : ''}`}
                 style={{backgroundImage: coverImg}}
             >
             <button

@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import EditProfile from '../../features/modal/components/editProfile/EditProfile'
+import EditProfileButton from '../../features/modal/components/EditProfileButton'
 import useControlShow from "../../hooks/useControlShow"
 import HeaderButtonCluster from './HeaderButtonCluster'
 
@@ -11,7 +13,7 @@ const Header = ({ showState }) => {
         <header className={`main-header__container ${show 
             && 'main-header-scroll'}`}>
             <Link to='/'>
-                <h1 className="main-header__title">DevSpot</h1>
+                <h1 className="main-header__title">DevBlog</h1>
             </Link>
             <HeaderButtonCluster />
         </header>

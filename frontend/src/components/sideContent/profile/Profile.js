@@ -3,6 +3,7 @@ import FollowButton from "../../../features/users/components/buttons/FollowButto
 import UnfollowButton from "../../../features/users/components/buttons/UnfollowButton"
 import useAuth from "../../../hooks/useAuth"
 import { useNavigate } from "react-router-dom"
+import EditProfileButton from "../../../features/modal/components/EditProfileButton"
 
 const Profile = ({ user }) => {
     const auth = useAuth()
@@ -12,12 +13,7 @@ const Profile = ({ user }) => {
     const followButton = () => {
         if (user.id === auth.id) return (
             <div>
-                <button
-                    className='side-full-list-button'
-                    onClick={() => navigate('/')}
-                >
-                    Edit profile
-                </button>
+                <EditProfileButton />
             </div>
         )
         if (user.followers?.includes(auth.id)) {
