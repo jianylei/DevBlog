@@ -80,11 +80,13 @@ const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
                 image: imageUrl
             }).then(res => {
                 if (!res.error) {
-                    upload(data)
-
-                    dispatch(setOpen({ open: false }))
-                    navigate('/', { replace: true })
-                    window.location.reload()
+                    upload(data).then(res => {
+                        if (!res.error) {
+                            dispatch(setOpen({ open: false }))
+                            navigate('/', { replace: true })
+                            window.location.reload()
+                        }
+                    })
                 }
             })
             //dispatch(setOpen({ open: false }))
