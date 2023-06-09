@@ -20,12 +20,17 @@ const UpdateButton = () => {
 
     const [
         updatePost,
-        { isSuccess: updatePostSuccess, isError: updatePostIsError, error: updatePostError }
+        {
+            isSuccess: updatePostSuccess,
+            isLoading: postLoading,
+            isError: updatePostIsError,
+            error: updatePostError
+        }
     ] = useUpdatePostMutation();
 
     useEffect(() => {
         if (updatePostSuccess && !uploadLoading && !uploadIsError) {
-            navigate('/' + getPathStrFromStr(post.title, post.id));
+            navigate('/');
         }
         // eslint-disable-next-line
     }, [navigate, updatePostSuccess, uploadIsError, uploadLoading]);
@@ -40,7 +45,7 @@ const UpdateButton = () => {
         console.log(uploadError);
     }
 
-    const handlePublish = (e) => {
+    const handlePublish = async (e) => {
         e.preventDefault();
 
         if (canSave) {
@@ -72,39 +77,28 @@ const UpdateButton = () => {
                     coverUrl = cover;
                 }
 
-                updatePost({
-                    id,
-                    title,
-                    subHeading,
-                    content: str,
-                    tags: tagsList,
-                    cover: coverUrl
-                })
-                    .then((res) => {
-                        if (!res.error) {
-                            upload(data);
-                        }
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                    });
-            } else {
-                updatePost({
-                    id,
-                    title,
-                    subHeading,
-                    content: str,
-                    tags: tagsList,
-                    cover: coverUrl
-                });
+                await upload(data);
             }
+            await updatePost({
+                id,
+                title,
+                subHeading,
+                content: str,
+                tags: tagsList,
+                cover: coverUrl
+            });
         } else {
             dispatch(setError({ errMsg: '' }));
         }
     };
 
     return (
-        <button className="login__button" onClick={handlePublish}>
+        <button
+            className="login__button"
+            onClick={handlePublish}
+            disabled={postLoading || uploadLoading}
+            style={{ cursor: postLoading || uploadLoading ? 'wait' : 'pointer' }}
+        >
             Update
         </button>
     );

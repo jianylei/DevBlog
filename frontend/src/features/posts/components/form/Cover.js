@@ -31,11 +31,13 @@ const Cover = ({ state, profile }) => {
                 className={`image ${profile ? 'modal-card-cover' : 'post-card-cover'} ${
                     cover ? 'img-overlay' : ''
                 }`}
-                style={{ backgroundImage: coverImg }}>
+                style={{ backgroundImage: coverImg }}
+            >
                 <button
                     type="button"
                     className={`form-input-unselect ${cover ? 'show' : undefined}`}
-                    onClick={handleRemove}>
+                    onClick={handleRemove}
+                >
                     remove
                 </button>
             </div>

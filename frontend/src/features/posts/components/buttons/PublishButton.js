@@ -80,21 +80,6 @@ const PublishButton = () => {
                     }
 
                     await upload(data);
-                    /*
-                    addNewPost({
-                        user: userId,
-                        title,
-                        subHeading,
-                        content: str,
-                        tags: tagsList,
-                        cover: coverUrl
-                    })
-                        .then((res) => {
-                            if (!res.error) upload(data);
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                        });*/
                 }
                 await addNewPost({
                     user: userId,
@@ -104,16 +89,6 @@ const PublishButton = () => {
                     tags: tagsList,
                     cover: coverUrl
                 });
-                /*else {
-                    addNewPost({
-                        user: userId,
-                        title,
-                        subHeading,
-                        content: str,
-                        tags: tagsList,
-                        cover: coverUrl
-                    });
-                }*/
             }
         } else {
             dispatch(setError({ errMsg: '' }));
@@ -121,7 +96,12 @@ const PublishButton = () => {
     };
 
     return (
-        <button className="login__button" onClick={handlePublish}>
+        <button
+            className="login__button"
+            onClick={handlePublish}
+            disabled={uploadLoading || addPostLoading}
+            style={{ cursor: uploadLoading || addPostLoading ? 'wait' : 'pointer' }}
+        >
             Publish
         </button>
     );
