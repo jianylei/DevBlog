@@ -70,7 +70,11 @@ const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
                 imageUrl = cover
             }
 
-            await updateUser({ 
+            if (cover) {
+                await upload(data)
+            }
+
+            const r = await updateUser({ 
                 id: user._id, 
                 username, 
                 password, 
@@ -78,17 +82,13 @@ const EditProfileForm = ({ setErr, updateUserMutation, user }) => {
                 role: user.role,
                 about,
                 image: imageUrl
-            }).then(res => {
-                if (!res.error) {
-                    upload(data)
-                    dispatch(setOpen({ open: false }))
-                    navigate('/', { replace: true })
-                    window.location.reload()
-                }
             })
-            //dispatch(setOpen({ open: false }))
-            //navigate('/', { replace: true })
-            //window.location.reload()
+
+            if (!r.error && username !== user.username) {
+                dispatch(setOpen({ open: false }))
+                navigate('/', { replace: true })
+                window.location.reload()
+            }
         }
     }
 
