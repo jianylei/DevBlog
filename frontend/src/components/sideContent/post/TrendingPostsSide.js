@@ -3,7 +3,7 @@ import { useGetPostsQuery } from '../../../features/posts/postsApiSlice';
 import PostItem from './PostItem';
 
 const TrendingPostsSide = () => {
-    const { data: posts, isSuccess, isError, error } = useGetPostsQuery('postsList');
+    const { data: posts, isSuccess, isError } = useGetPostsQuery('postsList');
 
     const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ const TrendingPostsSide = () => {
 
         content = (
             <div className="side-section">
-                <h3 className="side-title">What's trending</h3>
+                <h3 className="side-title">What&apos;s trending</h3>
                 <div className="side-post-items">{slicedContent}</div>
                 <div>
                     <button className="side-full-list-button" onClick={() => navigate('/trending')}>

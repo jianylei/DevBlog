@@ -21,8 +21,8 @@ const ConfirmSignUp = () => {
             <p className={errClass}>{error?.data?.message}</p>
             <h2 className="modal-title">Verify your email address.</h2>
             <p>
-                We've emailed you a confirmation link, this can take up to 3-5 minutes. Once you
-                confirm your email you can continue setting up your profile.
+                We&apos;ve emailed you a confirmation link, this can take up to 3-5 minutes. Once
+                you confirm your email you can continue setting up your profile.
             </p>
             <div className="form-nav-signup">
                 Email confirmed?

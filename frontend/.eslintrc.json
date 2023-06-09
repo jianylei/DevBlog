@@ -1,6 +1,7 @@
 {
     "env": {
         "browser": true,
+        "node": true,
         "es2021": true
     },
     "extends": ["plugin:react/recommended", "eslint:recommended", "plugin:prettier/recommended"],
@@ -9,11 +10,16 @@
         "ecmaVersion": "latest",
         "sourceType": "module"
     },
-    "plugins": ["react"],
+    "plugins": ["react", "react-hooks"],
     "rules": {
         "react/react-in-jsx-scope": "off",
         "react/prop-types": "off",
-        "prettier/prettier": ["off", { "singleQuote": true }],
+        "prettier/prettier": [
+            "error",
+            {
+                "endOfLine": "auto"
+            }
+        ],
         "endOfLine": "off"
     }
 }

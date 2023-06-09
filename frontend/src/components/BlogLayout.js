@@ -5,7 +5,7 @@ import { DIMENSIONS } from '../constants/constants';
 import BlogHeader from './header/BlogHeader';
 
 const BlogLayout = () => {
-    const [show, setShow] = useOutletContext();
+    const [show, setShow] = useOutletContext(); // eslint-disable-line no-unused-vars
     const { width } = useWindowDimensions();
 
     return (

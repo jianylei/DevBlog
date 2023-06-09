@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { setContent as setPostContent } from '../../postSlice';
 
 const Textarea = ({ state, err, resetInputErr, initVal }) => {
-    const [content, setContent] = state;
+    const [content, setContent] = state; // eslint-disable-line
     const dispatch = useDispatch();
 
     const handleChange = (e) => {

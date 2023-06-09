@@ -47,12 +47,10 @@ const PostHeader = ({ user, post }) => {
                         post.user !== id
                             ? { justifyContent: 'flex-start' }
                             : { justifyContent: 'space-between' }
-                    }
-                >
+                    }>
                     <div
                         className={`post-username ${!active ? 'deleted' : ''}`}
-                        onClick={active ? navHandler : undefined}
-                    >
+                        onClick={active ? navHandler : undefined}>
                         {post.author}
                     </div>
                     {width <= DIMENSIONS.WIDTH.M ? followButton() : undefined}

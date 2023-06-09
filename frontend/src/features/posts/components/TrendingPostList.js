@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import PostItem from './postItem/PostItem';
 import { useGetPostsQuery } from '../postsApiSlice';
-import useAuth from '../../../hooks/useAuth';
 import Loading from '../../../components/Loading';
 
 const TrendingPostList = () => {

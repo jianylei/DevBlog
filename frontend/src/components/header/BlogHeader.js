@@ -15,15 +15,13 @@ const BlogHeader = ({ show }) => {
                 </Link>
                 <Link
                     className={REGEX.ROUTES.TRENDING.test(pathname) ? 'active' : ''}
-                    to="/trending"
-                >
+                    to="/trending">
                     Trending
                 </Link>
                 {auth.id ? (
                     <Link
                         className={REGEX.ROUTES.FOLLOWING.test(pathname) ? 'active' : ''}
-                        to="/following"
-                    >
+                        to="/following">
                         Following
                     </Link>
                 ) : undefined}

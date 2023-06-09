@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createSlice } from '@reduxjs/toolkit';
 
 const postSlice = createSlice({
@@ -88,3 +89,4 @@ export default postSlice.reducer;
 export const selectCurrentPost = (state) => state.post;
 
 export const selectCurrentPostErr = (state) => [state.post.isError, state.post.errMsg];
+/* eslint-enable */

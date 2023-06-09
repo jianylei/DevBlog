@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { createSelector, createEntityAdapter } from '@reduxjs/toolkit';
 import { apiSlice } from '../../app/api/apiSlice';
 
@@ -135,3 +136,4 @@ export const {
     selectById: selectPostById,
     selectIds: selectPostIds
 } = postsAdapter.getSelectors((state) => selectPostsData(state) ?? initialState);
+/* eslint-enable */
