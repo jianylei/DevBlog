@@ -15,7 +15,7 @@ const sendConfirmationEmail = (id, username, email) => {
         process.env.CONFIRM_TOKEN_SECRET,
         { expiresIn: '30m' },
         (err, token) => {
-            const url = `http://localhost:3080/auth/verification/${token}`
+            const url = `https://devblog-api.onrender.com/auth/verification/${token}`
 
             transporter.sendMail({
                 to: email,
