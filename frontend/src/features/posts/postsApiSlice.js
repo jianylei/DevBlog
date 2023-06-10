@@ -33,7 +33,6 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         }),
         getFollowingPosts: builder.query({
             query: (id) => {
-                if (!id) throw new Error('Missing id');
                 return {
                     url: `/posts/following/${id}`,
                     validateStatus: (response, result) => {

@@ -25,8 +25,8 @@ const PostHeader = ({ user, post }) => {
 
     const followButton = () => {
         if (!active) return undefined;
-        if (user.id === id) return undefined;
-        if (user.followers?.includes(id)) {
+        if (user?.id === id) return undefined;
+        if (user?.followers?.includes(id)) {
             return <UnfollowButton username={user.username} />;
         }
         return <FollowButton username={user.username} />;
