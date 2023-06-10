@@ -1,14 +1,14 @@
-const mongoose = require('mongoose')
-const { ROLES } = require('../config/constants')
+const mongoose = require('mongoose');
+const { ROLES } = require('../config/constants');
 
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
-        required: true
+        required: true,
     },
     password: {
         type: String,
-        required: true
+        required: true,
     },
     firstName: {
         type: String,
@@ -19,37 +19,37 @@ const userSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     confirmed: {
         type: Boolean,
-        default: false
+        default: false,
     },
     about: {
         type: String,
-        required: false
+        required: false,
     },
     image: {
-        type:String,
-        required: false
+        type: String,
+        required: false,
     },
     role: {
         type: String,
         enum: [ROLES.Author, ROLES.Moderator, ROLES.Admin],
-        default : ROLES.Author
+        default: ROLES.Author,
     },
     active: {
         type: Boolean,
-        default: true
+        default: true,
     },
     followers: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref: 'User'
+        ref: 'User',
     },
     following: {
         type: [mongoose.Schema.Types.ObjectId],
-        ref: 'User'
-    }
+        ref: 'User',
+    },
 });
 
-module.exports = mongoose.model('User', userSchema)
+module.exports = mongoose.model('User', userSchema);

@@ -1,17 +1,16 @@
-const express = require('express')
-const router = express.Router()
-const usersController = require('../controllers/usersController')
+const express = require('express');
+const router = express.Router();
+const usersController = require('../controllers/usersController');
 
-router.route('/')
+router
+    .route('/')
     .get(usersController.getAllUsers)
     .post(usersController.createNewUser)
     .patch(usersController.updateUser)
-    .delete(usersController.deleteUser)
+    .delete(usersController.deleteUser);
 
-router.route('/follow/:username')
-    .patch(usersController.followUser)
+router.route('/follow/:username').patch(usersController.followUser);
 
-router.route('/unfollow/:username')
-    .patch(usersController.unFollowUser)
+router.route('/unfollow/:username').patch(usersController.unFollowUser);
 
-module.exports = router
+module.exports = router;

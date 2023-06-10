@@ -1,10 +1,10 @@
-module.exports = { 
+module.exports = {
     createUserReq: {
         body: {
             username: 'testing123',
             password: 'testing123',
-            email: 'email@email.com'
-        }
+            email: 'email@email.com',
+        },
     },
 
     updateUserReq: {
@@ -17,8 +17,8 @@ module.exports = {
             about: 'testingAbout',
             image: 'testingImage',
             role: 'Author',
-            active: true
-        }
+            active: true,
+        },
     },
 
     createPostReq: {
@@ -28,8 +28,8 @@ module.exports = {
             subHeading: 'testingSub',
             content: 'testingContent',
             cover: 'testingCover',
-            tags: ['testingTags']
-        }
+            tags: ['testingTags'],
+        },
     },
 
     updatePostReq: {
@@ -40,7 +40,7 @@ module.exports = {
             content: 'testingContent',
             cover: 'testingCover',
             tags: ['testingTags'],
-            status: 'Pending'
-        }
+            status: 'Pending',
+        },
     },
-}
+};

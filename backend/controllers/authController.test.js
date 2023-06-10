@@ -1,307 +1,312 @@
-const User = require('../models/User')
-const authController = require('./authController')
-const bcrypt = require('bcrypt')
-const jwt = require('jsonwebtoken')
+const User = require('../models/User');
+const authController = require('./authController');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 describe('POST /auth', () => {
     it('sucessful request', async () => {
-        const mockedReq = { 
+        const mockedReq = {
             body: {
                 username: 'testingUser',
-                password: 'testingPassword'
-            }
-        }
-        const mockedRes = { 
-            json: (jsonRes) => {
-                expect(jsonRes).toStrictEqual({"accessToken": "testingToken"})
+                password: 'testingPassword',
             },
-            cookie: jest.fn()
-        }
+        };
+        const mockedRes = {
+            json: (jsonRes) => {
+                expect(jsonRes).toStrictEqual({ accessToken: 'testingToken' });
+            },
+            cookie: jest.fn(),
+        };
 
         User.findOne = jest.fn().mockImplementation(() => ({
             exec: jest.fn().mockResolvedValueOnce({
                 username: 'testingUser',
                 password: 'testingPassword',
                 active: true,
-                confirmed: true
-            })
-        }))
+                confirmed: true,
+            }),
+        }));
 
-        bcrypt.compare = jest.fn().mockResolvedValueOnce(true)
+        bcrypt.compare = jest.fn().mockResolvedValueOnce(true);
 
-        jwt.sign = jest.fn().mockImplementation(() => 'testingToken')
+        jwt.sign = jest.fn().mockImplementation(() => 'testingToken');
 
-        await authController.login(mockedReq,mockedRes)
-    })
+        await authController.login(mockedReq, mockedRes);
+    });
 
     it('error: missing field', async () => {
-        let mockedReq = { 
+        let mockedReq = {
             body: {
                 username: 'testingUser',
-                password: ''
-            }
-        }
-        const mockedRes = { 
+                password: '',
+            },
+        };
+        const mockedRes = {
             status: (statusNum) => {
-                expect(statusNum).toEqual(400)
-                return mockedRes
+                expect(statusNum).toEqual(400);
+                return mockedRes;
             },
             json: (jsonRes) => {
-                expect(jsonRes).toStrictEqual({"message": 'All fields are required'})
-            }
-        }
+                expect(jsonRes).toStrictEqual({ message: 'All fields are required' });
+            },
+        };
 
-        await authController.login(mockedReq,mockedRes)
-        mockedReq.body.password = 'testingPassword'
-        mockedReq.body.username = ''
-        await authController.login(mockedReq,mockedRes)
-    })
+        await authController.login(mockedReq, mockedRes);
+        mockedReq.body.password = 'testingPassword';
+        mockedReq.body.username = '';
+        await authController.login(mockedReq, mockedRes);
+    });
 
     it('error: user not found', async () => {
-        const mockedReq = { 
+        const mockedReq = {
             body: {
                 username: 'testingUser',
-                password: 'testingPassword'
-            }
-        }
-        const mockedRes = { 
+                password: 'testingPassword',
+            },
+        };
+        const mockedRes = {
             status: (statusNum) => {
-                expect(statusNum).toEqual(401)
-                return mockedRes
+                expect(statusNum).toEqual(401);
+                return mockedRes;
             },
             json: (jsonRes) => {
-                expect(jsonRes).toStrictEqual({"message": 'Unauthorized'})
-            }
-        }
+                expect(jsonRes).toStrictEqual({ message: 'Unauthorized' });
+            },
+        };
 
         User.findOne = jest.fn().mockImplementation(() => ({
-            exec: jest.fn().mockResolvedValueOnce(undefined)
-        }))
+            exec: jest.fn().mockResolvedValueOnce(undefined),
+        }));
 
-        await authController.login(mockedReq,mockedRes)
-    })
+        await authController.login(mockedReq, mockedRes);
+    });
 
     it('error: user not active', async () => {
-        const mockedReq = { 
+        const mockedReq = {
             body: {
                 username: 'testingUser',
-                password: 'testingPassword'
-            }
-        }
-        const mockedRes = { 
+                password: 'testingPassword',
+            },
+        };
+        const mockedRes = {
             status: (statusNum) => {
-                expect(statusNum).toEqual(401)
-                return mockedRes
+                expect(statusNum).toEqual(401);
+                return mockedRes;
             },
             json: (jsonRes) => {
-                expect(jsonRes).toStrictEqual({"message": 'Unauthorized'})
-            }
-        }
+                expect(jsonRes).toStrictEqual({ message: 'Unauthorized' });
+            },
+        };
 
         User.findOne = jest.fn().mockImplementation(() => ({
             exec: jest.fn().mockResolvedValueOnce({
                 username: 'testingUser',
                 password: 'testingPassword',
-                active: false
-            })
-        }))
+                active: false,
+            }),
+        }));
 
-        await authController.login(mockedReq,mockedRes)
-    })
+        await authController.login(mockedReq, mockedRes);
+    });
 
     it('error: email not confirmed', async () => {
-        const mockedReq = { 
+        const mockedReq = {
             body: {
                 username: 'testingUser',
-                password: 'testingPassword'
-            }
-        }
-        const mockedRes = { 
+                password: 'testingPassword',
+            },
+        };
+        const mockedRes = {
             status: (statusNum) => {
-                expect(statusNum).toEqual(401)
-                return mockedRes
+                expect(statusNum).toEqual(401);
+                return mockedRes;
             },
             json: (jsonRes) => {
-                expect(jsonRes).toStrictEqual({"message": 'Please confirm your email'})
-            }
-        }
+                expect(jsonRes).toStrictEqual({ message: 'Please confirm your email' });
+            },
+        };
 
         User.findOne = jest.fn().mockImplementation(() => ({
             exec: jest.fn().mockResolvedValueOnce({
                 username: 'testingUser',
                 password: 'testingPassword',
                 active: true,
-                confirmed: false
-            })
-        }))
+                confirmed: false,
+            }),
+        }));
 
-        await authController.login(mockedReq,mockedRes)
-    })
+        await authController.login(mockedReq, mockedRes);
+    });
 
     it('error: invalid password', async () => {
-        const mockedReq = { 
+        const mockedReq = {
             body: {
                 username: 'testingUser',
-                password: 'testingPassword'
-            }
-        }
-        const mockedRes = { 
+                password: 'testingPassword',
+            },
+        };
+        const mockedRes = {
             status: (statusNum) => {
-                expect(statusNum).toEqual(401)
-                return mockedRes
+                expect(statusNum).toEqual(401);
+                return mockedRes;
             },
             json: (jsonRes) => {
-                expect(jsonRes).toStrictEqual({"message": 'Unauthorized'})
-            }
-        }
+                expect(jsonRes).toStrictEqual({ message: 'Unauthorized' });
+            },
+        };
 
         User.findOne = jest.fn().mockImplementation(() => ({
             exec: jest.fn().mockResolvedValueOnce({
                 username: 'testingUser',
                 password: 'testingPassword',
                 active: true,
-                confirmed: true
-            })
-        }))
+                confirmed: true,
+            }),
+        }));
 
-        bcrypt.compare = jest.fn().mockResolvedValueOnce(false)
+        bcrypt.compare = jest.fn().mockResolvedValueOnce(false);
 
-        await authController.login(mockedReq,mockedRes)
-    })
-})
+        await authController.login(mockedReq, mockedRes);
+    });
+});
 
 describe('GET /auth/refresh', () => {
     it('sucessful request', async () => {
-        const mockedReq = { 
+        const mockedReq = {
             cookies: {
-                jwt: 'testingJWT'
-            }
-        }
-        const mockedRes = { 
-            json: (jsonRes) => {
-                expect(jsonRes).toStrictEqual({"accessToken": "testingToken"})
+                jwt: 'testingJWT',
             },
-        }
+        };
+        const mockedRes = {
+            json: (jsonRes) => {
+                expect(jsonRes).toStrictEqual({ accessToken: 'testingToken' });
+            },
+        };
 
-        const decodedValue = { username: 'testingUser', roles: ['Author'] }
-        const verifySpy = jest.spyOn(jwt, 'verify')
+        const decodedValue = { username: 'testingUser', roles: ['Author'] };
+        /* eslint-disable */
+        const verifySpy = jest
+            .spyOn(jwt, 'verify')
             .mockImplementationOnce((token, getPublicKey, callback) => {
                 callback(null, decodedValue);
             });
-
+        /* eslint-enable */
         User.findOne = jest.fn().mockResolvedValueOnce({
-            id: 0, 
-            username: decodedValue.username
-        })
+            id: 0,
+            username: decodedValue.username,
+        });
 
-        jwt.sign = jest.fn().mockImplementation(() => 'testingToken')
+        jwt.sign = jest.fn().mockImplementation(() => 'testingToken');
 
-        await authController.refresh(mockedReq,mockedRes)
-    })
+        await authController.refresh(mockedReq, mockedRes);
+    });
 
     it('error: missing JWT', async () => {
-        const mockedReq = { 
+        const mockedReq = {
             cookies: {
-                jwt: ''
-            }
-        }
-        const mockedRes = { 
+                jwt: '',
+            },
+        };
+        const mockedRes = {
             status: (statusNum) => {
-                expect(statusNum).toEqual(401)
-                return mockedRes
+                expect(statusNum).toEqual(401);
+                return mockedRes;
             },
             json: (jsonRes) => {
-                expect(jsonRes).toStrictEqual({"message": "Unauthorized"})
+                expect(jsonRes).toStrictEqual({ message: 'Unauthorized' });
             },
-        }
+        };
 
-        await authController.refresh(mockedReq,mockedRes)
-    })
+        await authController.refresh(mockedReq, mockedRes);
+    });
 
     it('error: decode err', async () => {
-        const mockedReq = { 
+        const mockedReq = {
             cookies: {
-                jwt: 'testingJWT'
-            }
-        }
-        const mockedRes = { 
+                jwt: 'testingJWT',
+            },
+        };
+        const mockedRes = {
             status: (statusNum) => {
-                expect(statusNum).toEqual(401)
-                return mockedRes
+                expect(statusNum).toEqual(401);
+                return mockedRes;
             },
             json: (jsonRes) => {
-                expect(jsonRes).toStrictEqual({"message": "Forbidden"})
+                expect(jsonRes).toStrictEqual({ message: 'Forbidden' });
             },
-        }
-
-        const verifySpy = jest.spyOn(jwt, 'verify')
+        };
+        /* eslint-disable */
+        const verifySpy = jest
+            .spyOn(jwt, 'verify')
             .mockImplementationOnce((token, getPublicKey, callback) => {
                 callback('err', null);
             });
-
-        await authController.refresh(mockedReq,mockedRes)
-    })
+        /* eslint-enable */
+        await authController.refresh(mockedReq, mockedRes);
+    });
 
     it('error: user not found', async () => {
-        const mockedReq = { 
+        const mockedReq = {
             cookies: {
-                jwt: 'testingJWT'
-            }
-        }
-        const mockedRes = { 
+                jwt: 'testingJWT',
+            },
+        };
+        const mockedRes = {
             status: (statusNum) => {
-                expect(statusNum).toEqual(401)
-                return mockedRes
+                expect(statusNum).toEqual(401);
+                return mockedRes;
             },
             json: (jsonRes) => {
-                expect(jsonRes).toStrictEqual({"message": "Unauthorized"})
+                expect(jsonRes).toStrictEqual({ message: 'Unauthorized' });
             },
-        }
+        };
 
-        const decodedValue = { username: 'testingUser', roles: ['Author'] }
-        const verifySpy = jest.spyOn(jwt, 'verify')
+        const decodedValue = { username: 'testingUser', roles: ['Author'] };
+        /* eslint-disable */
+        const verifySpy = jest
+            .spyOn(jwt, 'verify')
             .mockImplementationOnce((token, getPublicKey, callback) => {
                 callback(null, decodedValue);
             });
+        /* eslint-enable */
+        User.findOne = jest.fn().mockResolvedValueOnce(undefined);
 
-        User.findOne = jest.fn().mockResolvedValueOnce(undefined)
-
-        await authController.refresh(mockedReq,mockedRes)
-    })
-})
+        await authController.refresh(mockedReq, mockedRes);
+    });
+});
 
 describe('POST /auth/logout', () => {
     it('sucessful request', async () => {
-        const mockedReq = { 
+        const mockedReq = {
             cookies: {
-                jwt: 'testingJWT'
-            }
-        }
-        const mockedRes = { 
-            json: (jsonRes) => {
-                expect(jsonRes).toStrictEqual({"message": 'Cookie cleared'})
+                jwt: 'testingJWT',
             },
-            clearCookie: jest.fn()
-        }
-
-        await authController.logout(mockedReq,mockedRes)
-    })
-
-    it('204 status', async () => {
-        const mockedReq = { 
-            cookies: {
-                jwt: ''
-            }
-        }
+        };
         const mockedRes = {
             json: (jsonRes) => {
-                expect(jsonRes).toStrictEqual({"message": 'Cookie cleared'})
+                expect(jsonRes).toStrictEqual({ message: 'Cookie cleared' });
+            },
+            clearCookie: jest.fn(),
+        };
+
+        await authController.logout(mockedReq, mockedRes);
+    });
+
+    it('204 status', async () => {
+        const mockedReq = {
+            cookies: {
+                jwt: '',
+            },
+        };
+        const mockedRes = {
+            json: (jsonRes) => {
+                expect(jsonRes).toStrictEqual({ message: 'Cookie cleared' });
             },
             sendStatus: (status) => {
-                expect(status).toEqual(204)
-            }
-        }
+                expect(status).toEqual(204);
+            },
+        };
 
-        await authController.logout(mockedReq,mockedRes)
-    })
-})
+        await authController.logout(mockedReq, mockedRes);
+    });
+});

@@ -1,16 +1,16 @@
-const fs = require('fs')
-const { PATH } = require('../config/constants')
+const fs = require('fs');
+const { PATH } = require('../config/constants');
 
-module.exports = { 
+module.exports = {
     removePostDirByName: (name) => {
-        const path = PATH.Images + 'posts/' + name
+        const path = PATH.Images + 'posts/' + name;
 
         try {
             if (fs.existsSync(path)) {
-                fs.rmSync(path, { recursive: true, force: true })
+                fs.rmSync(path, { recursive: true, force: true });
             }
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
-    }
-}
+    },
+};
