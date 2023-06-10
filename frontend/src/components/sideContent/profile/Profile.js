@@ -11,13 +11,13 @@ const Profile = ({ user }) => {
     const navigate = useNavigate();
 
     const followButton = () => {
-        if (user.id === auth.id)
+        if (user?.id === auth.id)
             return (
                 <div>
                     <EditProfileButton />
                 </div>
             );
-        if (user.followers?.includes(auth.id)) {
+        if (user?.followers?.includes(auth.id)) {
             return <UnfollowButton username={user?.username} side={true} />;
         }
         return <FollowButton username={user?.username} side={true} />;
@@ -39,7 +39,9 @@ const Profile = ({ user }) => {
                     ? `${user?.firstName} ${user?.lastName}`
                     : user?.username}
             </h3>
-            <h3 className="side-profile-followers">{getFollowersString(user.followers.length)}</h3>
+            <h3 className="side-profile-followers">
+                {getFollowersString(user?.followers?.length)}
+            </h3>
             <p className="side-profile-about">{user?.about}</p>
             <div className="side-profile-bottom">{followButton()}</div>
         </div>

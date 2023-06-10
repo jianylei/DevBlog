@@ -16,7 +16,7 @@ const AuthorSide = () => {
 
         const userId = ids?.length && ids.find((id) => entities[id]?.username === username);
 
-        content = <Profile user={entities[userId]} />;
+        content = userId ? <Profile user={entities[userId]} /> : undefined;
     }
 
     return content;

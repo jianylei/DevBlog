@@ -30,8 +30,8 @@ const PostSide = () => {
     if (isError) content = undefined;
 
     if (isSuccess && isUserSucess) {
-        const active = !(post.author === DELETED);
-        content = active ? <Profile user={user} /> : undefined;
+        const active = !(post?.author === DELETED);
+        content = active && user ? <Profile user={user} /> : undefined;
     }
 
     return content;

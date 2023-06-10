@@ -1,0 +1,18 @@
+.no-match__container {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.5rem;
+    line-height: 22px;
+}
+.no-match-button__container {
+    display: flex;
+    gap: 1rem;
+}
+.no-match-button__container button {
+    color: var(--SUCCESS);
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
