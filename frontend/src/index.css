@@ -25,8 +25,8 @@
     --HOVER-TAG: rgb(221, 221, 221);
     --SEPARATOR: rgb(240, 240, 240);
     --IMG-OVERLAY: rgba(0, 0, 0, 4%);
-    --SUCCESS: rgb(26, 137, 23);
-    --SUCCESS-HOVER: rgb(23, 122, 20);
+    --PRIMARY: rgb(26, 137, 23);
+    --PRIMARY-HOVER: rgb(23, 122, 20);
     --ERROR: #ea6d7e;
     --LINK-COLOR: rgba(117, 117, 117, 1);
     --LINK-HOVER: rgb(0, 0, 0);
@@ -220,7 +220,7 @@ svg {
 }
 
 .signup__button {
-    background-color: var(--SUCCESS);
+    background-color: var(--PRIMARY);
 }
 
 .login__button:hover {
@@ -228,7 +228,7 @@ svg {
 }
 
 .signup__button:hover {
-    background-color: var(--SUCCESS-HOVER);
+    background-color: var(--PRIMARY-HOVER);
 }
 
 .tag-button {
@@ -300,22 +300,22 @@ svg.post-edit__button {
 .follow-button {
     height: 32px;
     padding: 4px 12px 6px;
-    background-color: var(--SUCCESS);
+    background-color: var(--PRIMARY);
     font-size: 14px;
 }
 
 .unfollow-button {
     background-color: transparent;
-    border: 1px solid var(--SUCCESS);
-    color: var(--SUCCESS);
+    border: 1px solid var(--PRIMARY);
+    color: var(--PRIMARY);
 }
 
 .follow-button:hover {
-    background-color: var(--SUCCESS-HOVER);
+    background-color: var(--PRIMARY-HOVER);
 }
 
 .unfollow-button:hover {
-    border-color: var(--SUCCESS-HOVER);
+    border-color: var(--PRIMARY-HOVER);
     color: var(--COLOR-LIGHT);
 }
 
@@ -420,7 +420,7 @@ body .modal-open {
 }
 
 .form-nav-signup span {
-    color: var(--SUCCESS);
+    color: var(--PRIMARY);
     font-weight: 700;
     cursor: pointer;
 }

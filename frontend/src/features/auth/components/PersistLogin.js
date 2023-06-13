@@ -13,7 +13,7 @@ const PersistLogin = () => {
     const [refresh, { isLoading }] = useRefreshMutation();
 
     useEffect(() => {
-        if (effectRan.current === true || process.env.NODE_ENV !== 'development') {
+        if (effectRan.current === true || process.env.NODE_ENV !== 'development') { 
             // React 18 Strict Mode
             const verifyRefreshToken = async () => {
                 try {
