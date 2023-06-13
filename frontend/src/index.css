@@ -13,10 +13,8 @@
 }
 
 :root {
-    --BGCOLOR: #121212;
     --SURFACE: rgba(0, 0, 0, 0.05);
     --SURFACE-HOVER: rgba(0, 0, 0, 0.08);
-    --BORDER-COLOR: rgba(255, 255, 255, 5%);
     --BORDER-RADIUS: 1px;
     --BORDER-RADIUS-BUBBLE: 99em;
     --COLOR-BUBBLE: rgba(242, 242, 242, 1);
@@ -30,15 +28,8 @@
     --SUCCESS: rgb(26, 137, 23);
     --SUCCESS-HOVER: rgb(23, 122, 20);
     --ERROR: #ea6d7e;
-    --INACTIVE: rgba(255, 255, 255, 3%);
     --LINK-COLOR: rgba(117, 117, 117, 1);
     --LINK-HOVER: rgb(0, 0, 0);
-    --STATUS-COMPLETE: #74e39a;
-    --STATUS-OPEN: #ea6d7e;
-    --INPUT-INVALID: #dd0d3c;
-    --PRIMARY: #ea6d7e;
-    --SECONDARY: #bb86fc;
-    --SECONDARY-HOVER: #b076f7;
     --NO-IMAGE: linear-gradient(135deg, var(--SURFACE) 50%, var(--SURFACE-HOVER) 50%);
 }
 
@@ -508,7 +499,6 @@ body .modal-open {
 }
 
 /*  || BLOG LAYOUT */
-
 .blog__container {
     display: grid;
     grid-template-columns: 2fr 1fr;

@@ -40,7 +40,7 @@
 
 .side-full-list-button {
     background-color: transparent;
-    color: var(--SUCCESS);
+    color: var(--PRIMARY);
     width: fit-content;
     font-size: 13px;
 }

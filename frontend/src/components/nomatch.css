@@ -10,7 +10,7 @@
     gap: 1rem;
 }
 .no-match-button__container button {
-    color: var(--SUCCESS);
+    color: var(--PRIMARY);
     background-color: transparent;
     border: none;
     cursor: pointer;
