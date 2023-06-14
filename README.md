@@ -37,7 +37,7 @@ React, JavaScript, Node.js, Express.js, Redux, MongoDB, HTML/ CSS
 <img src="public/verification.png">
 
 ### Mobile
-<img src="public/mobile_home.png">
-<img src="public/mobile_post.png">
-<img src="public/mobile_create_post.png">
-<img src="public/mobile_user.png">
+<img src="public/mobile_home.png" width="200">
+<img src="public/mobile_post.png" width="200">
+<img src="public/mobile_create_post.png" width="200">
+<img src="public/mobile_user.png" width="200">
