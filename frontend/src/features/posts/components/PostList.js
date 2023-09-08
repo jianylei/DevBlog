@@ -37,6 +37,7 @@ const PostList = () => {
         const postsContent =
             ids?.length && ids.map((postId) => <PostItem key={postId} postId={postId} />);
 
+        // If there are no posts, display a message
         if (!postsContent.length) content = <p className="errmsg">No posts found.</p>;
 
         content = <div className="blog-content__container">{postsContent}</div>;
