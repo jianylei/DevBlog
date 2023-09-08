@@ -35,7 +35,8 @@ const PostItem = ({ post }) => {
                     <p
                         className={`side-post-item-author ${!active ? 'deleted' : ''}`}
                         onClick={active ? navAuthorHandler : undefined}
-                        disabled={!active}>
+                        disabled={!active}
+                    >
                         {post.author}
                     </p>
                 </div>

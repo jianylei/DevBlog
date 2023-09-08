@@ -15,7 +15,8 @@ const PostItemHeader = ({ post, navHandlerPost, navHandlerAuthor }) => {
             {!authorRoute ? (
                 <div
                     className={`post-card-author ${!active ? 'deleted' : ''}`}
-                    onClick={!active ? undefined : navHandlerAuthor}>
+                    onClick={!active ? undefined : navHandlerAuthor}
+                >
                     {post.author}&nbsp;
                 </div>
             ) : undefined}

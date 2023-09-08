@@ -37,7 +37,8 @@ const UnfollowButton = ({ username, side }) => {
         <button
             className={`follow-button unfollow-button ${buttonClass()}`}
             onClick={clickHandle}
-            disabled={isLoading ? true : false}>
+            disabled={isLoading ? true : false}
+        >
             Following
         </button>
     );

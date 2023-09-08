@@ -97,7 +97,8 @@ const UpdateButton = () => {
             className="login__button"
             onClick={handlePublish}
             disabled={postLoading || uploadLoading}
-            style={{ cursor: postLoading || uploadLoading ? 'wait' : 'pointer' }}>
+            style={{ cursor: postLoading || uploadLoading ? 'wait' : 'pointer' }}
+        >
             Update
         </button>
     );

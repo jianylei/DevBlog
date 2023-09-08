@@ -13,7 +13,8 @@ const EditProfileButton = ({ header }) => {
     return (
         <button
             className={header ? 'login__button' : 'side-full-list-button'}
-            onClick={() => clickHandle()}>
+            onClick={() => clickHandle()}
+        >
             Edit profile
         </button>
     );
