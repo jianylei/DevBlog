@@ -100,8 +100,7 @@ const PublishButton = () => {
             className="login__button"
             onClick={handlePublish}
             disabled={uploadLoading || addPostLoading}
-            style={{ cursor: uploadLoading || addPostLoading ? 'wait' : 'pointer' }}
-        >
+            style={{ cursor: uploadLoading || addPostLoading ? 'wait' : 'pointer' }}>
             Publish
         </button>
     );
